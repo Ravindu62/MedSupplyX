@@ -54,18 +54,11 @@
     <div class ="space"></div>
     <div class="anim">  
     <div class="text_centered"> 
-      <p> To obtain the report, please click on the "Download" button provided below. 
-        By doing so, you can easily access and retrieve the report you need in a convenient 
-        and efficient manner. </p> 
+      <p> To get the report , click below button </p> 
 </div>
-<div id="wrap">
-<a href="#" class="btn-slide">
-  <span class="circle"><i class="fa fa-download" style="position:absolute;top:10px;left:12px;"></i></span>
-  <span class="title">Download</span>
-  <span class="title-hover">Click here</span>
-</a>
-</div>
-    
+<div class="centerbtn">
+    <button class="downloadbtn"> Download Report </button>
+    </div>
     </div>
     
   </div>
