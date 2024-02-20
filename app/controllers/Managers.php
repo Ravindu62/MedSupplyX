@@ -44,12 +44,47 @@ public function registration() {
 
 
 public function rejectPharmacy($id) {
-    if($this->managerModel->rejectPharmacy($id)) {
-        $this->view('popup/reject');
+    if($_SERVER['REQUEST_METHOD'] == 'POST') {
+        // Get existing post from model
+        $pharmacyRegistration = $this->managerModel->getPharmacyById($id);
+
+        // Check for owner
+        if($pharmacyRegistration->pharmacyname != $_SESSION['USER_DATA']['name']) {
+            redirect('managers/registration');
+        }
+
+        if($this->managerModel->rejectPharmacy($id)) {
+            redirect('managers/registration');
+        } else {
+            die('Something went wrong');
+        }
     } else {
-        die('Something went wrong');
+        redirect('managers/registration');
     }
 }
+ 
+
+public function rejectSupplier($id) {
+    if($_SERVER['REQUEST_METHOD'] == 'POST') {
+        // Get existing post from model
+        $supplierRegistration = $this->managerModel->getsupplierById($id);
+
+        // Check for owner
+        if($supplierRegistration->supppliername != $_SESSION['USER_DATA']['name']) {
+            redirect('managers/registration');
+        }
+
+        if($this->managerModel->rejectPharmacy($id)) {
+            redirect('managers/registration');
+        } else {
+            die('Something went wrong');
+        }
+    } else {
+        redirect('managers/registration');
+    }
+}
+
+
 
 public function all_pharmacies() {
 
@@ -247,6 +282,7 @@ public function approve_supplier() {
     
         }
     }
+    
 }
 
 public function approve_pharmacy() {
@@ -283,7 +319,6 @@ public function approve_pharmacy() {
         // Bind values
         
         $this->db->bind(':name',$name);
-
         $this->db->bind(':email',  $email);
         $this->db->bind(':password', $password);
         $this->db->bind(':role', 'pharmacy');

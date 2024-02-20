@@ -61,7 +61,8 @@
     <td> <?php echo $getMedicine->volume; ?> </td>
     <td> <?php echo $getMedicine->type; ?> </td>
     <td> <?php echo $getMedicine->description; ?> </td>
-    <td> <a href="<?php echo URLROOT ?>/managers/removeMedicine/<?php echo $getMedicine->id; ?>"> <button class="smallOpen-button"> Remove </button> </a> </td>
+    <td> <input type="submit" class="smallOpen-button" value="Remove"> 
+    </td>
   </tr>
 
 <?php endforeach; ?>

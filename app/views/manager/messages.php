@@ -32,7 +32,7 @@
     <textarea placeholder="Type message.." name="msg" required></textarea>
    
 
-    <button type="submit" class="btn">Send</button>
+    <button type="submit" class="btn"> Send </button>
     <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
   </form>
 </div>

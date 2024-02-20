@@ -32,9 +32,10 @@
     <th> Physical Address </th>
     <th> Contact No </th>
     <th> Email </th>
-    <th> Accept / Reject </th>
+    <th colspan="2"> Accept / Reject </th>
   </tr>
 <tr> 
+  <td> </td>
   <td> </td>
   <td> </td>
   <td> </td>
@@ -52,8 +53,12 @@
   <td> <?php echo $pharmacyRegistration->address; ?> </td>
   <td> <?php echo $pharmacyRegistration->phone; ?> </td>
   <td> <?php echo $pharmacyRegistration->email; ?> </td>
-  <td> <button class="smallOpen-button" name="acceptpharmacy" value="<?php echo $pharmacyRegistration->email?>"> Accept </button> 
-  <button class="smallOpen-button-red"> Reject </button> </td>
+  <td> <button class="smallOpen-button" name="acceptpharmacy" value="<?php echo $pharmacyRegistration->email?>"> Accept </button> </form></td>
+
+  <td> <form action="<?php echo URLROOT;?>/managers/rejectPharmacy/<?php echo $pharmacyRegistration->id; ?>" method="POST">
+        <input type="submit" class="smallOpen-button-red" name="reject" value="Reject">    
+      </form> 
+  </td>
 
 
 </tr>
