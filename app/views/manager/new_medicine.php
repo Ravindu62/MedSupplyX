@@ -18,11 +18,9 @@
     <div class="anim">
       <div class="container-fluid">
         <div class="d-flex">
-          <form action="" method="POST" class="orderform">
+          <form action="<?php echo URLROOT; ?>/managers/new_medicine" method="POST" class="orderform">
 
             <table>
-
-
               <tr>
                 <td colspan="2">
                   <h3> <br> <br> New Medicine Details </h3>

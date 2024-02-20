@@ -55,6 +55,17 @@ class Manager
         return $row;
     }
 
+    public function getSupplierById($id) {
+        $this->db->query("SELECT * FROM supplierregistration WHERE id = :id");
+
+        // Bind values
+        $this->db->bind(':id', $id);
+
+        $row = $this->db->single();
+
+        return $row;
+    }
+
     public function approvePharmacy($id) {
         $this->db->query('UPDATE pharmacyregistration SET status = "approved" WHERE id = :id');
 
@@ -67,39 +78,14 @@ class Manager
         } else {
             return false;
         }
-    }
+    }    
 
-    public function rejectPharmacy($id) {
-        $this->db->query('UPDATE pharmacyregistration SET status = "rejected" WHERE id = :id');
-
-        // Bind values
-        $this->db->bind(':id', $id);
-
-        // Execute
-        if($this->db->execute()){
-            return true;
-        } else {
-            return false;
-        }
-    }
+        
+    
 
 
     public function approveSupplier($id) {
         $this->db->query('UPDATE supplierregistration SET status = "approved" WHERE id = :id');
-
-        // Bind values
-        $this->db->bind(':id', $id);
-
-        // Execute
-        if($this->db->execute()){
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public function rejectSupplier($id) {
-        $this->db->query('UPDATE supplierregistration SET status = "rejected" WHERE id = :id');
 
         // Bind values
         $this->db->bind(':id', $id);
@@ -205,6 +191,36 @@ class Manager
         $row = $this->db->single();
 
         return $row;
+
+    }
+
+    public function rejectPharmacy($id)
+    {
+        $this->db->query('UPDATE pharmacyregistration SET status = "rejected" WHERE id = :id');
+        // Bind values
+        $this->db->bind(':id', $id);
+        
+        // Execute
+        if($this->db->execute()){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function rejectSupplier($id) {
+
+        $this->db->query('UPDATE supplierregistration SET status = "rejected" WHERE id = :id');
+        // Bind values
+        $this->db->bind(':id', $id);
+        
+        // Execute
+        if($this->db->execute()){
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
     
