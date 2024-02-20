@@ -84,10 +84,11 @@
     <th> Physical Address </th>
     <th> Contact No </th>
     <th> Email </th>
-    <th> Accept / Reject </th>
+    <th colspan="2"> Accept / Reject </th>
   </tr>
 <tr> 
  
+  <td> </td>
   <td> </td>
   <td> </td>
   <td> </td>
@@ -106,8 +107,12 @@
   <td> <?php echo $supplierRegistration->address; ?> </td>
   <td> <?php echo $supplierRegistration->phone; ?> </td>
   <td> <?php echo $supplierRegistration->email; ?> </td>
-  <td> <button class="smallOpen-button" name="acceptsupplier" value="<?php echo $supplierRegistration->email?>"> Accept </button> 
-  <button class="smallOpen-button-red"> Reject </button> </td>
+  <td> <button class="smallOpen-button" name="acceptsupplier" value="<?php echo $supplierRegistration->email?>"> Accept </button>  </td>
+</form>
+  <td> <form action="<?php echo URLROOT;?>/managers/rejectSupplier/<?php echo $supplierRegistration->id; ?>" method="POST">
+        <input type="submit" class="smallOpen-button-red" name="reject" value="Reject">    
+      </form> 
+  </td>
 </tr>
 <?php endforeach; ?>
 
@@ -115,7 +120,6 @@
 
 
 </table>
-</form>
 </div>
 
 </div>

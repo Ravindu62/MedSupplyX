@@ -53,7 +53,6 @@
         }
 
         $order = $this->supplierModel->getOrder();
-        
 
         $data = [
             'order' => $order

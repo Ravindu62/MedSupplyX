@@ -26,7 +26,7 @@
         </table>
       </div>
       <div class="greeting">  
-      <a href="#"><i class="fa-regular fa-bell"></i></a>  Hello , <?php echo $_SESSION['USER_DATA']['name']; ?>
+      Hello , <?php echo $_SESSION['USER_DATA']['name']; ?>
       
       <img class="profile" src="<?php echo URLROOT ?>/public/img/profile.png" alt="profile">
       </div>
