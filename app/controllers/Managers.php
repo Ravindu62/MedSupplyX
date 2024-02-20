@@ -74,7 +74,7 @@ public function rejectSupplier($id) {
             redirect('managers/registration');
         }
 
-        if($this->managerModel->rejectPharmacy($id)) {
+        if($this->managerModel->rejectSupplier($id)) {
             redirect('managers/registration');
         } else {
             die('Something went wrong');

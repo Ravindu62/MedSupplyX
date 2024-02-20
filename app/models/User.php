@@ -166,7 +166,7 @@ class User {
         }
     }
 
-    public function findRejectedEmailSuppler($email) {
+    public function findRejectedEmailSupplier($email) {
         $this->db->query('SELECT * FROM supplierregistration WHERE email = :email');
 
         // Bind value
