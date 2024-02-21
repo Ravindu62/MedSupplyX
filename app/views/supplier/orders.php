@@ -29,7 +29,7 @@
 <table class="customers" id="myTable">
   <tr>
   
-   
+    <th> Pharmacy Name</th>
     <th> Medicine Name </th>
     <th> Batch No </th>
     <th> Quantity </th>
@@ -44,6 +44,7 @@
   <td> </td>
   <td> </td>
   <td> </td>
+  <td> </td>
 
   
   <td> <!-- <button class="smallOpen-button" onclick="openForm()"> accept </button> -->  </td>
@@ -51,6 +52,8 @@
 
 <?php foreach($data['order'] as $order) : ?>
 <tr> 
+
+  <td> <?php echo $order->pharmacyname; ?> </td>
   <td> <?php echo $order->medicine; ?> </td>
   <td> <?php echo $order->batchno; ?> </td>
   <td> <?php echo $order->quantity; ?> </td>

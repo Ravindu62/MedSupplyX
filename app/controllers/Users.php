@@ -38,7 +38,9 @@ class Users extends Controller {
                 $data['email_err'] = 'Please enter email';
             } else {
                 // Check email
-                if($this->userModel->findUserByEmail($data['email'])) {
+                if($this->userModel->findRejectedEmailPharmacy($data['email'])) {
+                    $data['email_err'] = 'Your email has been rejected by Manager. Please <a href="<?php echo URLROOT ?>/pages/index/#contact"> contact us </a>.';
+                }elseif($this->userModel->findUserByEmail($data['email'])) {
                     $data['email_err'] = 'Email is already taken';
                 }
             }
@@ -163,8 +165,10 @@ class Users extends Controller {
             if(empty($data['email'])) {
                 $data['email_err'] = 'Please enter email';
             } else {
-                // Check email
-                if($this->userModel->findUserByEmailSupplier($data['email'])) {
+                //check email is rejected
+                if($this->userModel->findRejectedEmailSupplier($data['email'])) {
+                    $data['email_err'] = 'Your email has been rejected Please contact us';
+                } elseif($this->userModel->findUserByEmailSupplier($data['email'])) {
                     $data['email_err'] = 'Email is already taken';
                 }
             }
@@ -257,16 +261,10 @@ class Users extends Controller {
             $this->view('users/supplier', $data);
         }
 
-
-
-    
-
-
-
-
     }
 
-    public function cashier() {
+  /*  cashier part
+  public function cashier() {
         // Check for POST
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Process form
@@ -377,6 +375,7 @@ class Users extends Controller {
             }
 
     }
+    */
 
     public function login() {
         // Check for POST
@@ -579,6 +578,10 @@ public function complete(){
     $data = [
         'title' => 'Register '
     ];
+}
+
+public function index(){
+    $this->view('pages/index');
 }
 }
 ?>
