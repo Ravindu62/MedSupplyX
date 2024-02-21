@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="<?php echo URLROOT ?>/public/css/style.css">
 
   <script src="https://kit.fontawesome.com/b01c051a0f.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
   <title> </title>
 </head>
@@ -26,7 +27,7 @@
         </table>
       </div>
       <div class="greeting">  
-      <a href="#"><i class="fa-regular fa-bell"></i></a>  Hello , <?php echo $_SESSION['USER_DATA']['name']; ?>
+      Hello , <?php echo $_SESSION['USER_DATA']['name']; ?>
       
       <img class="profile" src="<?php echo URLROOT ?>/public/img/profile.png" alt="profile">
       </div>

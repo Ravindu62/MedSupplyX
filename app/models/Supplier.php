@@ -10,7 +10,7 @@ class Supplier{
 
     public function getOrder()
     {
-        $this->db->query('SELECT * FROM `requestorder`');
+        $this->db->query('SELECT * FROM requestorder');
 
         $results = $this->db->resultSet();
 
