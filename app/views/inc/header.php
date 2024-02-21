@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="<?php echo URLROOT ?>/public/css/style.css">
 
   <script src="https://kit.fontawesome.com/b01c051a0f.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
   <title> </title>
 </head>
