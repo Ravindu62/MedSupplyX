@@ -59,4 +59,11 @@ class pharmacy
         
         return $row;
     }
+
+    public function getProfileData($id){
+        $this->db->query("SELECT * FROM pharmacy WHERE id = '$id'");
+        
+        $results = $this->db->resultSet();
+        return $results;
+    }
 }
