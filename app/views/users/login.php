@@ -43,12 +43,12 @@
         </form>
         <br>
         <div>
-                <input class="input2" type="checkbox" name="remember_me" id="remember_me">
-                <label for="remember_me">Remember me</label>
-            </div>
-            <div class="check">
-                <a href="#"> Forgot Password?</a>
-            </div>
+            <input class="input2" type="checkbox" name="remember_me" id="remember_me">
+            <label for="remember_me">Remember me</label>
+        </div>
+        <div class="check">
+            <a href="#"> Forgot Password?</a>
+        </div>
         <div class="sign-up">
             <pre>Don't have an account?  <a href="<?php echo URLROOT ?>/users/register">Sign up</a></pre>
         </div>
@@ -58,4 +58,3 @@
 <?php require APPROOT . '/views/inc/landing_footer.php'; ?>
 </form>
 </div>
-
