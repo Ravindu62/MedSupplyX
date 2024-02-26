@@ -85,15 +85,24 @@
     }
 
     public function profile() {
-        $data = [];
+        $pharmacyname = trim($_SESSION['USER_DATA']['name']);
+        $this->pharmacyModel->getProfileData($pharmacyname);
+        $profile = $this->pharmacyModel->getProfileData();
+
+        $data = [
+            'profile' => $profile
+        ];
         
         $this->view('pharmacy/profile', $data);
     }
 
-    public function logout() {
-        unset($_SESSION['USER_DATA']);
+    public function logout(){
+        unset($_SESSION['user_id']);
+        unset($_SESSION['user_email']);
+        unset($_SESSION['user_name']);
+        session_destroy();
         redirect('users/login');
-     }
+    }
 
     public function new_order() {
     
