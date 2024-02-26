@@ -25,3 +25,25 @@
             }
         }
     }   
+function generate_unique_token($length = 32)
+{
+    // Define characters allowed in the token
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+    $token = '';
+
+    // Generate random token
+    for ($i = 0; $i < $length; $i++) {
+        $token .= $characters[rand(0, strlen($characters) - 1)];
+    }
+
+    return $token;
+}
+
+function isLoggedIn(){
+    if(isset($_SESSION['user_id'])){
+        return true;
+    }else{
+        return false;
+    }
+}
