@@ -2,6 +2,7 @@
 class pharmacy
 {
     private $db;
+    private $query;
 
     public function __construct()
     {
@@ -61,9 +62,58 @@ class pharmacy
     }
 
     public function getProfileData($id){
-        $this->db->query("SELECT * FROM pharmacy WHERE id = '$id'");
-        
-        $results = $this->db->resultSet();
+        $this->db->query("SELECT *,FROM pharmacy WHERE id = '$id'");
+        $this->db->bind(':id', $id);
+
+        $results = $this->db->single();
         return $results;
     }
+
+    public function countTotalOrders() {
+        $this->query = $this->db->query2("SELECT COUNT(*) as count FROM requestorder");
+    
+        if ($this->query) {
+            return $this->query[0]->count;
+           
+        } else {
+            // Handle the error, e.g., log it or return an appropriate value
+            return 0;
+                }
+    }
+
+    public function countAcceptedOrders() {
+        $this->query = $this->db->query2("SELECT COUNT(*) as count FROM approvedorders");
+    
+        if ($this->query) {
+            return $this->query[0]->count;
+           
+        } else {
+            // Handle the error, e.g., log it or return an appropriate value
+            return 0;
+                }
+    }
+
+    public function countOutOfStockProducts() {
+        $this->query = $this->db->query2("SELECT COUNT(*) as count FROM requestorder");
+    
+        if ($this->query) {
+            return $this->query[0]->count;
+           
+        } else {
+            // Handle the error, e.g., log it or return an appropriate value
+            return 0;
+                }
+    }
+    public function countExpiredOrders() {
+        $this->query = $this->db->query2("SELECT COUNT(*) as count FROM requestorder");
+    
+        if ($this->query) {
+            return $this->query[0]->count;
+           
+        } else {
+            // Handle the error, e.g., log it or return an appropriate value
+            return 0;
+                }
+    
+}
 }
