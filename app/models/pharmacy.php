@@ -92,4 +92,16 @@ class pharmacy
             return 0;
                 }
     }
+
+    public function countOutOfStockProducts() {
+        $this->query = $this->db->query2("SELECT COUNT(*) as count FROM requestorder");
+    
+        if ($this->query) {
+            return $this->query[0]->count;
+           
+        } else {
+            // Handle the error, e.g., log it or return an appropriate value
+            return 0;
+                }
+    }
 }
