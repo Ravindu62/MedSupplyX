@@ -9,9 +9,24 @@
     }
 
     public function index() {
-        $data = [];
         
+$countTotalOrders = $this->pharmacyModel->countTotalOrders();
+        $countAcceptedOrders = $this->pharmacyModel->countAcceptedOrders();
+        $countOutOfStockProducts = $this->pharmacyModel->countOutOfStockProducts();
+        $countExpiredOrders = $this->pharmacyModel->countExpiredOrders();
+
+        $data = [
+            'countTotalOrders' => $countTotalOrders,
+            'countAcceptedOrders' => $countAcceptedOrders,
+            'countOutOfStockProducts' => $countOutOfStockProducts,
+            'countExpiredOrders' => $countExpiredOrders
+        ];
+
+
         $this->view('pharmacy/index', $data);
+    }
+
+
     }
 
     public function inventory() {
