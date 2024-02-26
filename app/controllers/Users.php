@@ -75,8 +75,29 @@ class Users extends Controller {
                 $data['password_err'] = 'Please enter password';
             } elseif(strlen($data['password']) < 6) {
                 $data['password_err'] = 'Password must be at least 6 characters';
-            } 
+            } elseif (!preg_match('/[A-Z]/', $data['password'])) {
+                $data['password_err'] = 'Password should contain at least one uppercase letter';
+            } elseif (!preg_match('/[a-z]/', $data['password'])) {
+                $data['password_err'] = 'Password should contain at least one lowercase letter';
+            } elseif (!preg_match('/\d/', $data['password'])) {
+                $data['password_err'] = 'Password should contain at least one number';
+            } elseif (!preg_match('/[^a-zA-Z\d]/', $data['password'])) {
+                $data['password_err'] = 'Password should contain at least one special character';
+            }
 
+            // if (empty($data['password'])) {
+            //     $data['password_err'] = 'Please provide a password';
+            // } elseif (strlen($data['password']) < 8) {
+            //     $data['password_err'] = 'Password should contain at least 8 characters';
+            // } elseif (!preg_match('/[A-Z]/', $data['password'])) {
+            //     $data['password_err'] = 'Password should contain at least one uppercase letter';
+            // } elseif (!preg_match('/[a-z]/', $data['password'])) {
+            //     $data['password_err'] = 'Password should contain at least one lowercase letter';
+            // } elseif (!preg_match('/\d/', $data['password'])) {
+            //     $data['password_err'] = 'Password should contain at least one number';
+            // } elseif (!preg_match('/[^a-zA-Z\d]/', $data['password'])) {
+            //     $data['password_err'] = 'Password should contain at least one special character';
+            // }
             // Validate confirm password
             if(empty($data['confirm_password'])) {
                 $data['confirm_password_err'] = 'Please confirm password';
