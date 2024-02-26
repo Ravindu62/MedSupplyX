@@ -46,17 +46,18 @@
                         <br>
                         <input type="password" name="password" id="password" class="gen-input reg-input" <?php echo (!empty($data['password_err'])) ? 'is-invalid' : ''; ?> value="<?php echo $data['password']; ?>">
                         <div><span class="importantMessage"> <?php echo $data['password_err']; ?> </span> </div>
-                        <input type="checkbox" id="showPassword" class="check-box-password"> Show Password
+                        <input type="checkbox" id="showPassword1" class="check-box-password"> Show Password
                     </div>
 
                     <div class="input">
-                        <label for="#con-password">Confirm Password :</label>
-                        <br>
-                        <input type="password" name="confirm_password" id="con-password" class="gen-input reg-input" <?php echo (!empty($data['confirm_password_err'])) ? 'is-invalid' : ''; ?> value="<?php echo $data['confirm_password']; ?>">
-                        <div><span class="importantMessage"> <?php echo $data['confirm_password_err']; ?> </span> </div>
-                        <input type="checkbox" id="showPassword" class="check-box-password"> Show Password
-                    </div>
-                    
+    <label for="#con-password">Confirm Password :</label>
+    <br>
+    <input type="password" name="confirm_password" id="con-password" class="gen-input reg-input" <?php echo (!empty($data['confirm_password_err'])) ? 'is-invalid' : ''; ?> value="<?php echo $data['confirm_password']; ?>">
+    <div><span class="importantMessage"> <?php echo $data['confirm_password_err']; ?> </span> </div>
+    <input type="checkbox" id="showPassword2" class="check-box-password"> Show Password
+</div>
+
+
 
 
                     <div class="captcha">
@@ -76,13 +77,25 @@
 
 
                     const passwordInput = document.getElementById("password");
-                    const showPasswordCheckbox = document.getElementById("showPassword");
+                    const confirmPasswordInput = document.getElementById("con-password");
+                    const showPasswordCheckbox1 = document.getElementById("showPassword1");
+                    const showPasswordCheckbox2 = document.getElementById("showPassword2");
+                   
 
-                    showPasswordCheckbox.addEventListener("change", function() {
-                        if (showPasswordCheckbox.checked) {
+
+                    showPasswordCheckbox1.addEventListener("change", function() {
+                        if (showPasswordCheckbox1.checked) {
                             passwordInput.type = "text";
                         } else {
                             passwordInput.type = "password";
+                        }
+                    });
+
+                    showPasswordCheckbox2.addEventListener("change", function() {
+                        if (showPasswordCheckbox2.checked) {
+                            confirmPasswordInput.type = "text";
+                        } else {
+                            confirmPasswordInput.type = "password";
                         }
                     });
                 </script>
@@ -91,4 +104,3 @@
         </div>
     </div>
     <?php require APPROOT . '/views/inc/landing_footer.php'; ?>
-
