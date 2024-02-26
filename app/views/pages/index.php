@@ -174,6 +174,7 @@
                                 type="text"
                                 name="Name"
                                 placeholder="Your Name"
+                                class="gen-input"
                                 required
                             >
                             <label for="Email">Email : </label>
@@ -181,6 +182,7 @@
                                 type="email"
                                 name="Email"
                                 placeholder="Your Email"
+                                class="gen-input"
                                 required
                             >
                             <label for="Message">Message : </label>
