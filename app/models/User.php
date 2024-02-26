@@ -149,22 +149,27 @@ class User {
 
     public function findRejectedEmailPharmacy($email) {
         $this->db->query('SELECT * FROM pharmacyregistration WHERE email = :email');
-
+    
         // Bind value
         $this->db->bind(':email', $email);
-
+    
         $row = $this->db->single();
-
-        $status = $row->status;
-
-       
-
-        if($status == 'rejected') {
-            return true;
+    
+        // Check if $row is not null before accessing its properties
+        if ($row) {
+            $status = $row->status;
+    
+            if($status == 'rejected') {
+                return true;
+            } else {
+                return false;
+            }
         } else {
+            // Handle the case where no row is found for the given email
             return false;
         }
     }
+    
 
     public function findRejectedEmailSupplier($email) {
         $this->db->query('SELECT * FROM supplierregistration WHERE email = :email');
