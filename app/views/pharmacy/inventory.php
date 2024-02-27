@@ -17,11 +17,15 @@
 <!-- content -->
   <div class="content">
   <h2>
+    <br>
+  <div class="alignRight">
+ <a href="<?php echo URLROOT; ?>/pharmacies/newInventory"> <button class="addBtn"> Add Inventory </button> </a>
+  </div>
   <div class="anim">
     Inventory 
   </div>
   </h2>
-
+<br>
 <div class="anim">    
 <table class="customers">
   <tr>
