@@ -20,86 +20,80 @@
     <!-- content -->
     <div class="content">
 
+      <br>
       <h2 class="anim"> Dashboard</h2>
       <p class="anim"> Here are the important details.</p>
       <br>
-      
-        <div class="row">
-        <div class="status">
-        <h3>Order Status</h3>
-          <div class="column">
-            <div class="card1">
-              <h3> <?php echo $data['countTotalOrders']; ?> </h3>
-              <p> Total Orders </p>
-            </div>
-          </div>
-
-          <div class="column">
-            <div class="card2">
-              <h3><?php echo $data['countAcceptedOrders']; ?> </h3>
-              <p> Accepted Orders </p>
-            </div>
-          </div>
-
-          <div class="column">
-            <div class="card3">
-              <h3> <?php echo $data['countPendingOrders']; ?></h3>
-              <p>Pending Orders </p>
-            </div>
-          </div>
-
-          <div class="column">
-            <div class="card4">
-              <h3> <?php echo $data['countRejectedOrders']; ?> </h3>
-              <p> Rejected Orders </p>
-            </div>
+      <br>
+      <div class="row">
+        <div class="column">
+          <div class="card1">
+            <h3> <?php echo $data['countTotalOrders']; ?> </h3>
+            <p> Total Orders </p>
           </div>
         </div>
+
+        <div class="column">
+          <div class="card2">
+            <h3><?php echo $data['countAcceptedOrders']; ?> </h3>
+            <p> Accepted Orders </p>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="card3">
+            <h3> <?php echo $data['countPendingOrders']; ?></h3>
+            <p>Pending Orders </p>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="card4">
+            <h3> <?php echo $data['countRejectedOrders']; ?> </h3>
+            <p> Rejected Orders </p>
+          </div>
+        </div>
+
 
         <div class="column">
           <div class="card1">
             <h3> <?php echo $data['countExpiredOrders']; ?> </h3>
             <p> Expired Orders </p>
           </div>
+        </div>
+
+        <div class="column">
+          <div class="card1">
+            <h3> <?php echo $data['countOutOfStockProducts']; ?> </h3>
+            <p> Todays Customer Orders </p><!-- get the bill count from bills where date match to date -->
           </div>
         </div>
-     
-      <br>
-      <div class="status">
-        <h3>Inventory Status</h3>
-        <div class="row">
-          <div class="column">
-            <div class="card1">
-              <h3> <?php echo $data['countOutOfStockProducts']; ?> </h3>
-              <p> Total Orders </p>
-            </div>
-          </div>
 
-          <div class="column">
-            <div class="card1">
-              <h3> <?php echo $data['countOutOfStockProducts']; ?> </h3>
-              <p> Total Orders </p>
-            </div>
+        <div class="column">
+          <div class="card1">
+            <h3> <?php echo $data['countOutOfStockProducts']; ?> </h3>
+            <p> Bill count </p><!-- how many bills generated alltime -->
           </div>
+        </div>
 
-          <div class="column">
-            <div class="card1">
-              <h3> <?php echo $data['countOutOfStockProducts']; ?> </h3>
-              <p> Total Orders </p>
-            </div>
+        <div class="column">
+          <div class="card1">
+            <h3> <?php echo $data['countOutOfStockProducts']; ?> </h3>
+            <p> Bill count </p><!-- need to change -->
           </div>
         </div>
       </div>
-      <div class="space"></div>
-      <div class="smallspace"></div>
+    
+    <div class="space"></div>
+    <div class="smallspace"></div>
 
-      <div class="chartbackground">
-        <div class="anim">
-          <div id="piechart" class="chart1"></div>
-          <div id="barchart" class="chart1"></div>
-        </div>
+    <div class="chartbackground">
+      <div class="anim">
+        <div id="piechart" class="chart1"></div>
+        <div id="barchart" class="chart1"></div>
       </div>
-      <!-- <div class="centerbtn">
+    </div>
+    <!-- <div class="centerbtn">
     <button class="downloadbtn"> Download Report </button>
     </div> -->
     </div>
