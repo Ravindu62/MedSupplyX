@@ -40,10 +40,21 @@ class Pharmacies extends Controller
 
     public function inventory()
     {
-        $data = [];
+        // Sanitize post inputs
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+        $pharmacyId = trim($_SESSION['USER_DATA']['id']);
+
+        // Get inventory items for the pharmacy
+        $inventory_items = $this->pharmacyModel->getInventoryItems($pharmacyId);
+
+        $data = [
+            'inventory' => $inventory_items,
+        ];
 
         $this->view('pharmacy/inventory', $data);
     }
+
 
     public function messages()
     {
