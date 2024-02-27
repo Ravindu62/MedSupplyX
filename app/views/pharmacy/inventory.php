@@ -26,46 +26,40 @@
 <table class="customers">
   <tr>
     <th> Medicine ID </th>
-    <th> Meidicine Name </th>
+    <th> Medicine Name </th>
     <th> Batch No </th>
-    <th> Category No </th>
+    <th> Category </th>
     <th> Quantity </th>
     <th> Manufacture Date </th>
     <th> Expire Date </th>
+    <th> Unit Price</th>
+    <th> Change / Delete</th>
     
     
   </tr>
-<tr> 
-  <td> </td>
-  <td> </td>
-  <td> </td>
-  <td> </td>
-  <td> </td>
-  <td> </td>
-  <td> </td>
-  
-  <td> <!-- <button class="smallOpen-button" onclick="openForm()"> Update </button> --> </td>
-</tr>
 
-
+<?php foreach($data['inventory'] as $inventory) : ?>
 <tr> 
-  <td>111 </td>
-  <td> Aspirine</td>
-  <td> 21123V </td>
-  <td> 122</td>
-  <td>1500 </td>
-  <td> 2023/07/10 </td>
-  <td> 2023/09/10</td>
-  
-  <td> <!-- <button class="smallOpen-button" onclick="openForm()"> Update </button> --> </td>
+  <td> <?php echo $inventory->medicine_id; ?> </td>
+  <td> <?php echo $inventory->name; ?> </td>
+  <td> <?php echo $inventory->batch_no; ?> </td>
+  <td> <?php echo $inventory->category_no; ?> </td>
+  <td> <?php echo $inventory->quantity; ?> </td>
+  <td> <?php echo $inventory->manu_date; ?> </td>
+  <td> <?php echo $inventory->expire_date; ?> </td>
+  <td> <?php echo $inventory->unit_amount; ?> </td>
+ <td> <form action="<?php echo URLROOT; ?>/pharmacies/deleteOrder/<?php echo $inventory->id; ?>" method="POST">
+    <input type="submit" id="delete" class="smallOpen-button" name="delete" value="Delete"> </td>
+</form>
 </tr>
+<?php endforeach; ?>
 
 </table>
 </div>
 </div>
 </div>
 
-<div class="chat-popup" id="myForm">
+<!-- <div class="chat-popup" id="myForm">
   <form action="/action_page.php" class="form-container">
     
 
@@ -76,7 +70,7 @@
     <button type="submit" class="btn"> Update </button>
     <button type="button" class="btn cancel" onclick="closeForm()"> Close </button>
   </form>
-</div>
+</div> -->
 
 
 <?php require APPROOT . '/views/inc/footer.php'; ?>
