@@ -70,10 +70,10 @@ class pharmacy
         return $results;
     }
 
-    public function countTotalOrders($pharmacyName)
+    public function countTotalOrders($pharmacyId)
     {
         // Assuming $pharmacyName holds the pharmacy name passed to the method
-        $this->query = $this->db->query2("SELECT COUNT(*) as count FROM requestorder WHERE pharmacyname = :pharmacyName", ['pharmacyName' => $pharmacyName]);
+        $this->query = $this->db->query2("SELECT COUNT(*) as count FROM requestorder WHERE pharmacy_id = :pharmacyId", ['pharmacyId' => $pharmacyId]);
     
         if ($this->query) {
             return $this->query[0]->count;
@@ -84,9 +84,9 @@ class pharmacy
     }
     
 
-    public function countAcceptedOrders($pharmacyName)
+    public function countAcceptedOrders($pharmacyId)
     {
-        $this->query = $this->db->query2("SELECT COUNT(*) as count FROM requestorder WHERE pharmacyname = :pharmacyName AND status = 'accepted'", ['pharmacyName' => $pharmacyName]);
+        $this->query = $this->db->query2("SELECT COUNT(*) as count FROM requestorder WHERE pharmacy_id = :pharmacyId AND status = 'accepted'", ['pharmacyId' => $pharmacyId]);
 
         if ($this->query) {
             return $this->query[0]->count;
@@ -94,6 +94,31 @@ class pharmacy
             // Handle the error, e.g., log it or return an appropriate value
             return 0;
         }
+    }
+
+    public function countPendingOrders($pharmacyId)
+    {
+        $this->query = $this->db->query2("SELECT COUNT(*) as count FROM requestorder WHERE pharmacy_id = :pharmacyId AND status = 'pending'", ['pharmacyId' => $pharmacyId]);
+
+        if ($this->query) {
+            return $this->query[0]->count;
+        } else {
+            // Handle the error, e.g., log it or return an appropriate value
+            return 0;
+        }
+    }
+
+    public function countRejectedOrders($pharmacyId){
+        $this->query = $this->db->query2("SELECT COUNT(*) as count FROM requestorder WHERE pharmacy_id = :pharmacyId AND status = 'rejected'", ['pharmacyId' => $pharmacyId]);
+
+        if ($this->query) {
+            return $this->query[0]->count;
+        } else {
+            // Handle the error, e.g., log it or return an appropriate value
+            return 0;
+        }
+
+        
     }
 
     public function countOutOfStockProducts($pharmacyId)

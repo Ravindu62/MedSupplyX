@@ -15,17 +15,20 @@ class Pharmacies extends Controller
         //sanitize post inputs
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-        $data1 = trim($_SESSION['USER_DATA']['name']);
-        $data2 = trim($_SESSION['USER_DATA']['id']);
+        $data1 = trim($_SESSION['USER_DATA']['id']);
 
         $countTotalOrders = $this->pharmacyModel->countTotalOrders($data1);
         $countAcceptedOrders = $this->pharmacyModel->countAcceptedOrders($data1);
-        $countOutOfStockProducts = $this->pharmacyModel->countOutOfStockProducts($data2);
-        $countExpiredOrders = $this->pharmacyModel->countExpiredOrders($data2);
+        $countPendingOrders = $this->pharmacyModel->countPendingOrders($data1);
+        $countRejectedOrders = $this->pharmacyModel->countRejectedOrders($data1);
+        $countOutOfStockProducts = $this->pharmacyModel->countOutOfStockProducts($data1);
+        $countExpiredOrders = $this->pharmacyModel->countExpiredOrders($data1);
 
         $data = [
             'countTotalOrders' => $countTotalOrders,
             'countAcceptedOrders' => $countAcceptedOrders,
+            'countPendingOrders' => $countPendingOrders,
+            'countRejectedOrders' => $countRejectedOrders,
             'countOutOfStockProducts' => $countOutOfStockProducts,
             'countExpiredOrders' => $countExpiredOrders
         ];
