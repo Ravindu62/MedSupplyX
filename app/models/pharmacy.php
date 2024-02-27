@@ -144,4 +144,13 @@ class pharmacy
             return 0;
         }
     }
+
+    public function getInventoryItems($pharmacyId){
+        $this->db->query("SELECT * FROM inventory WHERE pharmacy_id = :pharmacyId");
+        $this->db->bind(':pharmacyId', $pharmacyId);
+
+        $results = $this->db->resultSet();
+        
+        return $results;
+    }
 }
