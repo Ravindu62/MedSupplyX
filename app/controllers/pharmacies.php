@@ -27,8 +27,6 @@ $countTotalOrders = $this->pharmacyModel->countTotalOrders();
     }
 
 
-    }
-
     public function inventory() {
         $data = [];
         
