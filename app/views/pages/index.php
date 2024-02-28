@@ -139,7 +139,7 @@
                         <h1 class="sub-title">Contact Us</h1>
                         <p>
                             <i class="fa-solid fa-envelope"></i>
-                            medspplyx23@gmail.com
+                            medsupplyx23@gmail.com
                         </p>
                         <p>
                             <i class="fa-solid fa-phone"></i>
