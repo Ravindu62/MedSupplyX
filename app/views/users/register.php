@@ -5,7 +5,7 @@
         <div class="background2">
             <div class="main-container">
                 <div class="cards">
-                    <img src="<?php echo URLROOT ?>/public/img/pharmacy.webp" alt="">
+                    <img src="<?php echo URLROOT ?>/public/img/pharmacy1.webp" alt="">
                     <div class="indetail">
                         <h2>Pharmacy</h2>
                         <p> You can manage medicine inventory and put medicine orders through MedsupplyX </p>
