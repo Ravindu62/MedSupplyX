@@ -44,6 +44,7 @@
             <td> <?php echo $deliveredOrders->medicine_name; ?></td>
             <td> <?php echo $deliveredOrders->batchno; ?></td>
             <td> <?php echo $deliveredOrders->category; ?></td>
+            <td> <?php echo $deliveredOrders->quantity; ?></td>
             <td> <?php echo $deliveredOrders->ordered_date; ?></td>
             <td> <?php echo $deliveredOrders->deliveryDate; ?></td>
             <td> <?php echo $deliveredOrders->supplier_name; ?></td>
