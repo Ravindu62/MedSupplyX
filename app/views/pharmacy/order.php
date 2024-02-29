@@ -53,6 +53,23 @@
   <td> </td>
   <td> <!-- <button class="smallOpen-button" onclick="openForm()"> accept </button> -->  </td>
 </tr>
+
+<?php foreach($data['order'] as $order) : ?>
+<tr> 
+  <td> </td>
+  <td> <?php echo $order->medicine; ?> </td>
+  <td> <?php echo $order->batchno; ?> </td>
+  <td> <?php echo $order->quantity; ?> </td>
+  <td> <?php echo $order->createdAt; ?> </td>
+  <td> <?php echo $order->orderEndDate; ?> </td>
+  <td> <?php echo $order->deliveryDate; ?> </td>
+  <td> <button class="smallOpen-button"> Change </button> </td>   
+
+ <td> <form action="<?php echo URLROOT; ?>/pharmacies/deleteOrder/<?php echo $order->id; ?>" method="POST">
+    <input type="submit" id="delete" class="smallOpen-button" name="delete" value="Delete"> </td>
+</form>
+</tr>
+<?php endforeach; ?>
 </table>
 </div>
 
