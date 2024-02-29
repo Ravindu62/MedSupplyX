@@ -119,22 +119,35 @@ class Pharmacies extends Controller
 
     public function history()
     {
-        $data = [];
+        //sanitize post inputs
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-        $this->view('pharmacy/history', $data);
+        $pharmacyId = trim($_SESSION['USER_DATA']['id']);
+
+        $deliveredHistory = $this->pharmacyModel->getDeliverdOrders($pharmacyId);
+        $canceledHistory = $this->pharmacyModel->getCanceledOrders($pharmacyId);
+
+        $data = [
+            'deliveredHistory' => $deliveredHistory,
+            'canceledHistory' => $canceledHistory
+        ];
+        
+        $this->view('pharmacy/history/history', $data);
     }
 
     public function profile()
     {
-        $pharmacyname = trim($_SESSION['USER_DATA']['name']);
-        $this->pharmacyModel->getProfileData($pharmacyname);
-        $profile = $this->pharmacyModel->getProfileData();
+        // sanitize user inputs
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $pharmacyId = trim($_SESSION['USER_DATA']['id']);
+
+        $profile = $this->pharmacyModel->getProfileData($pharmacyId);
 
         $data = [
             'profile' => $profile
         ];
 
-        $this->view('pharmacy/profile', $data);
+        $this->view('pharmacy/profile/profile', $data);
     }
 
     public function logout()
