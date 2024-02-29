@@ -46,9 +46,18 @@
             <input class="input2" type="checkbox" name="remember_me" id="remember_me">
             <label for="remember_me">Remember me</label>
         </div>
-        <div class="check">
-            <a href="#"> Forgot Password?</a>
-        </div>
+        <!-- <form action="<?php echo URLROOT; ?>/users/forgotPassword" method="post">
+
+        <!-- <form action="<?php echo URLROOT; ?>/users/forgotPassword" method="post">
+            <div class="input">
+                <input class="input1" type="email" name="email" value="">
+                <span></span>
+                <i class="fa-solid fa-envelope"></i>
+            </div>
+            <div class="button">
+                <input type="submit" value="Reset Password" name="submit" class="userbtn2">
+            </div>
+        </form> -->
         <div class="sign-up">
             <pre>Don't have an account?  <a href="<?php echo URLROOT ?>/users/register">Sign up</a></pre>
         </div>

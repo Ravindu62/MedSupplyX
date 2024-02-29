@@ -21,9 +21,10 @@
 <div class="anim">  
 <table class="customers">
   <tr>
-    <th class="custom1"> </th>
+    <th class="custom1"> Medicine Id </th>
     <th class="custom1"> Medicine Name </th>
     <th class="custom1"> Batch No </th>
+    <th class="custom1"> Category </th>
     <th class="custom1"> Quantity </th>
     <th class="custom1"> Ordered Date </th>
     <th class="custom1"> Delivered Date </th>
@@ -33,29 +34,18 @@
     
     
   </tr>
+<?php foreach($data['deliveredHistory'] as $deliveredOrders) : ?>
 <tr> 
-  <td> </td>
-  <td> </td>
-  <td> </td>
-  <td> </td>
-  <td> </td>
-  <td> </td>
-  <td> </td>
-  <td> </td>
- 
+  <td> <?php echo $deliveredOrders->medicine_id; ?></td>
+  <td> <?php echo $deliveredOrders->medicine_name; ?></td>
+  <td> <?php echo $deliveredOrders->batchno; ?></td>
+  <td> <?php echo $deliveredOrders->category; ?></td>
+  <td> <?php echo $deliveredOrders->ordered_date; ?></td>
+  <td> <?php echo $deliveredOrders->deliveryDate; ?></td>
+  <td> <?php echo $deliveredOrders->supplier_name; ?></td>
+  <td> <?php echo $deliveredOrders->price; ?></td>
 </tr>
-
-<tr> 
-  <td> 01</td>
-  <td> Panadol </td>
-  <td> 1231</td>
-  <td> 200</td>
-  <td> 2023/09/05</td>
-  <td> 2023/09/05 </td>
-  <td> ABC (pvt) Ltd </td>
-  <td> 10 000/= </td>
- 
-</tr>
+<?php endforeach; ?>
 </table>
 </div>
 
