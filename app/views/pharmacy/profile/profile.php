@@ -26,36 +26,36 @@
                         <tr>
                         <div class="anim"> <td> <p class="profdetails"> Pharmacy Name </p>  </td> </div>
                             <td>:</td>
-                            <td> Gagana Pharmacy </td>           
+                            <td> <?php echo $data['profile']->name; ?> </td>           
                         </tr>
                       
                         <tr>
                             <td> <p class="profdetails">  Pharmacy Address </p> </td>
                             <td>:</td>
-                            <td> 222/1 , Athurugiriya Road </td>
+                            <td> <?php echo $data['profile']->address; ?> </td>
                         </tr>
                         <tr>
                             <td><p class="profdetails">Licence Number</p> </td>
                             <td>:</td>
-                            <td> 11692762K31 </td>
+                            <td> <?php echo $data['profile']->licenceno; ?> </td>
                         </tr>
                         <tr>
                             <td>  <p class="profdetails"> Contact Number </p> </td>
                             <td> : </td>
-                            <td> 0715714175 </td>
+                            <td> <?php echo $data['profile']->phone; ?> </td>
                             
                         </tr>
                    
                         <tr>
                             <td> <p class="profdetails">  Email </p></td>
                             <td>:</td>
-                            <td> wishwajithpeiris@gmail.com</td>
+                            <td> <?php echo $data['profile']->email; ?></td>
                             <td> <button class="addBtn"> Change </button> </td>
                         </tr>
                         <tr>
                             <td> <p class="profdetails"> Password </p> </td>
                             <td> : </td>
-                            <td> *********</td>
+                            <td> <?php echo $data['profile']->password; ?></td>
                             <td> <button class="addBtn"> Change </button> </td>
                         </tr>
 

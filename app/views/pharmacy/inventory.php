@@ -53,7 +53,7 @@
   <td> <?php echo $inventory->expire_date; ?> </td>
   <td> <?php echo $inventory->unit_amount; ?> </td>
  <td> <form action="<?php echo URLROOT; ?>/pharmacies/deleteOrder/<?php echo $inventory->id; ?>" method="POST">
-    <input type="submit" id="delete" class="smallOpen-button" name="delete" value="Delete"> </td>
+    <input type="submit" id="delete" class="smallOpen-button" name="edit" value="Edit"> </td>
 </form>
 </tr>
 <?php endforeach; ?>

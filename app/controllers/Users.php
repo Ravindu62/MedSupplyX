@@ -464,6 +464,67 @@ class Users extends Controller {
 
     }
 
+    private function generateUniqueToken() {
+        return bin2hex(random_bytes(32)); // Generates a random hexadecimal string
+    }
+
+    public function forgotPassword() {
+        // Check for POST
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Sanitize POST data
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+    
+            // Get email from form
+            $email = trim($_POST['email']);
+    
+            // Check if email exists in database
+            if($this->userModel->findUserByEmail($email)) {
+                // Generate and store reset token in database
+                $token = generateUniqueToken(); // Implement this function to generate a unique token
+                $this->userModel->storeResetToken($email, $token);
+    
+                // Send password reset email
+                $this->sendPasswordResetEmail($email, $token);
+    
+                // Redirect to a confirmation page
+                redirect('users/resetPasswordConfirmation');
+            } else {
+                // Email not found in database
+                flash('forgot_password_error', 'Email address not found', 'alert alert-danger');
+                redirect('users/forgotPassword');
+            }
+        } else {
+            // Load forgot password form view
+            $this->view('users/forgotPassword');
+        }
+    }
+    
+    public function resetPassword($token) {
+        // Check for POST
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Sanitize POST data
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+    
+            // Get password from form
+            $password = trim($_POST['password']);
+    
+            // Update password in database
+            if($this->userModel->resetPassword($token, $password)) {
+                // Password reset successful
+                flash('reset_password_success', 'Your password has been reset', 'alert alert-success');
+                redirect('users/login');
+            } else {
+                // Password reset failed
+                flash('reset_password_error', 'Error resetting password', 'alert alert-danger');
+                redirect('users/resetPassword/' . $token);
+            }
+        } else {
+            // Load reset password form view
+            $this->view('users/resetPassword', ['token' => $token]);
+        }
+    }
+    
+
     public function cashierlogin() {
         // Check for POST
         if($_SERVER['REQUEST_METHOD'] == 'POST') {

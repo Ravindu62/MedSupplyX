@@ -63,18 +63,28 @@ class pharmacy
 
     public function getProfileData($id)
     {
-        $this->db->query("SELECT *,FROM pharmacy WHERE id = '$id'");
+        $this->db->query("SELECT * FROM pharmacyregistration WHERE id = :id");
         $this->db->bind(':id', $id);
 
-        $results = $this->db->single();
-        return $results;
+        $row = $this->db->single();
+
+        // Check if a row was returned
+        if ($row) {
+            return $row;
+        } else {
+            // Log or echo an error message
+            error_log("No profile data found for ID: $id");
+            return false;
+        }
     }
+
+
 
     public function countTotalOrders($pharmacyId)
     {
         // Assuming $pharmacyName holds the pharmacy name passed to the method
-        $this->query = $this->db->query2("SELECT COUNT(*) as count FROM requestorder WHERE pharmacy_id = :pharmacyId", ['pharmacyId' => $pharmacyId]);
-    
+        $this->query = $this->db->query2("SELECT COUNT(*) as count FROM requestorder WHERE pharmacy_id = :pharmacyId", array('pharmacyId' => $pharmacyId));
+
         if ($this->query) {
             return $this->query[0]->count;
         } else {
@@ -82,11 +92,11 @@ class pharmacy
             return 0;
         }
     }
-    
+
 
     public function countAcceptedOrders($pharmacyId)
     {
-        $this->query = $this->db->query2("SELECT COUNT(*) as count FROM requestorder WHERE pharmacy_id = :pharmacyId AND status = 'accepted'", ['pharmacyId' => $pharmacyId]);
+        $this->query = $this->db->query2("SELECT COUNT(*) as count FROM requestorder WHERE pharmacy_id = :pharmacyId AND status = 'accepted'", array('pharmacyId' => $pharmacyId));
 
         if ($this->query) {
             return $this->query[0]->count;
@@ -98,7 +108,7 @@ class pharmacy
 
     public function countPendingOrders($pharmacyId)
     {
-        $this->query = $this->db->query2("SELECT COUNT(*) as count FROM requestorder WHERE pharmacy_id = :pharmacyId AND status = 'pending'", ['pharmacyId' => $pharmacyId]);
+        $this->query = $this->db->query2("SELECT COUNT(*) as count FROM requestorder WHERE pharmacy_id = :pharmacyId AND status = 'pending'", array('pharmacyId' => $pharmacyId));
 
         if ($this->query) {
             return $this->query[0]->count;
@@ -108,8 +118,9 @@ class pharmacy
         }
     }
 
-    public function countRejectedOrders($pharmacyId){
-        $this->query = $this->db->query2("SELECT COUNT(*) as count FROM requestorder WHERE pharmacy_id = :pharmacyId AND status = 'rejected'", ['pharmacyId' => $pharmacyId]);
+    public function countRejectedOrders($pharmacyId)
+    {
+        $this->query = $this->db->query2("SELECT COUNT(*) as count FROM requestorder WHERE pharmacy_id = :pharmacyId AND status = 'rejected'", array('pharmacyId' => $pharmacyId));
 
         if ($this->query) {
             return $this->query[0]->count;
@@ -117,25 +128,11 @@ class pharmacy
             // Handle the error, e.g., log it or return an appropriate value
             return 0;
         }
-
-        
     }
 
     public function countOutOfStockProducts($pharmacyId)
-{
-    $this->query = $this->db->query2("SELECT COUNT(*) as count FROM inventory WHERE pharmacy_id = :pharmacyId AND status = 'out'", ['pharmacyId' => $pharmacyId]);
-
-    if ($this->query) {
-        return $this->query[0]->count;
-    } else {
-        // Handle the error, e.g., log it or return an appropriate value
-        return 0;
-    }
-}
-
-    public function countExpiredOrders($pharmacyId)
     {
-        $this->query = $this->db->query2("SELECT COUNT(*) as count FROM inventory WHERE pharmacy_id = :pharmacyId AND status = 'expired'", ['pharmacyId' => $pharmacyId]);
+        $this->query = $this->db->query2("SELECT COUNT(*) as count FROM inventory WHERE pharmacy_id = :pharmacyId AND status = 'out'", array('pharmacyId' => $pharmacyId));
 
         if ($this->query) {
             return $this->query[0]->count;
@@ -145,12 +142,44 @@ class pharmacy
         }
     }
 
-    public function getInventoryItems($pharmacyId){
+    public function countExpiredOrders($pharmacyId)
+    {
+        $this->query = $this->db->query2("SELECT COUNT(*) as count FROM inventory WHERE pharmacy_id = :pharmacyId AND status = 'expired'", array('pharmacyId' => $pharmacyId));
+
+        if ($this->query) {
+            return $this->query[0]->count;
+        } else {
+            // Handle the error, e.g., log it or return an appropriate value
+            return 0;
+        }
+    }
+
+    public function getInventoryItems($pharmacyId)
+    {
         $this->db->query("SELECT * FROM inventory WHERE pharmacy_id = :pharmacyId");
         $this->db->bind(':pharmacyId', $pharmacyId);
 
         $results = $this->db->resultSet();
-        
+
+        return $results;
+    }
+
+    public function getDeliverdOrders($pharmacyId)
+    {
+        $this->db->query("SELECT * FROM requestorder WHERE pharmacy_id = :pharmacyId AND status = 'delivered'");
+        $this->db->bind(':pharmacyId', $pharmacyId);
+
+        $results = $this->db->resultSet();
+
+        return $results;
+    }
+
+    public function getCanceledOrders($pharmacyId){
+        $this->db->query("SELECT * FROM requestorder WHERE pharmacy_id = :pharmacyId AND status = 'canceled'");
+        $this->db->bind(':pharmacyId', $pharmacyId);
+
+        $results = $this->db->resultSet();
+
         return $results;
     }
 }

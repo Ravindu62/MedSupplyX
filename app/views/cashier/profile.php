@@ -26,13 +26,13 @@
                         
                         <div class="anim"> <td> <p class="profdetails"> Cashier Name </p> </td> </div>
                             <td>:</td>
-                            <td> Sanath Jayamanne</td>           
+                            <td> <?php echo $data['profile']->name; ?></td>           
                         </tr>
                       
                         <tr>
                             <td> <p class="profdetails">  Pharmacy </p></td>
                             <td>:</td>
-                            <td> Gagana Pharmacy </td>
+                            <td> <?php echo $data['profile']->name; ?> </td>
                         </tr>
                         <tr>
                             <td> <p class="profdetails"> Email  </p></td>
