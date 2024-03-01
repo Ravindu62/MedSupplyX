@@ -67,7 +67,7 @@ class Pharmacies extends Controller
     {
         $data = [];
 
-        $this->view('pharmacy/advertistments', $data);
+        $this->view('pharmacy/advertistments/advertistment', $data);
     }
 
     public function orders()
