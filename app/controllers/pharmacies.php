@@ -191,7 +191,7 @@ class Pharmacies extends Controller
     {
         $data = [];
 
-        $this->view('pharmacy/customerOrders', $data);
+        $this->view('pharmacy/customerOrders/customerOrders', $data);
     }
 
     public function deleteOrder($id)
