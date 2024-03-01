@@ -34,7 +34,7 @@ class Pharmacies extends Controller
         ];
 
 
-        $this->view('pharmacy/index', $data);
+        $this->view('pharmacy/dashboard/index', $data);
     }
 
 
