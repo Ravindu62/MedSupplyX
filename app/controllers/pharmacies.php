@@ -52,7 +52,7 @@ class Pharmacies extends Controller
             'inventory' => $inventory_items,
         ];
 
-        $this->view('pharmacy/inventory', $data);
+        $this->view('pharmacy/inventory/inventory', $data);
     }
 
 
