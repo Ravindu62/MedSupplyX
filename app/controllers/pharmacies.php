@@ -60,7 +60,7 @@ class Pharmacies extends Controller
     {
         $data = [];
 
-        $this->view('pharmacy/messages', $data);
+        $this->view('pharmacy/notifications/messages', $data);
     }
 
     public function advertistments()
