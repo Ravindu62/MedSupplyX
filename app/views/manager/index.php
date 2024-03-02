@@ -54,6 +54,7 @@
         </div>
       </div>
     </div>
+    
     <div class="smallspace"></div>
    
    <div class="chartbackground"> 
