@@ -52,6 +52,28 @@ class Admin{
             return false;
         }
     }
+    public function deleteManager($email)
+    {
+        $this->db->query('DELETE FROM managerregistration WHERE email = :email');
+        // Bind values
+        $this->db->bind(':email', $email);
+
+        // Execute
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function getManagerByEmail($email)
+    {
+        $this->db->query('SELECT * FROM managerregistration WHERE email = :email');
+        $this->db->bind(':email', $email);
+        $row = $this->db->single();
+
+        return $row;
+    }
 
     public function getManager() {
         $this->db->query('SELECT * FROM managerregistration');
@@ -99,7 +121,7 @@ class Admin{
     }
 }
 
-   /* public function countMessages(){
+    public function countMessages(){
         $this->query = $this->db->query2("SELECT COUNT(*) as count FROM messages");
         
     
@@ -112,7 +134,7 @@ class Admin{
     }
 
          
-}*/
+}
 }
 
 
