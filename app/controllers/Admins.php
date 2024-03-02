@@ -7,7 +7,17 @@
     }
 
 public function index() {
-        $data = [];
+        $countPharmacy = $this->adminModel->countPharmacies();
+        $countSuppliers = $this->adminModel->countSuppliers();
+        $countManagers = $this->adminModel->countManagers();
+       // $countMessages = $this->adminModel->countMessages();
+
+        $data = [
+            'countPharmacies' => $countPharmacy,
+            'countSuppliers' => $countSuppliers,
+            'countManagers' => $countManagers,
+           // 'countMessages' => $countMessages
+        ];
     
         $this->view('admin/index', $data);
 

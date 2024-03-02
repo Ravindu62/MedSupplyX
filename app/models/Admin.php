@@ -61,7 +61,59 @@ class Admin{
         
     }
 
+    public function countPharmacies() {
+        $this->query = $this->db->query2("SELECT COUNT(*) as count FROM pharmacyregistration WHERE status='approved'");
+    
+        if ($this->query) {
+            return $this->query[0]->count;
+           
+        } else {
+            // Handle the error, e.g., log it or return an appropriate value
+            return 0;
+                }
+    }
+
+
+    public function countSuppliers() {
+        $this->query = $this->db->query2("SELECT COUNT(*) as count FROM supplierregistration WHERE status='approved'");
+    
+        if ($this->query) {
+            return $this->query[0]->count;
+           
+        } else {
+            // Handle the error, e.g., log it or return an appropriate value
+            return 0;
+    }
+      
+}
+
+    public function countManagers() {
+        $this->query = $this->db->query2("SELECT COUNT(*) as count FROM managerregistration");
+    
+        if ($this->query) {
+            return $this->query[0]->count;
+           
+        } else {
+            // Handle the error, e.g., log it or return an appropriate value
+            return 0;
+    }
+}
+
+   /* public function countMessages(){
+        $this->query = $this->db->query2("SELECT COUNT(*) as count FROM messages");
+        
+    
+        if ($this->query) {
+            return $this->query[0]->count;
+           
+        } else {
+            // Handle the error, e.g., log it or return an appropriate value
+            return 0;
+    }
+
+         
+}*/
+}
 
 
     
-}
