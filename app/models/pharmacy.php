@@ -28,11 +28,10 @@ class pharmacy
         }
     }
 
-    public function getOrder()
+    public function getOrder($id)
     {
-        $pharmacyname = trim($_SESSION['USER_DATA']['name']);
-
-        $this->db->query("SELECT * FROM requestorder WHERE pharmacyname = '$pharmacyname'");
+        $this->db->query("SELECT * FROM requestorder WHERE id = :id");
+        $this->db->bind(':pharmacyId', $id);
         $results = $this->db->resultSet();
         return $results;
     }
