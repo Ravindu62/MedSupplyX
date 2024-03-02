@@ -2,6 +2,7 @@
 class Admin{
 
     private $db;
+    private $query;
     protected $table = 'users';
 
     public function __construct()
@@ -86,7 +87,47 @@ class Admin{
         
     }
 
-    
+    public function getManagerById($id) {
+        $this->db->query("SELECT * FROM managerregistration WHERE id = :id");
+
+        // Bind values
+        $this->db->bind(':id', $id);
+
+        $row = $this->db->single();
+
+        return $row;
+    }
+
+
+    public function deleteManager($id)
+    {
+        $this->db->query('DELETE FROM managerregistration WHERE id = :id');
+        // Bind values
+        $this->db->bind(':id', $id);
+        
+        // Execute
+        if($this->db->execute()){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /*public function updateManager($id,$mname,$memail){
+        $this->db->query('UPDATE managerregistration SET mname= :mname, memail= :memail WHERE id = :id');
+        // Bind values
+        $this->db->bind(':id', $id);
+        $this->db->bind(':mname', $mname);
+        $this->db->bind(':nemail', $memail);
+        
+        // Execute
+        if($this->db->execute()){
+            return true;
+        } else {
+            return false;
+        }
+    }
+    */
 
     public function countPharmacies() {
         $this->query = $this->db->query2("SELECT COUNT(*) as count FROM pharmacyregistration WHERE status='approved'");

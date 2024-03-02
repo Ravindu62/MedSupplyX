@@ -52,7 +52,12 @@
   <td> <?php echo $manager->email; ?> </td>
   
   
-  <td> <button class="smallOpen-button"> Change </button> <button class="smallOpen-button"> Delete </button></td>   
+  <td> <button class="smallOpen-button"> Update </button><br><br>
+  <form action="<?php echo URLROOT;?>/admin/deleteManager/<?php echo $manager->id; ?>" method="POST">
+        <input type="submit" class="smallOpen-button-red" name="delete" value="Delete">    
+      </form> 
+  
+  </td>   
 
 
 </tr>
