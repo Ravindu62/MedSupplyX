@@ -173,18 +173,17 @@ class Pharmacies extends Controller
     {
 
         $data1 = [
-            'pharmacyname' => trim($_SESSION['USER_DATA']['name'])
+            'pharmacyId' => trim($_SESSION['USER_DATA']['id'])
         ];
 
-        $this->pharmacyModel->getOrder($data1);
-        $order = $this->pharmacyModel->getOrder();
+        $order = $this->pharmacyModel->getOrder($data1);
 
         $data = [
             'order' => $order,
 
         ];
 
-        $this->view('pharmacy/orders', $data);
+        $this->view('pharmacy/supplierOrders/orders', $data);
     }
 
     public function customerOrders()
@@ -202,16 +201,16 @@ class Pharmacies extends Controller
 
             // Check for owner
             if ($order->pharmacyname != $_SESSION['USER_DATA']['name']) {
-                redirect('pharmacies/orders');
+                redirect('pharmacies/supplierOrders/orders');
             }
 
             if ($this->pharmacyModel->deleteOrder($id)) {
-                redirect('pharmacies/orders');
+                redirect('pharmacies/supplierOrders/orders');
             } else {
                 die('Something went wrong');
             }
         } else {
-            redirect('pharmacies/orders');
+            redirect('pharmacies/supplierOrders/orders');
         }
     }
 
@@ -250,7 +249,7 @@ class Pharmacies extends Controller
     }
 
 
-    public function new_order()
+    public function addOrder()
     {
 
 
@@ -310,13 +309,13 @@ class Pharmacies extends Controller
                 // Register user from model function
                 if ($this->pharmacyModel->addOrder($data)) {
                     // Redirect to order
-                    redirect('pharmacies/orders');
+                    redirect('pharmacies/supplierOrders/orders');
                 } else {
                     die('Something went wrong');
                 }
             } else {
                 // Load view with errors
-                $this->view('pharmacy/new_order', $data);
+                $this->view('pharmacy/supplierOrders/addorder', $data);
             }
         } else {
             // Init data
@@ -335,7 +334,7 @@ class Pharmacies extends Controller
             ];
 
             // Load view
-            $this->view('pharmacy/new_order', $data);
+            $this->view('pharmacy/supplierOrders/addorder', $data);
         }
     }
 
