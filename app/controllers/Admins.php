@@ -134,26 +134,6 @@ public function managers() {
 
 }
 
-public function deleteManger($email)
-{
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        // Get existing post from model
-        $managers = $this->adminModel->getManagerByEmail($email);
-
-        // Check for owner
-        if ($manager->managername != $_SESSION['USER_DATA']['name']) {
-            redirect('admin/managers');
-        }
-
-        if ($this->adminModel->deleteManager($email)) {
-            redirect('admin/managers');
-        } else {
-            die('Something went wrong');
-        }
-    } else {
-        redirect('admin/managers');
-    }
-}
 
 public function messages() {
     $data = [];

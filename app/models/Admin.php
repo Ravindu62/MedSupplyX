@@ -52,28 +52,31 @@ class Admin{
             return false;
         }
     }
-    public function deleteManager($email)
+    
+    /*public function deleteManager($email)
     {
-        $this->db->query('DELETE FROM managerregistration WHERE email = :email');
+        $this->db->query('UPDATE managerregistration SET status = "deleted" WHERE email = :email');
         // Bind values
         $this->db->bind(':email', $email);
-
+        
         // Execute
-        if ($this->db->execute()) {
+        if($this->db->execute()){
             return true;
         } else {
             return false;
         }
     }
 
-    public function getManagerByEmail($email)
-    {
-        $this->db->query('SELECT * FROM managerregistration WHERE email = :email');
+    public function getManagerByEmail($email) {
+        $this->db->query("SELECT * FROM managerregistration WHERE email = :email");
+
+        // Bind values
         $this->db->bind(':email', $email);
+
         $row = $this->db->single();
 
         return $row;
-    }
+    }*/
 
     public function getManager() {
         $this->db->query('SELECT * FROM managerregistration');
@@ -82,6 +85,8 @@ class Admin{
 
         
     }
+
+    
 
     public function countPharmacies() {
         $this->query = $this->db->query2("SELECT COUNT(*) as count FROM pharmacyregistration WHERE status='approved'");
