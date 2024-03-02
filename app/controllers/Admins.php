@@ -2,6 +2,10 @@
  class Admins extends Controller {
 
     Public $adminModel;
+    public $userModel;
+    Public $db;
+
+
     public function __construct() {
         $this->adminModel = $this->model('Admin');
     }
@@ -133,6 +137,50 @@ public function managers() {
     $this->view('admin/managers', $data);
 
 }
+
+public function deleteManager($id){
+    if($_SERVER['REQUEST_METHOD'] == 'POST') {
+        // Get existing post from model
+        $manager = $this->adminModel->getManagerById($id);
+
+        // Check for owner
+        /*if($manager->managername != $_SESSION['USER_DATA']['name']) {
+            redirect('admin/managers');
+        }*/
+
+        if($this->adminModel->deleteManager($id)) {
+            redirect('admin/managers');
+            exit();
+        } else {
+            die('Something went wrong');
+        }
+    } else {
+        redirect('admin/managers');
+    }
+    
+}
+
+/*public function updateManager($id){
+    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        $manager = $this->adminModel->getManagerById($id);
+
+        $mname = $POST['mname'];
+        $memail = $_POST['memail'];
+
+        if($this->adminModel->updateManager($id,$mname,$memail)){
+            redirect ('admin/managers');
+            exit();
+        }else{
+            die('Something went wrong');
+        }
+    }else{
+        $managerData = $manager->getManagerById($Id);
+        $mname = $managerData['name'];
+        $memail = $managerData['email'];
+
+        $this->view('admin/managers', $data);
+    }
+}*/
 
 
 public function messages() {
