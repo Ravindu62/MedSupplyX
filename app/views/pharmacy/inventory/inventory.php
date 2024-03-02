@@ -19,7 +19,7 @@
   <h2>
     <br>
   <div class="alignRight">
- <a href="<?php echo URLROOT; ?>/pharmacies/newInventory"> <button class="addBtn"> Add Inventory </button> </a>
+ <a href="<?php echo URLROOT; ?>/pharmacies/addInventory"> <button class="addBtn"> Add Inventory </button> </a>
   </div>
   <div class="anim">
     Inventory 
