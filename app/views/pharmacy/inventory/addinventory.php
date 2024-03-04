@@ -25,7 +25,7 @@
         <div class="anim">
             <div class="container-fluid">
                 <div class="d-flex">
-                    <form action="<?php echo URLROOT; ?>/pharmacies/new_inventory" method="POST" class="orderform">
+                    <form action="<?php echo URLROOT; ?>/pharmacies/addInventory" method="POST" class="orderform">
 
                         <table>
 
