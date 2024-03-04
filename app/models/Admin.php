@@ -2,6 +2,7 @@
 class Admin{
 
     private $db;
+    private $query;
     protected $table = 'users';
 
     public function __construct()
@@ -52,6 +53,31 @@ class Admin{
             return false;
         }
     }
+    
+    /*public function deleteManager($email)
+    {
+        $this->db->query('UPDATE managerregistration SET status = "deleted" WHERE email = :email');
+        // Bind values
+        $this->db->bind(':email', $email);
+        
+        // Execute
+        if($this->db->execute()){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function getManagerByEmail($email) {
+        $this->db->query("SELECT * FROM managerregistration WHERE email = :email");
+
+        // Bind values
+        $this->db->bind(':email', $email);
+
+        $row = $this->db->single();
+
+        return $row;
+    }*/
 
     public function getManager() {
         $this->db->query('SELECT * FROM managerregistration');
@@ -61,7 +87,101 @@ class Admin{
         
     }
 
+    public function getManagerById($id) {
+        $this->db->query("SELECT * FROM managerregistration WHERE id = :id");
+
+        // Bind values
+        $this->db->bind(':id', $id);
+
+        $row = $this->db->single();
+
+        return $row;
+    }
+
+
+    public function deleteManager($id)
+    {
+        $this->db->query('DELETE FROM managerregistration WHERE id = :id');
+        // Bind values
+        $this->db->bind(':id', $id);
+        
+        // Execute
+        if($this->db->execute()){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /*public function updateManager($id,$mname,$memail){
+        $this->db->query('UPDATE managerregistration SET mname= :mname, memail= :memail WHERE id = :id');
+        // Bind values
+        $this->db->bind(':id', $id);
+        $this->db->bind(':mname', $mname);
+        $this->db->bind(':nemail', $memail);
+        
+        // Execute
+        if($this->db->execute()){
+            return true;
+        } else {
+            return false;
+        }
+    }
+    */
+
+    public function countPharmacies() {
+        $this->query = $this->db->query2("SELECT COUNT(*) as count FROM pharmacyregistration WHERE status='approved'");
+    
+        if ($this->query) {
+            return $this->query[0]->count;
+           
+        } else {
+            // Handle the error, e.g., log it or return an appropriate value
+            return 0;
+                }
+    }
+
+
+    public function countSuppliers() {
+        $this->query = $this->db->query2("SELECT COUNT(*) as count FROM supplierregistration WHERE status='approved'");
+    
+        if ($this->query) {
+            return $this->query[0]->count;
+           
+        } else {
+            // Handle the error, e.g., log it or return an appropriate value
+            return 0;
+    }
+      
+}
+
+    public function countManagers() {
+        $this->query = $this->db->query2("SELECT COUNT(*) as count FROM managerregistration");
+    
+        if ($this->query) {
+            return $this->query[0]->count;
+           
+        } else {
+            // Handle the error, e.g., log it or return an appropriate value
+            return 0;
+    }
+}
+
+    public function countMessages(){
+        $this->query = $this->db->query2("SELECT COUNT(*) as count FROM messages");
+        
+    
+        if ($this->query) {
+            return $this->query[0]->count;
+           
+        } else {
+            // Handle the error, e.g., log it or return an appropriate value
+            return 0;
+    }
+
+         
+}
+}
 
 
     
-}
