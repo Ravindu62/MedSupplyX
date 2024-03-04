@@ -112,9 +112,9 @@ class pharmacy
         $this->db->bind(':batchNo', $data['batchNo']);
         $this->db->bind(':category', $data['category']);
         $this->db->bind(':quantity', $data['quantity']);
-        $this->db->bind(':manuDate', $data['manu_date']);
-        $this->db->bind(':expireDate', $data['expire_date']);
-        $this->db->bind(':unitPrice', $data['unitPrice']);
+        $this->db->bind(':manu_Date', $data['manu_date']);
+        $this->db->bind(':expire_Date', $data['expire_date']);
+        $this->db->bind(':unit_amount', $data['unitPrice']);
 
         // Execute
 
