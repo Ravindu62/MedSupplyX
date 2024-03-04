@@ -66,6 +66,7 @@ class Pharmacies extends Controller
             // Sanitize POST data
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
+            // Initialize data
             $data = [
                 'medicineId' => trim($_POST['medicineId']),
                 'medicineName' => trim($_POST['medicineName']),
@@ -116,7 +117,7 @@ class Pharmacies extends Controller
             // Make sure no errors
             if (empty($data['medicineId_err']) && empty($data['medicineName_err']) && empty($data['batchNum_err']) && empty($data['catergory_err']) && empty($data['quantity_err']) && empty($data['manu_date_err']) && empty($data['expire_date_err']) && empty($data['unit_price_err'])){
                 // Validated
-                
+
                 // Check and set logged in user
                 if (isset($_SESSION['user_id'])) {
                     $data['user_id'] = $_SESSION['user_id'];
@@ -125,15 +126,15 @@ class Pharmacies extends Controller
                 }
 
                 // Register user from model function
-                if ($this->pharmacyModel->addOrder($data)) {
+                if ($this->pharmacyModel->addInventory($data)) {
                     // Redirect to order
-                    redirect('pharmacies/inventory/addInventory');
+                    redirect('pharmacy/inventory/addInventory');
                 } else {
                     die('Something went wrong');
                 }
             } else {
                 // Load view with errors
-                $this->view('pharmacies/inventory/addInventory', $data);
+                $this->view('pharmacy/inventory/addInventory', $data);
             }
         } else {
             // Init data
