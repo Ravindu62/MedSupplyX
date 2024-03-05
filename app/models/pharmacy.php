@@ -147,11 +147,22 @@ class pharmacy
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////Supplier Order/////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public function getOrder()
+    {
+        $pharmacyId = trim($_SESSION['USER_DATA']['id']);
+
+        $this->db->query("SELECT * FROM requestorder WHERE pharmacy_id = '$pharmacyId'");
+        /* $this->db->bind(':pharmacy_id', $id); */
+
+        $results = $this->db->resultSet();
+        return $results;
+    }
+    
     public function addOrder($data)
     {
-        $this->db->query('INSERT INTO requestorder (pharmacyname,medicine, batchno, quantity, deliveryDate, orderEndDate) VALUES(:pharmacyname , :medicineName, :batchNumber, :quantity, :deliveryDate, :orderEntryDate)');
-        // Bind values
-        $this->db->bind(':pharmacyname', $_SESSION['USER_DATA']['name']);
+        $this->db->query('INSERT INTO requestorder (pharmacyname, medicine, batchno, quantity, deliveryDate, orderEndDate) VALUES(:pharmacyname , :medicineName, :batchNumber, :quantity, :deliveryDate, :orderEntryDate)');
+        //Bind values
+        $this->db->bind(':pharmacyname', $data['pharmacyname']);
         $this->db->bind(':medicineName', $data['Mname']);
         $this->db->bind(':batchNumber', $data['Bnum']);
         $this->db->bind(':quantity', $data['quantity']);
@@ -164,14 +175,6 @@ class pharmacy
         } else {
             return false;
         }
-    }
-
-    public function getOrder($id)
-    {
-        $this->db->query("SELECT * FROM requestorder WHERE id = :id");
-        $this->db->bind(':pharmacyId', $id);
-        $results = $this->db->resultSet();
-        return $results;
     }
 
 
@@ -253,3 +256,4 @@ class pharmacy
         }
     }
 }
+

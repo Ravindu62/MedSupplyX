@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title> Requset an Order </title>
+<title> Order from Supplier </title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="<?php echo URLROOT ?>/public/css/style.css">
@@ -19,7 +19,7 @@
   <div class="smallspace"></div>
   
   <div class="alignRight">
- <a href="<?php echo URLROOT ?>/pharmacy/new_order"> <button class="addBtn"> + New Order </button> </a>
+ <a href="<?php echo URLROOT ?>/pharmacy/supplierOrders/addOrder"> <button class="addBtn"> New Order </button> </a>
   </div> 
   
   <div class="anim">
@@ -31,42 +31,31 @@
 <div class="anim">
 <table class="customers">
   <tr>
-    <th>  </th>
+    <th> Order Id </th>
     <th> Medicine Name </th>
     <th> Batch No </th>
     <th> Quantity </th>
     <th> Ordered Date </th>
     <th> Delivery Date </th>
     <th> Suppliers </th>
+    <th> Status </th>
     <th> Change / Delete</th>
-   
     
   </tr>
-<tr> 
- 
-  <td> </td>
-  <td> </td>
-  <td> </td>
-  <td> </td>
-  <td> </td>
-  <td> </td>
-  <td> </td>
-  <td> <!-- <button class="smallOpen-button" onclick="openForm()"> accept </button> -->  </td>
-</tr>
 
 <?php foreach($data['order'] as $order) : ?>
 <tr> 
-  <td> </td>
-  <td> <?php echo $order->medicine; ?> </td>
+  <td> <?php echo $order->id; ?> </td>
+  <td> <?php echo $order->medicine_name; ?> </td>
   <td> <?php echo $order->batchno; ?> </td>
   <td> <?php echo $order->quantity; ?> </td>
-  <td> <?php echo $order->createdAt; ?> </td>
-  <td> <?php echo $order->orderEndDate; ?> </td>
+  <td> <?php echo $order->ordered_date; ?> </td>
   <td> <?php echo $order->deliveryDate; ?> </td>
-  <td> <button class="smallOpen-button"> Change </button> </td>   
+  <td> <?php echo $order->supplier_name; ?> </td>
+  <td> <?php echo $order->status; ?> </td>
+  <td> <button class="smallOpen-button"> Change </button> <form action="<?php echo URLROOT; ?>/pharmacies/deleteOrder/<?php echo $order->id; ?>" method="POST">
+    <input type="submit" id="delete" class="smallOpen-button" name="delete" value="Delete"> </td>   
 
- <td> <form action="<?php echo URLROOT; ?>/pharmacies/deleteOrder/<?php echo $order->id; ?>" method="POST">
-    <input type="submit" id="delete" class="smallOpen-button" name="delete" value="Delete"> </td>
 </form>
 </tr>
 <?php endforeach; ?>
@@ -175,4 +164,3 @@ function closeForm() {
 
 </body>
 </html>
-

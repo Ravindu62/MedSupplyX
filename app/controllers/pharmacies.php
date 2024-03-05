@@ -115,7 +115,7 @@ class Pharmacies extends Controller
                 $data['unit_price_err'] = 'Please enter the unit price of this medicine';
             }
             // Make sure no errors
-            if (empty($data['medicineId_err']) && empty($data['medicineName_err']) && empty($data['batchNum_err']) && empty($data['catergory_err']) && empty($data['quantity_err']) && empty($data['manu_date_err']) && empty($data['expire_date_err']) && empty($data['unit_price_err'])){
+            if (empty($data['medicineId_err']) && empty($data['medicineName_err']) && empty($data['batchNum_err']) && empty($data['catergory_err']) && empty($data['quantity_err']) && empty($data['manu_date_err']) && empty($data['expire_date_err']) && empty($data['unit_price_err'])) {
                 // Validated
 
                 // Check and set logged in user
@@ -158,7 +158,7 @@ class Pharmacies extends Controller
             ];
 
             // Load view
-            $this->view('pharmacy/new_inventory', $data);
+            $this->view('pharmacy/addinventory', $data);
         }
     }
 
@@ -179,19 +179,18 @@ class Pharmacies extends Controller
 
     public function orders()
     {
+        // Sanitize post inputs
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-        $data1 = [
-            'pharmacyId' => trim($_SESSION['USER_DATA']['id'])
-        ];
+        
 
-        $order = $this->pharmacyModel->getOrder($data1);
+        $order = $this->pharmacyModel->getOrder();
 
         $data = [
             'order' => $order,
-
         ];
 
-        $this->view('pharmacy/supplierOrders/orders', $data);
+        $this->view('pharmacy/supplierOrders/order', $data);
     }
 
     public function customerOrders()
@@ -237,7 +236,7 @@ class Pharmacies extends Controller
             'deliveredHistory' => $deliveredHistory,
             'canceledHistory' => $canceledHistory
         ];
-        
+
         $this->view('pharmacy/history/history', $data);
     }
 
@@ -347,7 +346,7 @@ class Pharmacies extends Controller
     }
 
 
-    
+
     public function logout()
     {
         unset($_SESSION['user_id']);
@@ -357,3 +356,4 @@ class Pharmacies extends Controller
         redirect('users/login');
     }
 }
+
