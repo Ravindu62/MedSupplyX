@@ -147,7 +147,7 @@ class pharmacy
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////Supplier Order/////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public function getOrder()
+    public function getOrders()
     {
         $pharmacyId = trim($_SESSION['USER_DATA']['id']);
 
@@ -177,6 +177,28 @@ class pharmacy
         }
     }
 
+    public function acceptedOrders(){
+
+        $pharmacyId = trim($_SESSION['USER_DATA']['id']);
+
+        $this->db->query("SELECT * FROM requestorder WHERE pharmacy_id = '$pharmacyId' AND status = 'accepted'");
+        /* $this->db->bind(':pharmacy_id', $id); */
+
+        $results = $this->db->resultSet();
+        return $results;
+    }
+
+    public function selectedOrders(){
+
+        $pharmacyId = trim($_SESSION['USER_DATA']['id']);
+
+        $this->db->query("SELECT * FROM requestorder WHERE pharmacy_id = '$pharmacyId' AND status = 'selected'");
+        /* $this->db->bind(':pharmacy_id', $id); */
+
+        $results = $this->db->resultSet();
+        return $results;
+
+    }
 
     public function deleteOrder($id)
     {
