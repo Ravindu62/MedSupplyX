@@ -160,6 +160,7 @@ public function deleteManager($id){
     
 }
 
+
 /*public function updateManager($id){
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $manager = $this->adminModel->getManagerById($id);
@@ -196,6 +197,7 @@ public function advertistments() {
     $this->view('admin/advertistments', $data);
 
 }
+
 
 public function all_orders() {
     $data = [];
