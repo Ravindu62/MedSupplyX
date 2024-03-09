@@ -104,7 +104,7 @@ class pharmacy
 
     public function addInventory($data)
     {
-        $this->db->query('INSERT INTO inventory (pharmacy_id, medicine_id, name, batch_no, category_no, quantity, manu_date, expire_date, unit_amount) VALUES(:pharmacyId, :medicineId, :medicineName, :batchNo, :category, :quantity, :manuDate, :expireDate, :unitPrice)');
+        $this->db->query('INSERT INTO inventory (pharmacy_id, medicine_id, name, batch_no, category_no, quantity, manu_date, expire_date, unit_amount) VALUES(:pharmacyId, :medicineId, :medicineName, :batchNo, :category, :quantity, :manufacturedDate, :expireDate, :unitPrice)');
         // Bind values
         $this->db->bind(':pharmacyId', $_SESSION['USER_DATA']['id']);
         $this->db->bind(':medicineId', $data['medicineId']);
@@ -112,9 +112,9 @@ class pharmacy
         $this->db->bind(':batchNo', $data['batchNo']);
         $this->db->bind(':category', $data['category']);
         $this->db->bind(':quantity', $data['quantity']);
-        $this->db->bind(':manu_Date', $data['manu_date']);
-        $this->db->bind(':expire_Date', $data['expire_date']);
-        $this->db->bind(':unit_amount', $data['unitPrice']);
+        $this->db->bind(':manufacturedDate', $data['manufacturedDate']);
+        $this->db->bind(':expireDate', $data['expireDate']);
+        $this->db->bind(':unitPrice', $data['unitPrice']);
 
         // Execute
 
