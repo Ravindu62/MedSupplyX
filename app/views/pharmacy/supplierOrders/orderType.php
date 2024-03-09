@@ -1,8 +1,12 @@
-
-    <body>
-        <?php require APPROOT . '/views/inc/landing_header.php'; ?>
-
-        <div class="background2">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Order Type </title>
+</head>
+<body>
+<div class="background2">
             <div class="main-container">
                 <div class="cards">
                     <img src="<?php echo URLROOT ?>/public/img/pharmacy1.webp" alt="">
@@ -23,7 +27,5 @@
             </div>
         </div>
 
-        <?php require APPROOT . '/views/inc/landing_footer.php'; ?>
-        
-    </body>
+</body>
 </html>

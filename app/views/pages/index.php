@@ -139,7 +139,7 @@
                         <h1 class="sub-title">Contact Us</h1>
                         <p>
                             <i class="fa-solid fa-envelope"></i>
-                            medspplyx23@gmail.com
+                            medsupplyx23@gmail.com
                         </p>
                         <p>
                             <i class="fa-solid fa-phone"></i>
@@ -174,6 +174,7 @@
                                 type="text"
                                 name="Name"
                                 placeholder="Your Name"
+                                class="gen-input"
                                 required
                             >
                             <label for="Email">Email : </label>
@@ -181,6 +182,7 @@
                                 type="email"
                                 name="Email"
                                 placeholder="Your Email"
+                                class="gen-input"
                                 required
                             >
                             <label for="Message">Message : </label>
