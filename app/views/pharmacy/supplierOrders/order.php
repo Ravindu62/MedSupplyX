@@ -21,7 +21,7 @@
     <div class="smallspace"></div>
 
     <div class="alignRight">
-      <a href="<?php echo URLROOT ?>/pharmacy/supplierOrders/addOrder"> <button class="addBtn"> New Order </button> </a>
+      <a href="<?php echo URLROOT ?>/pharmacy/supplierOrders/orderType"> <button class="addBtn"> New Order </button> </a>
     </div>
 
     <div class="anim">
