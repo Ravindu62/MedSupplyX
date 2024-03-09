@@ -21,7 +21,6 @@
             <h2> Add Inventory </h2>
         </div>
         <div class="smallspace"></div>
-
         <div class="anim">
             <div class="container-fluid">
                 <div class="d-flex">

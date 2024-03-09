@@ -21,8 +21,10 @@
     <div class="smallspace"></div>
 
     <div class="alignRight">
-      <a href="<?php echo URLROOT ?>/pharmacy/supplierOrders/orderType"> <button class="addBtn"> New Order </button> </a>
+      <a href="<?php echo URLROOT ?>/pharmacies/addorder"> <button class="addBtn"> New Order </button> </a>
     </div>
+
+    <div class="smallspace"></div>
 
     <div class="anim">
       <h2> Your Orders </h2>
@@ -41,7 +43,7 @@
           <th> Delivery Date </th>
           <th> Suppliers </th>
           <th> Status </th>
-          <th> Change / Delete</th>
+          <th colspan="2"> Change / Delete</th>
 
         </tr>
 
@@ -55,8 +57,8 @@
             <td> <?php echo $order->deliveryDate; ?> </td>
             <td> <?php echo $order->supplier_name; ?> </td>
             <td> <?php echo $order->status; ?> </td>
-            <td> <button class="smallOpen-button"> Change </button>
-              <form action="<?php echo URLROOT; ?>/pharmacies/deleteOrder/<?php echo $order->id; ?>" method="POST">
+            <td> <button class="smallOpen-button"> Change </button> </td>
+            <td> <form action="<?php echo URLROOT; ?>/pharmacies/deleteOrder/<?php echo $order->id; ?>" method="POST">
                 <input type="submit" id="delete" class="smallOpen-button" name="delete" value="Delete">
             </td>
 
@@ -83,7 +85,7 @@
           <th> Delivery Date </th>
           <th> Supplier </th>
           <th> Supplier Price (LKR) </th>
-          <th> Accept / Reject </th>
+          <th colspan="2"> Accept / Reject </th>
 
 
         </tr>
@@ -98,11 +100,10 @@
             <td> <?php echo $acceptedOrders->deliveryDate; ?> </td>
             <td> <?php echo $acceptedOrders->supplier_name; ?> </td>
             <td> <?php echo $acceptedOrders->status; ?> </td>
-            <td> <button class="smallOpen-button"> Accept </button>
-              <form action="<?php echo URLROOT; ?>/pharmacies/deleteOrder/<?php echo $order->id; ?>" method="POST">
+            <td> <button class="smallOpen-button"> Accept </button> </td>
+            <td> <form action="<?php echo URLROOT; ?>/pharmacies/deleteOrder/<?php echo $order->id; ?>" method="POST">
                 <input type="submit" id="delete" class="smallOpen-button" name="delete" value="Reject">
             </td>
-
             </form>
           </tr>
         <?php endforeach; ?>

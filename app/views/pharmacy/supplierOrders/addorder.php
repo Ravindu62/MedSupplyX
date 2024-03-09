@@ -86,7 +86,7 @@
                 <td class="verticleCentered"> <button class="addBtn"> Done </button>
           </form>
 
-          <a href="<?php echo URLROOT ?>/pharmacy/orders" class="link">
+          <a href="<?php echo URLROOT ?>/pharmacies/orders" class="link">
              <div class="publicbtn"> Cancel </div>
           </a> </td>
           </tr>

@@ -61,7 +61,7 @@ class Pharmacies extends Controller
         $this->view('pharmacy/inventory/inventory', $data);
     }
 
-    public function addInventory()
+    public function addinventory()
     {
 
 
@@ -127,16 +127,18 @@ class Pharmacies extends Controller
                 // Inventory model function
                 if ($this->pharmacyModel->addInventory($data)) {
                     // Redirect to order
-                    $this->view('pharmacy/inventory/addInventory', $data);
+                    $this->view('pharmacy/inventory/addinventory', $data);
                 } else {
                     die('Something went wrong');
                 }
             } else {
                 // Load view with errors
-                $this->view('pharmacy/inventory/addInventory', $data);
+                $this->view('pharmacy/inventory/addinventory', $data);
             }
     }
-}
+    $data =[];
+    $this->view('pharmacy/inventory/addinventory', $data);
+    }
 
     
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -271,6 +273,8 @@ class Pharmacies extends Controller
             // Load view
             $this->view('pharmacy/supplierOrders/addorder', $data);
         }
+        $data = [];
+        $this->view('pharmacy/supplierOrders/addorder', $data);
     }
 
 
