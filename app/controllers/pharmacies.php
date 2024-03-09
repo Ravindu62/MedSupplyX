@@ -76,20 +76,20 @@ class Pharmacies extends Controller
             $data = [
                 'medicineId' => trim($_POST['medicineId']),
                 'medicineName' => trim($_POST['medicineName']),
-                'batchNum' => trim($_POST['batchnum']),
-                'catergory' => trim($_POST['catergory']),
+                'batchNo' => trim($_POST['batchNo']),
+                'category' => trim($_POST['category']),
                 'quantity' => trim($_POST['quantity']),
-                'manu_date' => trim($_POST['manu_date']),
-                'expire_date' => trim($_POST['expire_date']),
-                'unit_price' => trim($_POST['unit_price']),
+                'manufacturedDate' => trim($_POST['manufacturedDate']),
+                'expireDate' => trim($_POST['expireDate']),
+                'unitPrice' => trim($_POST['unitPrice']),
                 'medicineId_err' => '',
                 'medicineName_err' => '',
-                'batchNum_err' => '',
-                'catergory_err' => '',
+                'batchNo_err' => '',
+                'category_err' => '',
                 'quantity_err' => '',
-                'manu_date_err' => '',
-                'expire_date_err' => '',
-                'unit_price_err' => '',
+                'manufacturedDate_err' => '',
+                'expireDate_err' => '',
+                'unitPrice_err' => '',
             ];
 
             // Validate data
@@ -101,40 +101,33 @@ class Pharmacies extends Controller
                 $data['medicineName'] = 'Please enter medicine name';
             }
 
-            if (empty($data['batchNum'])) {
-                $data['batchNum_err'] = 'Please enter batch number';
+            if (empty($data['batchNo'])) {
+                $data['batchNo_err'] = 'Please enter batch number';
             }
 
             if (empty($data['category'])) {
-                $data['category_err'] = 'Please enter category of the medicine';
+                $data['category_err'] = 'Please enter category of th    e medicine';
             }
 
-            if (empty($data['manu_date'])) {
-                $data['manu_date_err'] = 'Please enter manufacture date medicine';
+            if (empty($data['manufacturedDate'])) {
+                $data['manufacturedDate_err'] = 'Please enter manufacture date medicine';
             }
 
-            if (empty($data['expire_date'])) {
-                $data['expire_date_err'] = 'Please enter expire date of the medicine';
+            if (empty($data['expireDate'])) {
+                $data['expireDate_err'] = 'Please enter expire date of the medicine';
             }
 
-            if (empty($data['unit_price'])) {
-                $data['unit_price_err'] = 'Please enter the unit price of this medicine';
+            if (empty($data['unitPrice'])) {
+                $data['unitPrice_err'] = 'Please enter the unit price of this medicine';
             }
             // Make sure no errors
-            if (empty($data['medicineId_err']) && empty($data['medicineName_err']) && empty($data['batchNum_err']) && empty($data['catergory_err']) && empty($data['quantity_err']) && empty($data['manu_date_err']) && empty($data['expire_date_err']) && empty($data['unit_price_err'])) {
+            if (empty($data['medicineId_err']) && empty($data['medicineName_err']) && empty($data['batchNo_err']) && empty($data['category_err']) && empty($data['quantity_err']) && empty($data['manufacturedDate_err']) && empty($data['expireDate_err']) && empty($data['unitPrice_err'])) {
                 // Validated
 
-                // Check and set logged in user
-                if (isset($_SESSION['user_id'])) {
-                    $data['user_id'] = $_SESSION['user_id'];
-                } else {
-                    $data['user_id'] = 0;
-                }
-
-                // Register user from model function
+                // Inventory model function
                 if ($this->pharmacyModel->addInventory($data)) {
                     // Redirect to order
-                    redirect('pharmacy/inventory/addInventory');
+                    $this->view('pharmacy/inventory/addInventory', $data);
                 } else {
                     die('Something went wrong');
                 }
@@ -142,31 +135,8 @@ class Pharmacies extends Controller
                 // Load view with errors
                 $this->view('pharmacy/inventory/addInventory', $data);
             }
-        } else {
-            // Init data
-            $data = [
-                'medicineId' => '',
-                'medicineName' => '',
-                'batchNum' => '',
-                'catergory' => '',
-                'quantity' => '',
-                'manu_date' => '',
-                'expire_date' => '',
-                'unit_price' => '',
-                'medicineId_err' => '',
-                'medicineName_err' => '',
-                'batchNum_err' => '',
-                'catergory_err' => '',
-                'quantity_err' => '',
-                'manu_date_err' => '',
-                'expire_date_err' => '',
-                'unit_price_err' => '',
-            ];
-
-            // Load view
-            $this->view('pharmacy/addinventory', $data);
-        }
     }
+}
 
     
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
