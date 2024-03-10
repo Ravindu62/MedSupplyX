@@ -132,9 +132,10 @@ class Pharmacies extends Controller
             } else {
                 // Load view with errors
                 $this->view('pharmacy/inventory/addInventory', $data);
-            // }
+             }
     }
-    }
+    $data =[];
+    $this->view('pharmacy/inventory/addInventory', $data);
 }
     
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -142,7 +143,16 @@ class Pharmacies extends Controller
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public function messages()
     {
-        $data = [];
+        //Sanitize inputs
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+        $pharmacyId = trim($_SESSION['USER_DATA']['id']);
+
+        $messages = $this->pharmacyModel->getMessages($pharmacyId);
+
+        $data = [
+            'messages' => $messages
+        ];
 
         $this->view('pharmacy/notifications/messages', $data);
     }
@@ -158,17 +168,17 @@ class Pharmacies extends Controller
 
             // Initialize data
             $data = [
-                'to' => trim($_POST['to']),
+                'receiver' => trim($_POST['receiver']),
                 'heading' => trim($_POST['heading']),
                 'message' => trim($_POST['message']),
-                'to_err' => '',
+                'receiver_err' => '',
                 'heading_err' => '',
                 'message_err' => ''
             ];
 
             // Validate data
-            if (empty($data['to'])) {
-                $data['to_err'] = 'Please enter the recipient';
+            if (empty($data['receiver'])) {
+                $data['receiver_err'] = 'Please enter the recipient';
             }
 
             if (empty($data['heading'])) {
@@ -180,19 +190,19 @@ class Pharmacies extends Controller
             }
 
             // Make sure no errors
-            if (empty($data['to_err']) && empty($data['heading_err']) && empty($data['message_err'])) {
+            if (empty($data['receiver_err']) && empty($data['heading_err']) && empty($data['message_err'])) {
                 // Validated
 
                 // Inventory model function
-                if ($this->pharmacyModel->newMessage($data)) {
+                if ($this->pharmacyModel->addMessage($data)) {
                     // Redirect to order
-                    redirect('pharmacy/notifications/messages');
+                    redirect('pharmacies/messages');
                 } else {
                     die('Something went wrong');
                 }
             } else {
                 // Load view with errors
-                $this->view('pharmacy/notifications/newMessage', $data);
+                $this->view('pharmacies/messages', $data);
             }
         } else {
             // Init data
@@ -206,7 +216,7 @@ class Pharmacies extends Controller
             ];
 
             // Load view
-            $this->view('pharmacy/notifications/newMessage', $data);
+            $this->view('pharmacies/messages', $data);
         }
     }
 
@@ -331,7 +341,8 @@ class Pharmacies extends Controller
 
             // Load view
             $this->view('pharmacy/supplierOrders/addorder', $data);
-        }
+                }
+        $this->view('pharmacy/supplierOrders/addorder', $data);
     }
 
 
