@@ -7,7 +7,7 @@ class Pharmacies extends Controller
 
     public function __construct()
     {
-        $this->pharmacyModel = $this->model('Pharmacy');
+        $this->pharmacyModel = $this->model('pharmacy');
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -63,8 +63,6 @@ class Pharmacies extends Controller
 
     public function addInventory()
     {
-
-
         // Check for POST
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Process form
@@ -136,8 +134,7 @@ class Pharmacies extends Controller
                 $this->view('pharmacy/inventory/addInventory', $data);
             }
     }
-}
-
+    }
     
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////Messages Function /////////////////////////////////////////////////////////
@@ -318,12 +315,16 @@ class Pharmacies extends Controller
 
         $pharmacyId = trim($_SESSION['USER_DATA']['id']);
 
-        $deliveredHistory = $this->pharmacyModel->getDeliverdOrders($pharmacyId);
-        $canceledHistory = $this->pharmacyModel->getCanceledOrders($pharmacyId);
+        $deliveredOrders = $this->pharmacyModel->getDeliveredOrders($pharmacyId);
+        $cancelledOrdersByPharmacy = $this->pharmacyModel->getCancelledOrdersByPharmacy($pharmacyId);
+        $rejectedOrdersBySuppliers = $this->pharmacyModel->getRejectedOrdersBySuppliers($pharmacyId);
+        $rejectedOrdersByPharmacy = $this->pharmacyModel->getRejectedOrdersByPharmacy($pharmacyId);
 
         $data = [
-            'deliveredHistory' => $deliveredHistory,
-            'canceledHistory' => $canceledHistory
+            'deliveredOrders' => $deliveredOrders,
+            'cancelledOrdersByPharmacy' => $cancelledOrdersByPharmacy,
+            'rejectedOrdersBySuppliers' => $rejectedOrdersBySuppliers,
+            'rejectedOrdersByPharmacy' => $rejectedOrdersByPharmacy,
         ];
 
         $this->view('pharmacy/history/history', $data);
@@ -335,19 +336,49 @@ class Pharmacies extends Controller
     ///////////////////////////////////////////////////////Profile Function /////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public function profile()
-    {
-        // sanitize user inputs
-        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-        $pharmacyId = trim($_SESSION['USER_DATA']['id']);
-
-        $profile = $this->pharmacyModel->getProfileData($pharmacyId);
-
+{
+    // Sanitize user inputs
+    $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+    
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        // Process form submission
+        $updateResult = $this->updateProfile();
+        if ($updateResult) {
+            // Profile updated successfully, reload the page
+            redirect('pharmacy/profile');
+        } else {
+            // Error updating profile, handle accordingly
+            // For example, set an error message and reload the page
+            $data = [
+                'error' => 'Failed to update profile.'
+            ];
+            $this->view('pharmacy/profile/profile', $data);
+        }
+    } else {
+        // Load profile data
+        $pharmacyName = trim($_SESSION['USER_DATA']['name']);
+        $profile = $this->pharmacyModel->getProfileData($pharmacyName);
         $data = [
             'profile' => $profile
         ];
-
         $this->view('pharmacy/profile/profile', $data);
     }
+}
+
+    // public function profile()
+    // {
+    //     // sanitize user inputs
+    //     $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+    //     $pharmacyName = trim($_SESSION['USER_DATA']['name']);
+
+    //     $profile = $this->pharmacyModel->getProfileData($pharmacyName);
+
+    //     $data = [
+    //         'profile' => $profile
+    //     ];
+
+    //     $this->view('pharmacy/profile/profile', $data);
+    // }
 
     
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -361,5 +392,5 @@ class Pharmacies extends Controller
         session_destroy();
         redirect('users/login');
     }
-}
 
+}
