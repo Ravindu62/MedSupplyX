@@ -25,7 +25,7 @@
         <div class="anim">
             <div class="container-fluid">
                 <div class="d-flex">
-                    <!-- <form action="<?php echo URLROOT; ?>/pharmacies/addInventory" method="POST" class="orderform">
+                    <form action="<?php echo URLROOT; ?>/pharmacies/addInventory" method="POST" class="orderform">
 
                         <table>
 
@@ -100,8 +100,8 @@
                                     </td>
                                 </a>
                             </tr>
-                    </form> -->
-                    <form action="<?php echo URLROOT; ?>/pharmacies/addInventory" method="post" class="orderform">
+                    </form>
+                    <!-- <form action="<?php echo URLROOT; ?>/pharmacies/addInventory" method="post" class="orderform">
                         <div>
                             <label for="medicineId">Medicine ID:</label>
                             <input type="text" id="medicineId" name="medicineId" required>
@@ -138,7 +138,7 @@
                         <button type="submit">Add Inventory</button>
                         <button type="submit"><a href="<?php echo URLROOT ?>/pharmacies/inventory" class="link">Back</a></button>
                         </div>
-                    </form>
+                    </form> -->
 
 
                     </table>
