@@ -21,7 +21,7 @@
     <div class="smallspace"></div>
 
     <div class="alignRight">
-      <a href="<?php echo URLROOT ?>/pharmacy/supplierOrders/orderType"> <button class="addBtn"> New Order </button> </a>
+      <a href="<?php echo URLROOT ?>/pharmacies/addOrder"> <button class="addBtn"> New Order </button> </a>
     </div>
 
     <div class="anim">
@@ -40,7 +40,7 @@
           <th> Delivery Date </th>
           <th> Suppliers </th>
           <th> Status </th>
-          <th> Change / Delete</th>
+          <th colspan="2"> Change / Delete</th>
 
         </tr>
 
@@ -53,8 +53,8 @@
             <td> <?php echo $order->deliveryDate; ?> </td>
             <td> <?php echo $order->supplier_name; ?> </td>
             <td> <?php echo $order->status; ?> </td>
-            <td> <button class="smallOpen-button"> Change </button>
-              <form action="<?php echo URLROOT; ?>/pharmacies/deleteOrder/<?php echo $order->id; ?>" method="POST">
+            <td> <button class="smallOpen-button"> Change </button> </td>
+            <td> <form action="<?php echo URLROOT; ?>/pharmacies/deleteOrder/<?php echo $order->id; ?>" method="POST">
                 <input type="submit" id="delete" class="smallOpen-button" name="delete" value="Delete">
             </td>
 
