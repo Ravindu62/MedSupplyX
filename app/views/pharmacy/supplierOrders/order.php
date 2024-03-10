@@ -33,7 +33,6 @@
     <div class="anim">
       <table class="customers">
         <tr>
-          <th> Order Id </th>
           <th> Medicine Name </th>
           <th> Batch No </th>
           <th> Quantity </th>
@@ -47,7 +46,6 @@
 
         <?php foreach ($data['order'] as $order) : ?>
           <tr>
-            <td> <?php echo $order->id; ?> </td>
             <td> <?php echo $order->medicine_name; ?> </td>
             <td> <?php echo $order->batchno; ?> </td>
             <td> <?php echo $order->quantity; ?> </td>
@@ -75,7 +73,6 @@
     <div class="anim">
       <table class="customers">
         <tr>
-          <th> Order Id </th>
           <th> Medicine Name </th>
           <th> Batch No </th>
           <th> Quantity </th>
@@ -90,7 +87,6 @@
         
         <?php foreach ($data['acceptedOrders'] as $acceptedOrders) : ?>
           <tr>
-            <td> <?php echo $acceptedOrders->id; ?> </td>
             <td> <?php echo $acceptedOrders->medicine_name; ?> </td>
             <td> <?php echo $acceptedOrders->batchno; ?> </td>
             <td> <?php echo $acceptedOrders->quantity; ?> </td>
