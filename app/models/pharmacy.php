@@ -52,7 +52,7 @@ class pharmacy
 
     public function countRejectedOrders($pharmacyId)
     {
-        $this->query = $this->db->query2("SELECT COUNT(*) as count FROM requestorder WHERE pharmacy_id = :pharmacyId AND status = 'rejected'", array('pharmacyId' => $pharmacyId));
+        $this->query = $this->db->query2("SELECT COUNT(*) as count FROM requestorder WHERE pharmacy_id = :pharmacyId AND status = 'rejected' OR 'pharmacy rejected' OR 'supplier rejected'", array('pharmacyId' => $pharmacyId));
 
         if ($this->query) {
             return $this->query[0]->count;

@@ -25,7 +25,7 @@ class Pharmacies extends Controller
         $countPendingOrders = $this->pharmacyModel->countPendingOrders($data1);
         $countRejectedOrders = $this->pharmacyModel->countRejectedOrders($data1);
         $countOutOfStockProducts = $this->pharmacyModel->countOutOfStockProducts($data1);
-        $countExpiredOrders = $this->pharmacyModel->countExpiredOrders($data1);
+        $countExpiredOrders = $this->pharmacyModel->countExpiredOrders($data1) ;
 
         $data = [
             'countTotalOrders' => $countTotalOrders,
