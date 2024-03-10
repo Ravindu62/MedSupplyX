@@ -130,9 +130,9 @@ class pharmacy
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////Notification data//////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public function getmessages($pharmacyId)
+    public function getMessages($pharmacyId)
     {
-        $this->db->query("SELECT * FROM messages WHERE pharmacy_id = :pharmacyId");
+        $this->db->query("SELECT * FROM messages WHERE pharmacyId = :pharmacyId");
         $this->db->bind(':pharmacyId', $pharmacyId);    
 
         $results = $this->db->resultSet();
@@ -142,14 +142,13 @@ class pharmacy
 
     public function addMessage($data)
     {
-        $this->db->query('INSERT INTO messages (pharmacy_id, sender, receiver, heading, message, createdDate) VALUES(:pharmacyId, :message, :receiver, :heading, :message, :createdDate)');
+        $this->db->query('INSERT INTO messages (pharmacyId, sender, receiver, heading, message) VALUES(:pharmacyId, :message, :receiver, :heading, :message)');
         // Bind values
         $this->db->bind(':pharmacyId', $_SESSION['USER_DATA']['id']);
-        $this->db->bind(':message', $data['message']);
+        $this->db->bind(':sender', $_SESSION['USER_DATA']['name']);
         $this->db->bind(':receiver', $data['receiver']);
         $this->db->bind(':heading', $data['heading']);
         $this->db->bind(':message', $data['message']);
-        $this->db->bind(':createdDate', $data['createdDate']);
         
         // Execute
         if ($this->db->execute()) {
