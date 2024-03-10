@@ -104,7 +104,7 @@ class Pharmacies extends Controller
             }
 
             if (empty($data['category'])) {
-                $data['category_err'] = 'Please enter category of th    e medicine';
+                $data['category_err'] = 'Please enter category of the medicine';
             }
 
             if (empty($data['manufacturedDate'])) {
@@ -125,25 +125,99 @@ class Pharmacies extends Controller
                 // Inventory model function
                 if ($this->pharmacyModel->addInventory($data)) {
                     // Redirect to order
-                    $this->view('pharmacy/inventory/addInventory', $data);
+                    redirect('pharmacy/inventory/inventory');
                 } else {
                     die('Something went wrong');
                 }
             } else {
                 // Load view with errors
                 $this->view('pharmacy/inventory/addInventory', $data);
-            }
+             }
     }
-    }
+    $data =[];
+    $this->view('pharmacy/inventory/addInventory', $data);
+}
     
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////Messages Function /////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public function messages()
     {
-        $data = [];
+        //Sanitize inputs
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+        $pharmacyId = trim($_SESSION['USER_DATA']['id']);
+
+        $messages = $this->pharmacyModel->getMessages($pharmacyId);
+
+        $data = [
+            'messages' => $messages
+        ];
 
         $this->view('pharmacy/notifications/messages', $data);
+    }
+
+    public function newMessage()
+    {
+        // Check for POST
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Process form
+
+            // Sanitize POST data
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+            // Initialize data
+            $data = [
+                'receiver' => trim($_POST['receiver']),
+                'heading' => trim($_POST['heading']),
+                'message' => trim($_POST['message']),
+                'receiver_err' => '',
+                'heading_err' => '',
+                'message_err' => ''
+            ];
+
+            // Validate data
+            if (empty($data['receiver'])) {
+                $data['receiver_err'] = 'Please enter the recipient';
+            }
+
+            if (empty($data['heading'])) {
+                $data['heading_err'] = 'Please enter the heading';
+            }
+
+            if (empty($data['message'])) {
+                $data['message_err'] = 'Please enter the message';
+            }
+
+            // Make sure no errors
+            if (empty($data['receiver_err']) && empty($data['heading_err']) && empty($data['message_err'])) {
+                // Validated
+
+                // Inventory model function
+                if ($this->pharmacyModel->addMessage($data)) {
+                    // Redirect to order
+                    redirect('pharmacies/messages');
+                } else {
+                    die('Something went wrong');
+                }
+            } else {
+                // Load view with errors
+                $this->view('pharmacies/messages', $data);
+            }
+        } else {
+            // Init data
+            $data = [
+                'to' => '',
+                'heading' => '',
+                'message' => '',
+                'to_err' => '',
+                'heading_err' => '',
+                'message_err' => ''
+            ];
+
+            // Load view
+            $this->view('pharmacies/messages', $data);
+        }
     }
 
 
@@ -267,7 +341,8 @@ class Pharmacies extends Controller
 
             // Load view
             $this->view('pharmacy/supplierOrders/addorder', $data);
-        }
+                }
+        $this->view('pharmacy/supplierOrders/addorder', $data);
     }
 
 

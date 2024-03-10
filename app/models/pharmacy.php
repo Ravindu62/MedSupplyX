@@ -130,8 +130,34 @@ class pharmacy
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////Notification data//////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public function getmessages($pharmacyId)
+    {
+        $this->db->query("SELECT * FROM messages WHERE pharmacy_id = :pharmacyId");
+        $this->db->bind(':pharmacyId', $pharmacyId);    
 
+        $results = $this->db->resultSet();
 
+        return $results;
+    }
+
+    public function addMessage($data)
+    {
+        $this->db->query('INSERT INTO messages (pharmacy_id, sender, receiver, heading, message, createdDate) VALUES(:pharmacyId, :message, :receiver, :heading, :message, :createdDate)');
+        // Bind values
+        $this->db->bind(':pharmacyId', $_SESSION['USER_DATA']['id']);
+        $this->db->bind(':message', $data['message']);
+        $this->db->bind(':receiver', $data['receiver']);
+        $this->db->bind(':heading', $data['heading']);
+        $this->db->bind(':message', $data['message']);
+        $this->db->bind(':createdDate', $data['createdDate']);
+        
+        // Execute
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 
 
