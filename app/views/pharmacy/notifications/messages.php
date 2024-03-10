@@ -23,7 +23,7 @@
   </div>
 
 <div class="chat-popup" id="myForm">
-  <form action="" class="form-container">
+  <form action="<?php echo URLROOT; ?>/pharmacies/newMessage" method="POST" " class="form-container">
   
   <div> 
     <label for="msg"> <b> To :-  </b> </label>
