@@ -31,9 +31,10 @@
 
                             <tr>
                                 <td colspan="2">
-                                    <h3> <br> <br> Medicine Details </h3>
+                                    <h3> <br> Medicine Details</h3>
                                 </td>
                             </tr>
+                            
                             <tr>
                                 <td class="verticleCentered">
                                     Medicine ID
