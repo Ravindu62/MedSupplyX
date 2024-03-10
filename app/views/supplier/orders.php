@@ -35,32 +35,22 @@
     <th> Quantity </th>
     <th> Delivery Date </th>
     <th> Ordered Date </th>
-    <th> Accept / Reject </th>
+    <th colspan="2"> Accept / Reject </th>
     
   </tr>
-<tr> 
-  <td> </td>
-  <td> </td>
-  <td> </td>
-  <td> </td>
-  <td> </td>
-  <td> </td>
 
-  
-  <td> <!-- <button class="smallOpen-button" onclick="openForm()"> accept </button> -->  </td>
-</tr>
 
 <?php foreach($data['order'] as $order) : ?>
 <tr> 
 
   <td> <?php echo $order->pharmacyname; ?> </td>
-  <td> <?php echo $order->medicine; ?> </td>
+  <td> <?php echo $order->medicine_name; ?> </td>
   <td> <?php echo $order->batchno; ?> </td>
   <td> <?php echo $order->quantity; ?> </td>
   <td> <?php echo $order->deliveryDate; ?> </td>
   <td> <?php echo $order->orderEndDate; ?> </td>
-  <td> <a href="#popup1"><button class="smallOpen-button"> Accept </button></a>
-       <button class="smallOpen-button" onclick=""> Reject </button> </td>
+  <td> <a href="#popup1"><button class="smallOpen-button"> Accept </button></a></td>
+  <td> <button class="smallOpen-button" onclick=""> Reject </button> </td>
 </tr>
 <?php endforeach; ?>
 

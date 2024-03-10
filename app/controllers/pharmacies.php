@@ -297,16 +297,18 @@ class Pharmacies extends Controller
 
             // Check for owner
             if ($order->pharmacyname != $_SESSION['USER_DATA']['name']) {
-                redirect('pharmacies/supplierOrders/orders');
+                redirect('pharmacies/orders');
+
             }
 
             if ($this->pharmacyModel->deleteOrder($id)) {
-                redirect('pharmacies/supplierOrders/orders');
+                redirect('pharmacies/orders');
+                          
             } else {
                 die('Something went wrong');
             }
         } else {
-            redirect('pharmacies/supplierOrders/orders');
+            redirect('pharmacies/orders');
         }
     }
 
