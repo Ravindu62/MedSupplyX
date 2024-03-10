@@ -16,32 +16,59 @@
 <!-- content -->
   <div class="content">
  <div class="anim">
+  <br>
     <h2> Messages </h2>
     </div>
   <div class="anim">
     <button class="open-button" onclick="openForm()"> Open New Message </button>
+    <br>
   </div>
+
+<br>
+
+<div class="anim">    
+<table class="customers">
+  <tr>
+    <th> Receiver </th>
+    <th> Heading </th>
+    <th> Message </th>
+    <th> Date </th>   
+  </tr>
+
+<?php foreach($data['messages'] as $messages) : ?>
+<tr> 
+  <td> <?php echo $messages->receiver; ?> </td>
+  <td> <?php echo $messages->heading; ?> </td>
+  <td> <?php echo $messages->message; ?> </td>
+  <td> <?php echo $messages->createdDate; ?> </td>
+</tr>
+<?php endforeach; ?>
+
+</table>
+</div>
+</div>
+</div>
 
 <div class="chat-popup" id="myForm">
   <form action="<?php echo URLROOT; ?>/pharmacies/newMessage" method="POST" " class="form-container">
   
   <div> 
-    <label for="msg"> <b> To :-  </b> </label>
-    <select class="dropdown" required>
+    <label for="receiver"> <b> To :-  </b> </label>
+    <select class="dropdown" name="receiver" required>
       <option value="0"> Select the person </option>
-      <option value="1"> Administrator </option>
-      <option value="2"> Manager </option>
+      <option value="admin"> Administrator </option>
+      <option value="manager"> Manager </option>
     </select>
   </div>
   
   <br> 
-    <label for="msg"> <b> Heading </b> </label> 
-    <input class="bar" type="text" placeholder="What's about..." name="msg" required >
+    <label for="heading"> <b> Heading </b> </label> 
+    <input class="bar" type="text" placeholder="What's about..." name="heading" required >
 
     <br>
   <br> 
-    <label for="msg"> <b> Message </b> </label>
-    <textarea placeholder="Type message.." name="complain" required></textarea>
+    <label for="message"> <b> Message </b> </label>
+    <textarea placeholder="Type message.." name="message" required></textarea>
    
 
     <button type="submit" class="btn">Send</button>
