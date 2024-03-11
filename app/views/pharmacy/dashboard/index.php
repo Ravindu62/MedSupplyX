@@ -58,22 +58,22 @@
 
         <div class="column">
           <div class="card1">
-            <h3> <?php echo $data['countExpiredOrders']; ?> </h3>
-            <p> Expired Orders </p>
+            <h3> <?php echo $data['countCancelledOrders']; ?> </h3>
+            <a href="<?php echo URLROOT; ?>/pharmacies/cancelledOrders"> Cancelled Orders </a>
           </div>
         </div>
 
         <div class="column">
           <div class="card1">
             <h3> <?php echo $data['countTodaysCustomerOrders']; ?> </h3>
-            <p> Todays Customer Orders </p><!-- get the bill count from bills where date match to date -->
+            <a href="<?php echo URLROOT; ?>/pharmacies/todayCustomerOrders"> Todays Customer Orders </a><!-- get the bill count from bills where date match to date -->
           </div>
         </div>
 
         <div class="column">
           <div class="card1">
             <h3> <?php echo $data['countBills']; ?> </h3>
-            <p> Bill count </p><!-- how many bills generated alltime -->
+            <a href=""> Bill count </a><!-- how many bills generated alltime -->
           </div>
         </div>
 
