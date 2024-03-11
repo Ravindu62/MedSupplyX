@@ -74,9 +74,9 @@ class pharmacy
         }
     }
 
-    public function countExpiredOrders($pharmacyId)
+    public function countCancelledOrders($pharmacyId)
     {
-        $this->query = $this->db->query2("SELECT COUNT(*) as count FROM inventory WHERE pharmacy_id = :pharmacyId AND status = 'expired'", array('pharmacyId' => $pharmacyId));
+        $this->query = $this->db->query2("SELECT COUNT(*) as count FROM requestorder WHERE pharmacy_id = :pharmacyId AND status = 'cancelled'", array('pharmacyId' => $pharmacyId));
 
         if ($this->query) {
             return $this->query[0]->count;
