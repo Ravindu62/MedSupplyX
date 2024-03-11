@@ -85,17 +85,17 @@
                                     Manufacturer Date
                                 </td>
                                 <td> : </td>
-                                <td class="verticleCentered"> <input type="Date" class="orderdetails" placeholder="YYYY-MM-DD" name="manu_date" required> </td>
+                                <td class="verticleCentered"> <input type="Date" class="orderdetails" placeholder="YYYY-MM-DD" name="manufacturedDate" required> </td>
 
                                 <td class="verticleCentered">
                                     Expire Date
                                 </td>
                                 <td> : </td>
-                                <td class="verticleCentered"> <input type="Date" class="orderdetails" placeholder="YYYY-MM-DD" name="expire_date" required> </td>
+                                <td class="verticleCentered"> <input type="Date" class="orderdetails" placeholder="YYYY-MM-DD" name="expireDate" required> </td>
                             </tr>
 
                             <tr>
-                                <td class="verticleCentered"> <input type="submit" class="addBtn" value="Send"></td>
+                                <td class="verticleCentered"> <input type="submit" class="addBtn" value="Add" name="add"></td>
                                 <td><a href="<?php echo URLROOT ?>/pharmacies/inventory" class="link">
                                     <div class="publicbtn"> Go Back </div>
                                     </td>
