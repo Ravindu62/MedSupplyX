@@ -140,6 +140,16 @@ class pharmacy
         return $results;
     }
 
+    public function todaysCustomerOrders($pharmacyId, $billDate){
+        $this->db->query("SELECT * FROM customerorder WHERE pharmacyId = :pharmacyId AND DATE(billDate) = :billDate");
+        $this->db->bind(':pharmacyId', $pharmacyId);
+        $this->db->bind(':billDate', $billDate);
+
+        $results = $this->db->resultSet();
+
+        return $results;
+    }
+
 
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
