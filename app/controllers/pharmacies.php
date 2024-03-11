@@ -127,6 +127,22 @@ class Pharmacies extends Controller
         $this->view('pharmacy/dashboard/cancelledOrders', $data);
     }
 
+    public function todaysCustomerOrders(){
+        // Sanitize post inputs
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+        $pharmacyId = trim($_SESSION['USER_DATA']['id']);
+        $currentDate = date("Y-m-d");
+
+        $todaysCustomerOrders = $this->pharmacyModel->todaysCustomerOrders($pharmacyId, $currentDate);
+
+        $data = [
+            'todaysCustomerOrders' => $todaysCustomerOrders
+        ];
+
+        $this->view('pharmacy/dashboard/todaysCustomerOrders', $data);
+    }
+
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////Inventory Function /////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
