@@ -102,45 +102,6 @@
                                 </a>
                             </tr>
                     </form>
-                    <!-- <form action="<?php echo URLROOT; ?>/pharmacies/addInventory" method="post" class="orderform">
-                        <div>
-                            <label for="medicineId">Medicine ID:</label>
-                            <input type="text" id="medicineId" name="medicineId" required>
-                        </div>
-                        <div>
-                            <label for="medicineName">Medicine Name:</label>
-                            <input type="text" id="medicineName" name="medicineName" required>
-                        </div>
-                        <div>
-                            <label for="batchNo">Batch Number:</label>
-                            <input type="text" id="batchNo" name="batchNo" required>
-                        </div>
-                        <div>
-                            <label for="category">Category:</label>
-                            <input type="text" id="category" name="category" required>
-                        </div>
-                        <div>
-                            <label for="quantity">Quantity:</label>
-                            <input type="text" id="quantity" name="quantity" required>
-                        </div>
-                        <div>
-                            <label for="manufacturedDate">Manufactured Date:</label>
-                            <input type="date" id="manufacturedDate" name="manufacturedDate" placeholder="YYYY-MM-DD" required>
-                        </div>
-                        <div>
-                            <label for="expireDate">Expired Date:</label>
-                            <input type="date" id="expireDate" name="expireDate" placeholder="YYYY-MM-DD" required>
-                        </div>
-                        <div>
-                            <label for="unitPrice">Unit Price:</label>
-                            <input type="text" id="unitPrice" name="unitPrice" required>
-                        </div>
-                        <div>
-                        <button type="submit">Add Inventory</button>
-                        <button type="submit"><a href="<?php echo URLROOT ?>/pharmacies/inventory" class="link">Back</a></button>
-                        </div>
-                    </form> -->
-
 
                     </table>
 
