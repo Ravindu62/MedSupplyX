@@ -4,6 +4,7 @@
   <head>
     <title> Dashboard </title>
     <meta charset="utf-8">
+    <link rel="icon" href="<?php echo URLROOT ?>/public/img/logo3.png" type="image/gif" sizes="20x16">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="<?php echo URLROOT ?>/public/css/style.css">
   </head>
@@ -29,28 +30,28 @@
         <div class="column">
           <div class="card1">
             <h3> <?php echo $data['countTotalOrders']; ?> </h3>
-            <a href="<?php echo URLROOT; ?>'/pharmacies/ongoingOrders'"> Total Ongoing Orders </a>
+            <a href="<?php echo URLROOT; ?>/pharmacies/ongoingOrders"> Total Ongoing Orders </a>
           </div>
         </div>
 
         <div class="column">
           <div class="card2">
             <h3><?php echo $data['countAcceptedOrders']; ?> </h3>
-            <p> Accepted Orders </p>
+            <a href="<?php echo URLROOT; ?>/pharmacies/acceptedOrders"> Accepted Orders </a>
           </div>
         </div>
 
         <div class="column">
           <div class="card3">
             <h3> <?php echo $data['countPendingOrders']; ?></h3>
-            <p>Pending Orders </p>
+            <a href="<?php echo URLROOT; ?>/pharmacies/pendingOrders">Pending Orders </a>
           </div>
         </div>
 
         <div class="column">
           <div class="card4">
             <h3> <?php echo $data['countRejectedOrders']; ?> </h3>
-            <p> Rejected Orders </p>
+            <a href="<?php echo URLROOT; ?>/pharmacies/rejectedOrders"> Rejected Orders </a>
           </div>
         </div>
 
