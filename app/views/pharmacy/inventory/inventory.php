@@ -49,10 +49,10 @@
   <td> <?php echo $inventory->batch_no; ?> </td>
   <td> <?php echo $inventory->category_no; ?> </td>
   <td> <?php echo $inventory->quantity; ?> </td>
-  <td> <?php echo $inventory->manu_date; ?> </td>
-  <td> <?php echo $inventory->expire_date; ?> </td>
+  <td> <?php echo date('Y-m-d', strtotime($inventory->manu_date)); ?> </td>
+  <td> <?php echo date('Y-m-d', strtotime($inventory->expire_date)); ?> </td>
   <td> <?php echo $inventory->unit_amount; ?> </td>
- <td> <form action="<?php echo URLROOT; ?>/pharmacies/deleteOrder/<?php echo $inventory->id; ?>" method="POST">
+ <td> <form action="<?php echo URLROOT; ?>/pharmacies/editInventory/<?php echo $inventory->id; ?>" method="POST">
     <input type="submit" id="delete" class="smallOpen-button" name="edit" value="Edit"> </td>
 </form>
 </tr>
@@ -62,19 +62,6 @@
 </div>
 </div>
 </div>
-
-<!-- <div class="chat-popup" id="myForm">
-  <form action="/action_page.php" class="form-container">
-    
-
-    <label for="text"><b> Number of Item </b></label>
-    <input class="bar" type="text" placeholder="Enter Your Price for the order" name="price" required>
-    <br> <br>
-
-    <button type="submit" class="btn"> Update </button>
-    <button type="button" class="btn cancel" onclick="closeForm()"> Close </button>
-  </form>
-</div> -->
 
 
 <?php require APPROOT . '/views/inc/footer.php'; ?>

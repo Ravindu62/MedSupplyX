@@ -94,7 +94,7 @@ class pharmacy
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public function getInventoryItems($pharmacyId)
     {
-        $this->db->query("SELECT * FROM inventory WHERE pharmacy_id = :pharmacyId");
+        $this->db->query('SELECT * FROM inventory WHERE pharmacy_id = :pharmacyId');
         $this->db->bind(':pharmacyId', $pharmacyId);
 
         $results = $this->db->resultSet();
@@ -125,6 +125,36 @@ class pharmacy
         }
     }
 
+    public function editInventory($data)
+    {
+        $this->db->query('UPDATE inventory SET medicine_id = :medicineId, name = :medicineName, batch_no = :batchNo, category_no = :category, quantity = :quantity, manu_date = :manufacturedDate, expire_date = :expireDate, unit_amount = :unitPrice WHERE id = :id');
+        // Bind values
+        $this->db->bind(':id', $data['id']);
+        $this->db->bind(':medicineId', $data['medicineId']);
+        $this->db->bind(':medicineName', $data['medicineName']);
+        $this->db->bind(':batchNo', $data['batchNo']);
+        $this->db->bind(':category', $data['category']);
+        $this->db->bind(':quantity', $data['quantity']);
+        $this->db->bind(':manufacturedDate', $data['manufacturedDate']);
+        $this->db->bind(':expireDate', $data['expireDate']);
+        $this->db->bind(':unitPrice', $data['unitPrice']);
+
+        // Execute
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function getInventoryItemById($id)
+    {
+        $this->db->query('SELECT * FROM inventory WHERE id = :id');
+        $this->db->bind(':id', $id);
+        return $this->db->single();
+    }
+
+
 
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -133,7 +163,7 @@ class pharmacy
     public function getMessages($pharmacyId)
     {
         $this->db->query("SELECT * FROM messages WHERE pharmacyId = :pharmacyId");
-        $this->db->bind(':pharmacyId', $pharmacyId);    
+        $this->db->bind(':pharmacyId', $pharmacyId);
 
         $results = $this->db->resultSet();
 
@@ -149,7 +179,7 @@ class pharmacy
         $this->db->bind(':receiver', $data['receiver']);
         $this->db->bind(':heading', $data['heading']);
         $this->db->bind(':message', $data['message']);
-        
+
         // Execute
         if ($this->db->execute()) {
             return true;
