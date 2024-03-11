@@ -52,7 +52,7 @@ class pharmacy
 
     public function countRejectedOrders($pharmacyId)
     {
-        $this->query = $this->db->query2("SELECT COUNT(*) as count FROM requestorder WHERE pharmacy_id = :pharmacyId AND status = 'rejected' OR 'pharmacy rejected' OR 'supplier rejected'", array('pharmacyId' => $pharmacyId));
+        $this->query = $this->db->query2("SELECT COUNT(*) as count FROM requestorder WHERE pharmacy_id = :pharmacyId AND status IN ('rejected', 'pharmacy rejected', 'supplier rejected')", array('pharmacyId' => $pharmacyId));
 
         if ($this->query) {
             return $this->query[0]->count;
@@ -126,7 +126,15 @@ class pharmacy
         $pharmacyId = trim($_SESSION['USER_DATA']['id']);
 
         $this->db->query("SELECT * FROM requestorder WHERE pharmacy_id = '$pharmacyId' AND status = 'pending'");
-        // $this->db->bind(':pharmacy_id', $pharmacyid);
+
+        $results = $this->db->resultSet();
+        return $results;
+    }
+
+    public function rejectedOrders(){
+        $pharmacyId = trim($_SESSION['USER_DATA']['id']);
+
+        $this->db->query("SELECT * FROM requestorder WHERE pharmacy_id = '$pharmacyId' AND status IN ('rejected', 'pharmacy rejected', 'supplier rejected')");
 
         $results = $this->db->resultSet();
         return $results;
