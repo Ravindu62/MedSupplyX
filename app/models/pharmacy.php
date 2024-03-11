@@ -122,6 +122,16 @@ class pharmacy
         return $results;
     }
 
+    public function pendingOrders(){
+        $pharmacyId = trim($_SESSION['USER_DATA']['id']);
+
+        $this->db->query("SELECT * FROM requestorder WHERE pharmacy_id = '$pharmacyId' AND status = 'pending'");
+        // $this->db->bind(':pharmacy_id', $pharmacyid);
+
+        $results = $this->db->resultSet();
+        return $results;
+    }
+
 
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
