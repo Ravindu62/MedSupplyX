@@ -3,6 +3,7 @@
 <head> 
 <title> Inventory </title>
 <meta charset="utf-8">
+<link rel="icon" href="<?php echo URLROOT ?>/public/img/logo3.png" type="image/gif" sizes="20x16">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="<?php echo URLROOT ?>/public/css/style.css">
 </head>
