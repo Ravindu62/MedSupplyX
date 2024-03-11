@@ -66,7 +66,7 @@
         <div class="column">
           <div class="card1">
             <h3> <?php echo $data['countTodaysCustomerOrders']; ?> </h3>
-            <a href="<?php echo URLROOT; ?>/pharmacies/todayCustomerOrders"> Todays Customer Orders </a><!-- get the bill count from bills where date match to date -->
+            <a href="<?php echo URLROOT; ?>/pharmacies/todaysCustomerOrders"> Todays Customer Orders </a><!-- get the bill count from bills where date match to date -->
           </div>
         </div>
 
