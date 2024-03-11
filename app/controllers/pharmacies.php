@@ -30,7 +30,7 @@ class Pharmacies extends Controller
         $countPendingOrders = $this->pharmacyModel->countPendingOrders($pharmacyId);
         $countRejectedOrders = $this->pharmacyModel->countRejectedOrders($pharmacyId);
         $countOutOfStockProducts = $this->pharmacyModel->countOutOfStockProducts($pharmacyId);
-        $countExpiredOrders = $this->pharmacyModel->countExpiredOrders($pharmacyId);
+        $countCancelledOrders = $this->pharmacyModel->countCancelledOrders($pharmacyId);
         $countTodaysCustomerOrders = $this->pharmacyModel->countTodaysCustomerOrders($pharmacyId, $currentDate);
         $countBills = $this->pharmacyModel->countBills($pharmacyId);
     
@@ -41,7 +41,7 @@ class Pharmacies extends Controller
             'countPendingOrders' => $countPendingOrders,
             'countRejectedOrders' => $countRejectedOrders,
             'countOutOfStockProducts' => $countOutOfStockProducts,
-            'countExpiredOrders' => $countExpiredOrders,
+            'countCancelledOrders' => $countCancelledOrders,
             'countTodaysCustomerOrders' => $countTodaysCustomerOrders,
             'countBills' => $countBills,
         ];
@@ -110,6 +110,21 @@ class Pharmacies extends Controller
         ];
 
         $this->view('pharmacy/dashboard/rejectedOrders', $data);
+    }
+
+    public function cancelledOrders(){
+        // Sanitize post inputs
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+        $pharmacyId = trim($_SESSION['USER_DATA']['id']);
+
+        $cancelledOrders = $this->pharmacyModel->getCancelledOrdersByPharmacy($pharmacyId);
+
+        $data = [
+            'cancelledOrders' => $cancelledOrders
+        ];
+
+        $this->view('pharmacy/dashboard/cancelledOrders', $data);
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
