@@ -29,7 +29,7 @@
         <div class="column">
           <div class="card1">
             <h3> <?php echo $data['countTotalOrders']; ?> </h3>
-            <p> Total Orders </p>
+            <a href="<?php echo URLROOT; ?>'/pharmacies/ongoingOrders'"> Total Ongoing Orders </a>
           </div>
         </div>
 
@@ -64,14 +64,14 @@
 
         <div class="column">
           <div class="card1">
-            <h3> <?php echo $data['countOutOfStockProducts']; ?> </h3>
+            <h3> <?php echo $data['countTodaysCustomerOrders']; ?> </h3>
             <p> Todays Customer Orders </p><!-- get the bill count from bills where date match to date -->
           </div>
         </div>
 
         <div class="column">
           <div class="card1">
-            <h3> <?php echo $data['countOutOfStockProducts']; ?> </h3>
+            <h3> <?php echo $data['countBills']; ?> </h3>
             <p> Bill count </p><!-- how many bills generated alltime -->
           </div>
         </div>
