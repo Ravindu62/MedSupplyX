@@ -100,7 +100,15 @@ header {
   background-image: url(../img/background.png);
 }
 
+.dashboard-a{
+  text-decoration: none;
+  color:black;
+}
 
+.dashboard-a:hover{
+  color: #00607F;
+  font-weight: bold;
+}
 
 .tab{
   text-decoration: none;
