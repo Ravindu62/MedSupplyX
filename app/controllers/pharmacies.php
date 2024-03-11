@@ -66,6 +66,22 @@ class Pharmacies extends Controller
         $this->view('pharmacy/dashboard/ongoingOrders', $data);
     }
 
+    public function acceptedOrders(){
+        // Sanitize post inputs
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+        $pharmacyId = trim($_SESSION['USER_DATA']['id']);
+
+        $acceptedOrders = $this->pharmacyModel->acceptedOrders();
+
+        $data = [
+            'acceptedOrders' => $acceptedOrders
+        ];
+
+        $this->view('pharmacy/dashboard/acceptedOrders', $data);
+        
+    }
+
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////Inventory Function /////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
