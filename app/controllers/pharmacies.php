@@ -57,13 +57,13 @@ class Pharmacies extends Controller
 
         $pharmacyId = trim($_SESSION['USER_DATA']['id']);
 
-        $ongoingOrders = $this->pharmacyModel->getOngoingOrders($pharmacyId);
+        $ongoingOrders = $this->pharmacyModel->getOrders();
 
         $data = [
             'ongoingOrders' => $ongoingOrders
         ];
 
-        $this->view('pharmacy/ongoingOrders/ongoingOrders', $data);
+        $this->view('pharmacy/dashboard/ongoingOrders', $data);
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
