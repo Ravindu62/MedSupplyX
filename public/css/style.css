@@ -1249,8 +1249,10 @@ nav ul li:hover::before {
 }
 
 .search{
-  margin:0 auto;
+  margin-top: 10px;
+  /* margin:0 auto; */
   width:450px;
+  display: inline-block;
 
 }
 

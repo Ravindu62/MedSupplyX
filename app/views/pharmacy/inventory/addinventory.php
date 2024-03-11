@@ -62,7 +62,10 @@
                                     Category
                                 </td>
                                 <td> : </td>
-                                <td class="verticleCentered"> <input type="text" name="category" class="smallForm" required> </td>
+                                <td class="verticleCentered"> <select name="category" type="text" class="smallForm" required>
+                                    <option value="general">General</option>
+                                    <option value="special">Special</option>
+                                </select>  </td>
                             </tr>
 
                             <tr>

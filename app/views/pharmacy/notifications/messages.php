@@ -40,7 +40,7 @@
   <td> <?php echo $messages->receiver; ?> </td>
   <td> <?php echo $messages->heading; ?> </td>
   <td> <?php echo $messages->message; ?> </td>
-  <td> <?php echo $messages->createdDate; ?> </td>
+  <td> <?php echo date('Y-m-d', strtotime($messages->createdDate)); ?> </td>
 </tr>
 <?php endforeach; ?>
 
