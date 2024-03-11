@@ -86,6 +86,41 @@ class pharmacy
         }
     }
 
+    public function countTodaysCustomerOrders($pharmacyId, $billDate)
+{
+    // Query the database to count the orders for the specified pharmacy ID and date
+    $this->query = $this->db->query2("SELECT COUNT(*) as count FROM customerorder WHERE pharmacyId = :pharmacyId AND DATE(billDate) = :billDate", array('pharmacyId' => $pharmacyId, 'billDate' => $billDate));
+
+    if ($this->query) {
+        // Return the count of orders
+        return $this->query[0]->count;
+    } else {
+        // Handle the error, e.g., log it or return an appropriate value
+        return 0;
+    }
+}
+
+
+    public function countBills($pharmacyId){
+        $this->query = $this->db->query2("SELECT COUNT(*) as count FROM customerorder WHERE pharmacyId = :pharmacyId", array('pharmacyId' => $pharmacyId));
+
+        if ($this->query) {
+            return $this->query[0]->count;
+        } else {
+            // Handle the error, e.g., log it or return an appropriate value
+            return 0;
+        }
+    }
+
+    public function ongoingOrders($pharmacyId)
+    {
+        $this->db->query("SELECT * FROM requestorder WHERE pharmacy_id = :pharmacyId AND status = 'pending'");
+        $this->db->bind(':pharmacyId', $pharmacyId);
+
+        $results = $this->db->resultSet();
+
+        return $results;
+    }
 
 
 
