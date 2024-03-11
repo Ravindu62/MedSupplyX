@@ -158,6 +158,82 @@ class Pharmacies extends Controller
         $this->view('pharmacy/inventory/addInventory', $data);
     }
 
+    public function editInventory($id)
+{
+    // Fetch the inventory item by its ID
+    $inventory_item = $this->pharmacyModel->getInventoryItemById($id);
+
+    // Check if the form is submitted
+    if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+        // Process form data
+
+        // Sanitize POST data
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+        // Initialize data array
+        $data = [
+            'id' => $id, // Inventory item ID
+            'medicineId' => trim($_POST['medicineId']),
+            'medicineName' => trim($_POST['medicineName']),
+            'batchNo' => trim($_POST['batchNo']),
+            'category' => trim($_POST['category']),
+            'quantity' => trim($_POST['quantity']),
+            'manufacturedDate' => trim($_POST['manufacturedDate']),
+            'expireDate' => trim($_POST['expireDate']),
+            'unitPrice' => trim($_POST['unitPrice']),
+            'medicineId_err' => '',
+            'medicineName_err' => '',
+            'batchNo_err' => '',
+            'category_err' => '',
+            'quantity_err' => '',
+            'manufacturedDate_err' => '',
+            'expireDate_err' => '',
+            'unitPrice_err' => '',
+        ];
+
+        // Validate data
+        if (empty($data['medicineId'])) {
+            $data['medicineId_err'] = 'Please enter medicine id';
+        }
+
+        if (empty($data['medicineName'])) {
+            $data['medicineName'] = 'Please enter medicine name';
+        }
+
+        if (empty($data['batchNo'])) {
+            $data['batchNo_err'] = 'Please enter batch number';
+        }
+
+        if (empty($data['category'])) {
+            $data['category_err'] = 'Please enter category of the medicine';
+        }
+
+        if (empty($data['manufacturedDate'])) {
+            $data['manufacturedDate_err'] = 'Please enter manufacture date medicine';
+        }
+
+        if (empty($data['expireDate'])) {
+            $data['expireDate_err'] = 'Please enter expire date of the medicine';
+        }
+
+        if (empty($data['unitPrice'])) {
+            $data['unitPrice_err'] = 'Please enter the unit price of this medicine';
+        }
+
+        // Call the model function to update inventory item
+        if ($this->pharmacyModel->editInventory($data)) {
+            // Redirect to inventory page after successful update
+            redirect('pharmacies/inventory');
+        } else {
+            die('Something went wrong');
+        }
+    } else {
+        // Load view with inventory item data for editing
+        $this->view('pharmacy/inventory/editInventory', $inventory_item);
+    }
+}
+
+
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////Messages Function /////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
