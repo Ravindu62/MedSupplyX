@@ -15,31 +15,56 @@ class Pharmacies extends Controller
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public function index()
     {
-        //sanitize post inputs
+        // Sanitize post inputs
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
-        $data1 = trim($_SESSION['USER_DATA']['id']);
-
-        $countTotalOrders = $this->pharmacyModel->countTotalOrders($data1);
-        $countAcceptedOrders = $this->pharmacyModel->countAcceptedOrders($data1);
-        $countPendingOrders = $this->pharmacyModel->countPendingOrders($data1);
-        $countRejectedOrders = $this->pharmacyModel->countRejectedOrders($data1);
-        $countOutOfStockProducts = $this->pharmacyModel->countOutOfStockProducts($data1);
-        $countExpiredOrders = $this->pharmacyModel->countExpiredOrders($data1);
-
+    
+        // Get the pharmacy ID from the session
+        $pharmacyId = $_SESSION['USER_DATA']['id'];
+    
+        // Get the current date in the format "YYYY-MM-DD"
+        $currentDate = date("Y-m-d");
+    
+        // Call the model methods to count various statistics
+        $countTotalOrders = $this->pharmacyModel->countTotalOrders($pharmacyId);
+        $countAcceptedOrders = $this->pharmacyModel->countAcceptedOrders($pharmacyId);
+        $countPendingOrders = $this->pharmacyModel->countPendingOrders($pharmacyId);
+        $countRejectedOrders = $this->pharmacyModel->countRejectedOrders($pharmacyId);
+        $countOutOfStockProducts = $this->pharmacyModel->countOutOfStockProducts($pharmacyId);
+        $countExpiredOrders = $this->pharmacyModel->countExpiredOrders($pharmacyId);
+        $countTodaysCustomerOrders = $this->pharmacyModel->countTodaysCustomerOrders($pharmacyId, $currentDate);
+        $countBills = $this->pharmacyModel->countBills($pharmacyId);
+    
+        // Prepare the data to pass to the view
         $data = [
             'countTotalOrders' => $countTotalOrders,
             'countAcceptedOrders' => $countAcceptedOrders,
             'countPendingOrders' => $countPendingOrders,
             'countRejectedOrders' => $countRejectedOrders,
             'countOutOfStockProducts' => $countOutOfStockProducts,
-            'countExpiredOrders' => $countExpiredOrders
+            'countExpiredOrders' => $countExpiredOrders,
+            'countTodaysCustomerOrders' => $countTodaysCustomerOrders,
+            'countBills' => $countBills,
         ];
-
-
+    
+        // Load the view with the data
         $this->view('pharmacy/dashboard/index', $data);
     }
+    
 
+    public function ongoingOrders(){
+        // Sanitize post inputs
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+        $pharmacyId = trim($_SESSION['USER_DATA']['id']);
+
+        $ongoingOrders = $this->pharmacyModel->getOngoingOrders($pharmacyId);
+
+        $data = [
+            'ongoingOrders' => $ongoingOrders
+        ];
+
+        $this->view('pharmacy/ongoingOrders/ongoingOrders', $data);
+    }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////Inventory Function /////////////////////////////////////////////////////////
