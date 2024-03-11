@@ -25,9 +25,15 @@
     Inventory 
   </div>
   </h2>
+
+  <form class="search">
+  <input type = "text" id="myInput" placeholder="Seach Medicine Names..." onkeyup="pharmacyMedicineSearch()"> 
+  <i class="fas fa-search" id="searchicon"></i>
+  </form>
+  
 <br>
 <div class="anim">    
-<table class="customers">
+<table class="customers" id="myTable">
   <tr>
     <th> Medicine ID </th>
     <th> Medicine Name </th>
