@@ -2,8 +2,9 @@
 <html lang="en">
 
 <head>
-  <title> Requset an Order </title>
+  <title> Place New Order </title>
   <meta charset="utf-8">
+  <link rel="icon" href="<?php echo URLROOT ?>/public/img/logo3.png" type="image/gif" sizes="20x16">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="<?php echo URLROOT ?>/public/css/style.css">
 </head>
@@ -18,7 +19,7 @@
   <!-- content -->
   <div class="content">
     <div class="anim">
-      <h2> Request an Order </h2>
+      <h2> Add Order </h2>
     </div>
     <div class="smallspace"></div>
 
