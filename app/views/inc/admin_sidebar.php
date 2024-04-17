@@ -18,7 +18,7 @@
   <div class="nav-container">
   <ul class="nav">
     <li class="active">
-      <a href="<?php echo URLROOT ?>/admins/" class="navbar_section">
+      <a href="<?php echo URLROOT ?>/admins/index" class="navbar_section">
       <i class="fa-solid fa-gauge"></i>
         <span class="text">Dashboard</span>
       </a>
@@ -36,6 +36,12 @@
       </a>
     </li>
     <li>
+    <a href="<?php echo URLROOT ?>/admins/all_pharmacies" class="navbar_section">
+    <i class="fa-solid fa-users"></i>
+        <span class="text">Users </span>
+      </a>
+    </li>
+    <li>
     <a href="<?php echo URLROOT ?>/admins/messages" class="navbar_section">
     <i class="fa-solid fa-envelope"></i>
         <span class="text">Messages </span>
@@ -45,12 +51,6 @@
     <a href="<?php echo URLROOT ?>/admins/all_orders" class="navbar_section">
     <i class="fa-solid fa-cart-shopping"></i>
         <span class="text"> All Orders </span>
-      </a>
-    </li>
-    <li>
-    <a href="<?php echo URLROOT ?>/admins/history" class="navbar_section">
-    <i class="fa-solid fa-clock-rotate-left"></i>
-        <span class="text"> History </span>
       </a>
     </li>
     <li>

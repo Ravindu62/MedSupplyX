@@ -11,15 +11,21 @@
     }
 
 public function index() {
-        $countPharmacy = $this->adminModel->countPharmacies();
-        $countSuppliers = $this->adminModel->countSuppliers();
+        $countapprovedPharmacy = $this->adminModel->countapprovedPharmacies();
+        $countpendingPharmacy = $this->adminModel->countpendingPharmacies();
+        $countapprovedSuppliers = $this->adminModel->countapprovedSuppliers();
+        $countpendingSuppliers = $this->adminModel->countpendingSuppliers();
         $countManagers = $this->adminModel->countManagers();
+        $countOrders = $this->adminModel->countOrders();
         $countMessages = $this->adminModel->countMessages();
 
         $data = [
-            'countPharmacies' => $countPharmacy,
-            'countSuppliers' => $countSuppliers,
+            'countapprovedPharmacies' => $countapprovedPharmacy,
+            'countpendingPharmacies' => $countpendingPharmacy,
+            'countapprovedSuppliers' => $countapprovedSuppliers,
+            'countpendingSuppliers' => $countpendingSuppliers,
             'countManagers' => $countManagers,
+            'countOrders' => $countOrders,
             'countMessages' => $countMessages
         ];
     
@@ -181,7 +187,28 @@ public function deleteManager($id){
         $this->view('admin/managers', $data);
     }
 }*/
+public function all_pharmacies() {
 
+    $allPharmacies = $this->adminModel->getApprovedPharmacyRegistration();
+        
+    $data = [
+        'allPharmacies' => $allPharmacies
+    ];
+    
+    $this->view('admin/users', $data);
+
+}
+
+public function all_suppliers() {
+
+    $allSuppliers = $this->adminModel->getApprovedSupplierRegistration();
+    $data = [
+        'allSuppliers' => $allSuppliers
+    ];
+    
+    $this->view('admin/user', $data);
+
+}
 
 public function messages() {
     $data = [];
@@ -204,12 +231,12 @@ public function all_orders() {
 
 }
 
-public function history() {
+/*public function history() {
     $data = [];
     
     $this->view('admin/history', $data);
 
-}
+}*/
 
 public function profile() {
     $data = [];
