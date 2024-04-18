@@ -41,14 +41,14 @@
                                     Medicine ID
                                 </td>
                                 <td> : </td>
-                                <td class="verticleCentered"> <input type="text" name="medicineId" class="orderdetails" value="<?php echo $data->medicineId; ?>" required>  </td>
+                                <td class="verticleCentered"> <input type="text" name="medicineId" class="orderdetails" value="<?php echo $inventory_item->medicineId; ?>" required>  </td>
 
 
                                 <td class="verticleCentered">
                                     Medicine Name
                                 </td>
                                 <td> : </td>
-                                <td class="verticleCentered"><input type="text" name="medicineName" class="smallForm" value="<?php echo $data->medicineName; ?>" required> </td>
+                                <td class="verticleCentered"><input type="text" name="medicineName" class="smallForm" value="<?php echo $inventory_item->medicineName; ?>" required> </td>
 
                             </tr>
 
@@ -57,13 +57,13 @@
                                     Batch No
                                 </td>
                                 <td> : </td>
-                                <td class="verticleCentered"> <input type="text" name="batchNo" class="orderdetails" value="<?php echo $data->batchNo; ?>" required> </td>
+                                <td class="verticleCentered"> <input type="text" name="batchNo" class="orderdetails" value="<?php echo $inventory_item->batchNo; ?>" required> </td>
 
                                 <td class="verticleCentered">
                                     Category
                                 </td>
                                 <td> : </td>
-                                <td class="verticleCentered"> <input type="text" name="category" class="smallForm" value="<?php echo $data->category; ?>" required> </td>
+                                <td class="verticleCentered"> <input type="text" name="category" class="smallForm" value="<?php echo $inventory_item->category; ?>" required> </td>
                             </tr>
 
                             <tr>
@@ -71,14 +71,14 @@
                                     Quantity
                                 </td>
                                 <td> : </td>
-                                <td class="verticleCentered"> <input type="number" name="quantity" class="smallForm" min="1" value="<?php echo $data->quantity; ?>" required> </td>
+                                <td class="verticleCentered"> <input type="number" name="quantity" class="smallForm" min="1" value="<?php echo $inventory_item->quantity; ?>" required> </td>
 
 
                                 <td class="verticleCentered">
                                     Unit Price
                                 </td>
                                 <td> : </td>
-                                <td class="verticleCentered"> <input type="number" name="unitPrice" class="smallForm" min="1" value="<?php echo $data->unitPrice; ?>" required> </td>
+                                <td class="verticleCentered"> <input type="number" name="unitPrice" class="smallForm" min="1" value="<?php echo $inventory_item->unitPrice; ?>" required> </td>
                             </tr>
 
                             <tr>
@@ -86,13 +86,13 @@
                                     Manufacturer Date
                                 </td>
                                 <td> : </td>
-                                <td class="verticleCentered"> <input type="Date" class="orderdetails" placeholder="YYYY-MM-DD" name="manufacturedDate" value="<?php echo $data->manufacturedDate; ?>" required> </td>
+                                <td class="verticleCentered"> <input type="Date" class="orderdetails" placeholder="YYYY-MM-DD" name="manufacturedDate" value="<?php echo $inventory_item->manufacturedDate; ?>" required> </td>
 
                                 <td class="verticleCentered">
                                     Expire Date
                                 </td>
                                 <td> : </td>
-                                <td class="verticleCentered"> <input type="Date" class="orderdetails" placeholder="YYYY-MM-DD" name="expireDate" value="<?php echo $data->expireDate; ?>" required> </td>
+                                <td class="verticleCentered"> <input type="Date" class="orderdetails" placeholder="YYYY-MM-DD" name="expireDate" value="<?php echo $inventory_item->expireDate; ?>" required> </td>
                             </tr>
 
                             <tr>
