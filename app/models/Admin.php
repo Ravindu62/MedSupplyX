@@ -112,22 +112,8 @@ class Admin{
             return false;
         }
     }
-
-    /*public function updateManager($id,$mname,$memail){
-        $this->db->query('UPDATE managerregistration SET mname= :mname, memail= :memail WHERE id = :id');
-        // Bind values
-        $this->db->bind(':id', $id);
-        $this->db->bind(':mname', $mname);
-        $this->db->bind(':nemail', $memail);
-        
-        // Execute
-        if($this->db->execute()){
-            return true;
-        } else {
-            return false;
-        }
-    }
-    */
+    
+    
     public function getApprovedPharmacyRegistration() {
         $this->db->query("SELECT * FROM pharmacyregistration WHERE status='approved'");
 

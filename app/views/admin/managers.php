@@ -52,11 +52,11 @@
   <td> <?php echo $manager->email; ?> </td>
   
   
-  <td> <button class="smallOpen-button"> Update </button><br><br>
-  <form action="<?php echo URLROOT;?>/admin/deleteManager/<?php echo $manager->id; ?>" method="POST">
-        <input type="submit" class="smallOpen-button-red" name="delete" value="Delete">    
-      </form> 
-  
+  <td>
+     <button type="submit" class="smallOpen-button" value="update" name="submit" onclick="enableInputs()">Update</button><br><br>
+            <form action="<?php echo URLROOT;?>/admins/deleteManager/<?php echo $manager->id; ?>" method="POST">
+                  <input type="submit" class="smallOpen-button-red" name="delete" value="Delete">    
+                </form> 
   </td>   
 
 
@@ -67,6 +67,7 @@
 </div>
 </div>
 </div>
+
 
 </body>
 </html>

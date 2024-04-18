@@ -31,7 +31,6 @@
     <th> Physical Address </th>
     <th> Contact No </th>
     <th> Email </th>
-    <th> Delete </th>
   </tr>
 <tr> 
   
@@ -41,10 +40,9 @@
   <td> </td>
   <td> </td>
   <td> </td>
-  <td> <!-- <button> Accept </button> --> </td>
 </tr>
 
-<?php foreach($data['allPharmacies'] as $allPharmacies) : ?>
+<?php foreach($data['users'] as $allPharmacies) : ?>
 <tr> 
   <td> </td>
   <td> <?php echo $allPharmacies->licenceno; ?> </td>
@@ -52,7 +50,6 @@
   <td> <?php echo $allPharmacies->address; ?> </td>
   <td> <?php echo $allPharmacies->phone; ?> </td>
   <td> <?php echo $allPharmacies->email; ?> </td>
-  <td> <button class="smallOpen-button"> Delete </button> </td>
   <?php endforeach; ?>
 </tr>
 
@@ -60,35 +57,3 @@
 </div>
 </div>
 </div>
-
-<div class="chat-popup" id="myForm">
-  <form action="/action_page.php" class="form-container">
-    
-
-    <label for="text"><b> Number of Item </b></label>
-    <input class="bar" type="text" placeholder="Enter Your Price for the order" name="price" required>
-    <br> <br>
-
-    <button type="submit" class="btn"> Update </button>
-    <button type="button" class="btn cancel" onclick="closeForm()"> Close </button>
-  </form>
-</div>
-
-
-<?php require APPROOT . '/views/inc/footer.php'; ?>
-
-
-<script>
-function openForm() {
-  document.getElementById("myForm").style.display = "block";
-}
-
-function closeForm() {
-  document.getElementById("myForm").style.display = "none";
-}
-</script>
-
-
-</body>
-</html>
-

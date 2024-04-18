@@ -144,69 +144,38 @@ public function managers() {
 
 }
 
-public function deleteManager($id){
-    if($_SERVER['REQUEST_METHOD'] == 'POST') {
-        // Get existing post from model
-        $manager = $this->adminModel->getManagerById($id);
-
-        // Check for owner
-        /*if($manager->managername != $_SESSION['USER_DATA']['name']) {
-            redirect('admin/managers');
-        }*/
-
-        if($this->adminModel->deleteManager($id)) {
-            redirect('admin/managers');
-            exit();
-        } else {
-            die('Something went wrong');
-        }
+//deelete manager by Id
+public function deleteManager($id) {
+    if($this->adminModel->deleteManager($id)) {
+        redirect('admins/managers');
     } else {
-        redirect('admin/managers');
+        die('Something went wrong');
     }
-    
 }
 
-/*public function updateManager($id){
-    if($_SERVER['REQUEST_METHOD'] == 'POST'){
-        $manager = $this->adminModel->getManagerById($id);
 
-        $mname = $POST['mname'];
-        $memail = $_POST['memail'];
 
-        if($this->adminModel->updateManager($id,$mname,$memail)){
-            redirect ('admin/managers');
-            exit();
-        }else{
-            die('Something went wrong');
-        }
-    }else{
-        $managerData = $manager->getManagerById($Id);
-        $mname = $managerData['name'];
-        $memail = $managerData['email'];
 
-        $this->view('admin/managers', $data);
-    }
-}*/
 public function all_pharmacies() {
 
     $allPharmacies = $this->adminModel->getApprovedPharmacyRegistration();
-        
+    
     $data = [
-        'allPharmacies' => $allPharmacies
+        'users' => $allPharmacies
     ];
     
-    $this->view('admin/users', $data);
-
+    $this->view('admin/all_pharmacies', $data);
 }
 
 public function all_suppliers() {
 
     $allSuppliers = $this->adminModel->getApprovedSupplierRegistration();
+        
     $data = [
         'allSuppliers' => $allSuppliers
     ];
     
-    $this->view('admin/user', $data);
+    $this->view('admin/all_suppliers', $data);
 
 }
 
