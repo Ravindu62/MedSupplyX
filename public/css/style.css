@@ -1379,7 +1379,7 @@ nav ul li:hover::before {
 /* Style the horizontal tabs in order page */
 .horizontaltab , .horizontaltab2{
   overflow: hidden;
-  background-color: transparent;
+  background-color: white;
   border-bottom: 1px solid #00607F;
   border-left: 1px solid #00607F; 
 }
@@ -1413,16 +1413,17 @@ nav ul li:hover::before {
   color:#00607F;
   font-weight: bold;
   border-right: 1px solid #00607F;
+
 }
 
 /* Change background color of buttons on hover */
-.horizonaltab , .horizontaltab2 button:hover {
+.horizonaltab button:hover , .horizontaltab2 button:hover {
   background-color: #daf6ff;
   
 }
 
 /* Create an active/current tablink class */
-.horizontaltab , .horizontaltab2 button.active {
+.horizontaltab button:hover , .horizontaltab2 button.active {
   background-color: #00607F;
   color:#ffffff;
 }
