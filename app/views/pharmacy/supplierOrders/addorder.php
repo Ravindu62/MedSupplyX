@@ -4,6 +4,7 @@
 <head>
   <title> Place New Order </title>
   <meta charset="utf-8">
+  <link rel="icon" href="<?php echo URLROOT ?>/public/img/logo3.png" type="image/gif" sizes="20x16">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="<?php echo URLROOT ?>/public/css/style.css">
 </head>
@@ -86,7 +87,7 @@
                 <td class="verticleCentered"> <button class="addBtn"> Done </button>
           </form>
 
-          <a href="<?php echo URLROOT ?>/pharmacies/orders" class="link">
+          <a href="<?php echo URLROOT ?>/pharmacy/orders" class="link">
              <div class="publicbtn"> Cancel </div>
           </a> </td>
           </tr>

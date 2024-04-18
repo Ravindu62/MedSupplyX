@@ -522,7 +522,6 @@ footer {
 .customers td, .customers th {
   border: 0px solid #ddd;
   padding: 8px;
-  text-align: center;
   color:#707070;
 }
 
@@ -1372,6 +1371,69 @@ nav ul li:hover::before {
   100% {
     opacity: 0.3;
   }
+}
+
+
+
+
+/* Style the horizontal tabs in order page */
+.horizontaltab , .horizontaltab2{
+  overflow: hidden;
+  background-color: transparent;
+  border-bottom: 1px solid #00607F;
+  border-left: 1px solid #00607F; 
+}
+
+/* Style the buttons inside the tab */
+.horizontaltab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+  width:33.33%;
+  color:#00607F;
+  font-weight: bold;
+  border-right: 1px solid #00607F;
+}
+
+.horizontaltab2 button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+  width:50%;
+  color:#00607F;
+  font-weight: bold;
+  border-right: 1px solid #00607F;
+}
+
+/* Change background color of buttons on hover */
+.horizonaltab , .horizontaltab2 button:hover {
+  background-color: #daf6ff;
+  
+}
+
+/* Create an active/current tablink class */
+.horizontaltab , .horizontaltab2 button.active {
+  background-color: #00607F;
+  color:#ffffff;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+  
 }
 
 

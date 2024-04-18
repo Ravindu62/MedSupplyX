@@ -4,6 +4,7 @@
 <head>
   <title> Order from Supplier </title>
   <meta charset="utf-8">
+  <link rel="icon" href="<?php echo URLROOT ?>/public/img/logo3.png" type="image/gif" sizes="20x16">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="<?php echo URLROOT ?>/public/css/style.css">
 </head>
@@ -21,10 +22,8 @@
     <div class="smallspace"></div>
 
     <div class="alignRight">
-      <a href="<?php echo URLROOT ?>/pharmacies/addorder"> <button class="addBtn"> New Order </button> </a>
+      <a href="<?php echo URLROOT ?>/pharmacies/addOrder"> <button class="addBtn"> New Order </button> </a>
     </div>
-
-    <div class="smallspace"></div>
 
     <div class="anim">
       <h2> Your Orders </h2>
@@ -35,7 +34,6 @@
     <div class="anim">
       <table class="customers">
         <tr>
-          <th> Order Id </th>
           <th> Medicine Name </th>
           <th> Batch No </th>
           <th> Quantity </th>
@@ -49,7 +47,6 @@
 
         <?php foreach ($data['order'] as $order) : ?>
           <tr>
-            <td> <?php echo $order->id; ?> </td>
             <td> <?php echo $order->medicine_name; ?> </td>
             <td> <?php echo $order->batchno; ?> </td>
             <td> <?php echo $order->quantity; ?> </td>
@@ -77,7 +74,6 @@
     <div class="anim">
       <table class="customers">
         <tr>
-          <th> Order Id </th>
           <th> Medicine Name </th>
           <th> Batch No </th>
           <th> Quantity </th>
@@ -85,14 +81,13 @@
           <th> Delivery Date </th>
           <th> Supplier </th>
           <th> Supplier Price (LKR) </th>
-          <th colspan="2"> Accept / Reject </th>
+          <th> Accept / Reject </th>
 
 
         </tr>
         
         <?php foreach ($data['acceptedOrders'] as $acceptedOrders) : ?>
           <tr>
-            <td> <?php echo $acceptedOrders->id; ?> </td>
             <td> <?php echo $acceptedOrders->medicine_name; ?> </td>
             <td> <?php echo $acceptedOrders->batchno; ?> </td>
             <td> <?php echo $acceptedOrders->quantity; ?> </td>
@@ -100,10 +95,11 @@
             <td> <?php echo $acceptedOrders->deliveryDate; ?> </td>
             <td> <?php echo $acceptedOrders->supplier_name; ?> </td>
             <td> <?php echo $acceptedOrders->status; ?> </td>
-            <td> <button class="smallOpen-button"> Accept </button> </td>
-            <td> <form action="<?php echo URLROOT; ?>/pharmacies/deleteOrder/<?php echo $order->id; ?>" method="POST">
+            <td> <button class="smallOpen-button"> Accept </button>
+              <form action="<?php echo URLROOT; ?>/pharmacies/deleteOrder/<?php echo $order->id; ?>" method="POST">
                 <input type="submit" id="delete" class="smallOpen-button" name="delete" value="Reject">
             </td>
+
             </form>
           </tr>
         <?php endforeach; ?>

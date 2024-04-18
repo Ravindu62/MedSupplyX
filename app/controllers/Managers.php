@@ -201,7 +201,8 @@ public function medicines() {
         $this->view('manager/new_medicine', $data);
 
 }
- }
+}
+
 
 
 public function messages() {
@@ -225,6 +226,18 @@ public function profile() {
     $this->view('manager/profile', $data);
 
 }
+
+public function editprofile() {
+
+    $getUserData = $this->managerModel->getUserData();
+    
+    $data=[
+        'getUserData' => $getUserData
+    ];
+    $this->view('manager/editprofile', $data);
+}
+
+
 
 public function logout() {
     unset($_SESSION['USER_DATA']);

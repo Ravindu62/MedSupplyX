@@ -32,7 +32,7 @@
     <li>
     <a href="<?php echo URLROOT ?>/pharmacies/messages" class="navbar_section">
     <i class="fa-solid fa-envelope"></i>
-        <span class="text">Messages</span>
+        <span class="text"> Notifications</span>
       </a>
     </li>
     <a href="<?php echo URLROOT ?>/pharmacies/advertistments" class="navbar_section">

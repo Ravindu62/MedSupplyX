@@ -50,7 +50,7 @@
                             <td> : </td>
                             <td colspan="2"> <b> <p id="password" style="display:none;"> <?php echo $data['getUserData']->password; ?> </b> </p>
                                  <input type="checkbox" onclick="showPassword()"> show password </td>
-                            <td> <button class="addBtn"> Change </button> </td>
+                            <td> <a href="<?php echo URLROOT ?>/managers/editprofile"> <button class="addBtn"> Change </button> </a> </td>
                         </tr>
                        
                 </table>

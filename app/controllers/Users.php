@@ -29,7 +29,8 @@ class Users extends Controller {
                 'email_err' => '',
                 'licenceno_err' => '',
                 'password_err' => '',
-                'confirm_password_err' => ''
+                'confirm_password_err' => '',
+                'licence_err' => ''
                 
             ];
 
@@ -93,13 +94,41 @@ class Users extends Controller {
                     $data['confirm_password_err'] = 'Passwords do not match';
                 }
             }
+
+            //validate licence document is empty before sumbit
+            if(empty($_FILES['licence']['name'])) {
+                $data['licence_err'] = 'Please upload your licence';
+            } else {
+                $allowed =  array('pdf');
+                $filename = $_FILES['licence']['name'];
+                $ext = pathinfo($filename, PATHINFO_EXTENSION);
+                if(!in_array($ext,$allowed) ) {
+                    $data['licence_err'] = 'Please upload a valid pdf file';
+                }
+            }
             
 
             // Make sure errors are empty
-            if(empty($data['email_err']) && empty($data['name_err']) && empty($data['password_err']) && empty($data['confirm_password_err']) && empty($data['address_err']) && empty($data['phone_err']) && empty($data['licenceno_err'])) {    
+            if(empty($data['email_err']) && empty($data['name_err']) && empty($data['password_err']) && empty($data['confirm_password_err']) && empty($data['address_err']) && empty($data['phone_err']) && empty($data['licenceno_err']) && empty($data['licence_err'])) { 
 
             // Hash password
                // $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+
+            
+            // autochange filename if exist file with same name and upload
+            $filename = $_FILES['licence']['name'];
+            $tempname = $_FILES['licence']['tmp_name'];
+            $folder = "C:/xampp/htdocs/MedSupplyX/public/uploads/PharmacyLicence/";
+            $i = 0;
+            $parts = pathinfo($filename);
+            while (file_exists($folder . $filename)) {
+                $i++;
+                $filename = $parts['filename'] . "-" . $i . "." . $parts['extension'];
+            }
+            move_uploaded_file($tempname, $folder.$filename);
+            $data['licence'] = $filename;
+      
+
 
             // Register user
                 if($this->userModel->pharmacy($data)) {
@@ -125,13 +154,15 @@ class Users extends Controller {
                 'licenceno' => '',
                 'password' => '',
                 'confirm_password' => '',
+                'licence' => '',
                 'name_err' => '',
                 'address_err' => '',
                 'phone_err' => '',
                 'email_err' => '',
                 'licenceno_err' => '',
                 'password_err' => '',
-                'confirm_password_err' => ''
+                'confirm_password_err' => '',
+                'licence_err' => ''
 
             ];
 
@@ -164,7 +195,8 @@ class Users extends Controller {
                 'licenceno_err' => '',
                 'email_err' => '',
                 'password_err' => '',
-                'confirm_password_err' => ''
+                'confirm_password_err' => '',
+                'licence_err' => ''
             ];
 
 
@@ -222,12 +254,38 @@ class Users extends Controller {
                 }
             }
 
+            //validate licence document is empty before sumbit
+            if(empty($_FILES['licence']['name'])) {
+                $data['licence_err'] = 'Please upload your licence';
+            } else {
+                $allowed =  array('pdf');
+                $filename = $_FILES['licence']['name'];
+                $ext = pathinfo($filename, PATHINFO_EXTENSION);
+                if(!in_array($ext,$allowed) ) {
+                    $data['licence_err'] = 'Please upload a valid pdf file';
+                }
+            }
+
             // Make sure errors are empty
-            if(empty($data['email_err']) && empty($data['name_err']) && empty($data['password_err']) && empty($data['confirm_password_err']) && empty($data['address_err']) && empty($data['phone_err']) && empty($data['licenceno_err'])) {
+            if(empty($data['email_err']) && empty($data['name_err']) && empty($data['password_err']) && empty($data['confirm_password_err']) && empty($data['address_err']) && empty($data['phone_err']) && empty($data['licenceno_err']) && empty($data['licence_err'])) {
 
             // Hash password
                // $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
 
+            // autochange filename if exist file with same name and upload
+            $filename = $_FILES['licence']['name'];
+            $tempname = $_FILES['licence']['tmp_name'];
+            $folder = "C:/xampp/htdocs/MedSupplyX/public/uploads/supplierLicence/";
+            $i = 0;
+            $parts = pathinfo($filename);
+            while (file_exists($folder . $filename)) {
+                $i++;
+                $filename = $parts['filename'] . "-" . $i . "." . $parts['extension'];
+            }
+            move_uploaded_file($tempname, $folder.$filename);
+            $data['licence'] = $filename;
+
+            
             // Register user
                 if($this->userModel->supplier($data)) {
                     redirect('users/complete');
@@ -262,7 +320,9 @@ class Users extends Controller {
                 'licenceno_err' => '',
                 'email_err' => '',
                 'password_err' => '',
-                'confirm_password_err' => ''
+                'confirm_password_err' => '',
+                'licence_err' => ''
+
             ];
 
             // Load view

@@ -16,8 +16,13 @@
 
 <!-- content -->
   <div class="content">
+
+<div class="horizontaltab2">
+  <button class="tablinks active" onclick="openEvent(event, 'pharmacy')">Pharmacy Registration </button>
+  <button class="tablinks" onclick="openEvent(event, 'supplier')">Supplier Registration </button>
+</div>
   
-  
+<div id="pharmacy" class="tabcontent">
   <h2 class="anim"> Pharmacies </h2>
   <p class="anim"> Here are all the Pharmacies who want to register to the MedSupplyX </p>
 
@@ -32,9 +37,11 @@
     <th> Physical Address </th>
     <th> Contact No </th>
     <th> Email </th>
+    <th> Licence </th>
     <th colspan="2"> Accept / Reject </th>
   </tr>
 <tr> 
+  <td> </td>
   <td> </td>
   <td> </td>
   <td> </td>
@@ -53,6 +60,10 @@
   <td> <?php echo $pharmacyRegistration->address; ?> </td>
   <td> <?php echo $pharmacyRegistration->phone; ?> </td>
   <td> <?php echo $pharmacyRegistration->email; ?> </td>
+  <td> <a href="<?php echo URLROOT; ?>/public/uploads/PharmacyLicence/<?php echo $pharmacyRegistration->licence; ?>" target="_blank">
+          <i class="fa fa-file-pdf-o" style="font-size:24px;color:red;"></i> 
+       </a> 
+  </td>
   <td> <button class="smallOpen-button" name="acceptpharmacy" value="<?php echo $pharmacyRegistration->email?>"> Accept </button> </form></td>
 
   <td> <form action="<?php echo URLROOT;?>/managers/rejectPharmacy/<?php echo $pharmacyRegistration->id; ?>" method="POST">
@@ -68,8 +79,9 @@
 </table>
 </div>
 </form>
+</div>
 
-<div class="space"></div> 
+<div id="supplier" class="tabcontent">
 <h2 class="anim"> Suppliers </h2>
   <p class="anim"> Here are all the Suppliers who want to register to the MedSupplyX </p>
 
@@ -107,6 +119,10 @@
   <td> <?php echo $supplierRegistration->address; ?> </td>
   <td> <?php echo $supplierRegistration->phone; ?> </td>
   <td> <?php echo $supplierRegistration->email; ?> </td>
+  <td> <a href="<?php echo URLROOT; ?>/public/uploads/SupplierLicence/<?php echo $supplierRegistration->licence; ?>" target="_blank">
+          <i class="fa fa-file-pdf-o" style="font-size:24px;color:red;"></i> 
+       </a> 
+  </td>
   <td> <button class="smallOpen-button" name="acceptsupplier" value="<?php echo $supplierRegistration->email?>"> Accept </button>  </td>
 </form>
   <td> <form action="<?php echo URLROOT;?>/managers/rejectSupplier/<?php echo $supplierRegistration->id; ?>" method="POST">
@@ -121,9 +137,30 @@
 
 </table>
 </div>
+</div>
+</div>
+</div>
 
-</div>
-</div>
+
+<script>
+  function openEvent(evt, cityName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(cityName).style.display = "block";
+  if(evt) evt.currentTarget.className += " active";
+    else document.querySelector('button.tablinks').className += " active";
+}
+document.body.addEventListener('DOMContentLoaded', openEvent(event, 'pharmacy'));
+
+
+</script>
 
 
 <?php require APPROOT . '/views/inc/footer.php'; ?>

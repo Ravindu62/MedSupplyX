@@ -8,7 +8,7 @@ class pharmacy
     {
         $this->db = new Database;
     }
-    
+
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////Dashboard Data//////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -52,7 +52,7 @@ class pharmacy
 
     public function countRejectedOrders($pharmacyId)
     {
-        $this->query = $this->db->query2("SELECT COUNT(*) as count FROM requestorder WHERE pharmacy_id = :pharmacyId AND status = 'rejected'", array('pharmacyId' => $pharmacyId));
+        $this->query = $this->db->query2("SELECT COUNT(*) as count FROM requestorder WHERE pharmacy_id = :pharmacyId AND status IN ('rejected', 'pharmacy rejected', 'supplier rejected')", array('pharmacyId' => $pharmacyId));
 
         if ($this->query) {
             return $this->query[0]->count;
@@ -74,9 +74,9 @@ class pharmacy
         }
     }
 
-    public function countExpiredOrders($pharmacyId)
+    public function countCancelledOrders($pharmacyId)
     {
-        $this->query = $this->db->query2("SELECT COUNT(*) as count FROM inventory WHERE pharmacy_id = :pharmacyId AND status = 'expired'", array('pharmacyId' => $pharmacyId));
+        $this->query = $this->db->query2("SELECT COUNT(*) as count FROM requestorder WHERE pharmacy_id = :pharmacyId AND status = 'cancelled'", array('pharmacyId' => $pharmacyId));
 
         if ($this->query) {
             return $this->query[0]->count;
@@ -86,6 +86,69 @@ class pharmacy
         }
     }
 
+    public function countTodaysCustomerOrders($pharmacyId, $billDate)
+{
+    // Query the database to count the orders for the specified pharmacy ID and date
+    $this->query = $this->db->query2("SELECT COUNT(*) as count FROM customerorder WHERE pharmacyId = :pharmacyId AND DATE(billDate) = :billDate", array('pharmacyId' => $pharmacyId, 'billDate' => $billDate));
+
+    if ($this->query) {
+        // Return the count of orders
+        return $this->query[0]->count;
+    } else {
+        // Handle the error, e.g., log it or return an appropriate value
+        return 0;
+    }
+}
+
+
+    public function countBills($pharmacyId){
+        $this->query = $this->db->query2("SELECT COUNT(*) as count FROM customerorder WHERE pharmacyId = :pharmacyId", array('pharmacyId' => $pharmacyId));
+
+        if ($this->query) {
+            return $this->query[0]->count;
+        } else {
+            // Handle the error, e.g., log it or return an appropriate value
+            return 0;
+        }
+    }
+
+    public function ongoingOrders($pharmacyId)
+    {
+        $this->db->query("SELECT * FROM requestorder WHERE pharmacy_id = :pharmacyId AND status = 'pending'");
+        $this->db->bind(':pharmacyId', $pharmacyId);
+
+        $results = $this->db->resultSet();
+
+        return $results;
+    }
+
+    public function pendingOrders(){
+        $pharmacyId = trim($_SESSION['USER_DATA']['id']);
+
+        $this->db->query("SELECT * FROM requestorder WHERE pharmacy_id = '$pharmacyId' AND status = 'pending'");
+
+        $results = $this->db->resultSet();
+        return $results;
+    }
+
+    public function rejectedOrders(){
+        $pharmacyId = trim($_SESSION['USER_DATA']['id']);
+
+        $this->db->query("SELECT * FROM requestorder WHERE pharmacy_id = '$pharmacyId' AND status IN ('rejected', 'pharmacy rejected', 'supplier rejected')");
+
+        $results = $this->db->resultSet();
+        return $results;
+    }
+
+    public function todaysCustomerOrders($pharmacyId, $billDate){
+        $this->db->query("SELECT * FROM customerorder WHERE pharmacyId = :pharmacyId AND DATE(billDate) = :billDate");
+        $this->db->bind(':pharmacyId', $pharmacyId);
+        $this->db->bind(':billDate', $billDate);
+
+        $results = $this->db->resultSet();
+
+        return $results;
+    }
 
 
 
@@ -94,7 +157,7 @@ class pharmacy
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public function getInventoryItems($pharmacyId)
     {
-        $this->db->query("SELECT * FROM inventory WHERE pharmacy_id = :pharmacyId");
+        $this->db->query('SELECT * FROM inventory WHERE pharmacy_id = :pharmacyId');
         $this->db->bind(':pharmacyId', $pharmacyId);
 
         $results = $this->db->resultSet();
@@ -125,16 +188,71 @@ class pharmacy
         }
     }
 
+    public function editInventory($data)
+    {
+        $this->db->query('UPDATE inventory SET medicine_id = :medicineId, name = :medicineName, batch_no = :batchNo, category_no = :category, quantity = :quantity, manu_date = :manufacturedDate, expire_date = :expireDate, unit_amount = :unitPrice WHERE id = :id');
+        // Bind values
+        $this->db->bind(':id', $data['id']);
+        $this->db->bind(':medicineId', $data['medicineId']);
+        $this->db->bind(':medicineName', $data['medicineName']);
+        $this->db->bind(':batchNo', $data['batchNo']);
+        $this->db->bind(':category', $data['category']);
+        $this->db->bind(':quantity', $data['quantity']);
+        $this->db->bind(':manufacturedDate', $data['manufacturedDate']);
+        $this->db->bind(':expireDate', $data['expireDate']);
+        $this->db->bind(':unitPrice', $data['unitPrice']);
+
+        // Execute
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function getInventoryItemById($id)
+    {
+        $this->db->query('SELECT * FROM inventory WHERE id = :id');
+        $this->db->bind(':id', $id);
+        return $this->db->single();
+    }
+
+
 
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////Notification data//////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public function getMessages($pharmacyId)
+    {
+        $this->db->query("SELECT * FROM messages WHERE pharmacyId = :pharmacyId");
+        $this->db->bind(':pharmacyId', $pharmacyId);
 
-    
-    
-    
-    
+        $results = $this->db->resultSet();
+
+        return $results;
+    }
+
+    public function addMessage($data)
+    {
+        $this->db->query('INSERT INTO messages (pharmacyId, sender, receiver, heading, message) VALUES(:pharmacyId, :message, :receiver, :heading, :message)');
+        // Bind values
+        $this->db->bind(':pharmacyId', $_SESSION['USER_DATA']['id']);
+        $this->db->bind(':sender', $_SESSION['USER_DATA']['name']);
+        $this->db->bind(':receiver', $data['receiver']);
+        $this->db->bind(':heading', $data['heading']);
+        $this->db->bind(':message', $data['message']);
+
+        // Execute
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////Advertisetment data/////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -157,7 +275,7 @@ class pharmacy
         $results = $this->db->resultSet();
         return $results;
     }
-    
+
     public function addOrder($data)
     {
         $this->db->query('INSERT INTO requestorder (pharmacyname, medicine, batchno, quantity, deliveryDate, orderEndDate) VALUES(:pharmacyname , :medicineName, :batchNumber, :quantity, :deliveryDate, :orderEntryDate)');
@@ -177,7 +295,8 @@ class pharmacy
         }
     }
 
-    public function acceptedOrders(){
+    public function acceptedOrders()
+    {
 
         $pharmacyId = trim($_SESSION['USER_DATA']['id']);
 
@@ -188,7 +307,8 @@ class pharmacy
         return $results;
     }
 
-    public function selectedOrders(){
+    public function selectedOrders()
+    {
 
         $pharmacyId = trim($_SESSION['USER_DATA']['id']);
 
@@ -197,7 +317,6 @@ class pharmacy
 
         $results = $this->db->resultSet();
         return $results;
-
     }
 
     public function deleteOrder($id)
@@ -227,7 +346,7 @@ class pharmacy
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////Customer Order data/////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- 
+
 
 
 
@@ -235,7 +354,7 @@ class pharmacy
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////History data//////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public function getDeliverdOrders($pharmacyId)
+    public function getDeliveredOrders($pharmacyId)
     {
         $this->db->query("SELECT * FROM requestorder WHERE pharmacy_id = :pharmacyId AND status = 'delivered'");
         $this->db->bind(':pharmacyId', $pharmacyId);
@@ -245,9 +364,29 @@ class pharmacy
         return $results;
     }
 
-    public function getCanceledOrders($pharmacyId)
+    public function getCancelledOrdersByPharmacy($pharmacyId)
     {
-        $this->db->query("SELECT * FROM requestorder WHERE pharmacy_id = :pharmacyId AND status = 'canceled'");
+        $this->db->query("SELECT * FROM requestorder WHERE pharmacy_id = :pharmacyId AND status = 'cancelled'");
+        $this->db->bind(':pharmacyId', $pharmacyId);
+
+        $results = $this->db->resultSet();
+
+        return $results;
+    }
+
+    public function getRejectedOrdersBySuppliers($pharmacyId)
+    {
+        $this->db->query("SELECT * FROM requestorder WHERE pharmacy_id = :pharmacyId AND status = 'supplier rejected'");
+        $this->db->bind(':pharmacyId', $pharmacyId);
+
+        $results = $this->db->resultSet();
+
+        return $results;
+    }
+
+    public function getRejectedOrdersByPharmacy($pharmacyId)
+    {
+        $this->db->query("SELECT * FROM requestorder WHERE pharmacy_id = :pharmacyId AND status = 'pharmacy rejected'");
         $this->db->bind(':pharmacyId', $pharmacyId);
 
         $results = $this->db->resultSet();
@@ -256,15 +395,13 @@ class pharmacy
     }
 
 
-
-
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////Profile data//////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public function getProfileData($id)
+    public function getProfileData($pharmacyName)
     {
-        $this->db->query("SELECT * FROM pharmacyregistration WHERE id = :id");
-        $this->db->bind(':id', $id);
+        $this->db->query("SELECT * FROM pharmacyregistration WHERE name = :pharmacyName");
+        $this->db->bind(':pharmacyName', $pharmacyName);
 
         $row = $this->db->single();
 
@@ -273,9 +410,43 @@ class pharmacy
             return $row;
         } else {
             // Log or echo an error message
-            error_log("No profile data found for ID: $id");
+            error_log("No profile data found for pharmacy: $pharmacyName");
             return false;
         }
     }
-}
 
+
+    public function updateProfile($data)
+    {
+        // Implement the logic to update the profile data in the database
+        // Example code to update email, phone, and password:
+        $this->db->query('UPDATE pharmacyregistration SET email = :email, phone = :phone, password = :password WHERE name = :name');
+        $this->db->bind(':name', $data['name']);
+        $this->db->bind(':email', $data['email']);
+        $this->db->bind(':phone', $data['phone']);
+        $this->db->bind(':password', $data['password']);
+
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // }
+    // {
+    //     $this->db->query("SELECT * FROM pharmacyregistration WHERE id = :id");
+    //     // this->db->bind(':pharmacyId', $_SESSION['USER_DATA']['id']);
+    //     $this->db->bind(':id', $id);
+
+    //     $row = $this->db->single();
+
+    //     // Check if a row was returned
+    //     if ($row) {
+    //         return $row;
+    //     } else {
+    //         // Log or echo an error message
+    //         error_log("No profile data found for ID: $id");
+    //         return false;
+    //     }
+}

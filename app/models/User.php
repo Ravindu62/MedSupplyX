@@ -10,7 +10,7 @@ class User {
 
     // Register user
     public function pharmacy($data) {
-        $this->db->query('INSERT INTO pharmacyregistration (name, address, phone, licenceno, email, password) VALUES(:name, :address, :phone, :licenceno, :email , :password)');
+        $this->db->query('INSERT INTO pharmacyregistration (name, address, phone, licenceno, email, password , licence) VALUES(:name, :address, :phone, :licenceno, :email, :password, :licence)');
 
         // Bind values
         $this->db->bind(':name', $data['name']);
@@ -19,6 +19,8 @@ class User {
         $this->db->bind(':licenceno', $data['licenceno']);
         $this->db->bind(':email', $data['email']);
         $this->db->bind(':password', $data['password']);
+        $this->db->bind(':licence', $data['licence']);
+
 
         
         // Execute
@@ -31,7 +33,7 @@ class User {
 
     // Register user
     public function supplier($data) {
-        $this->db->query('INSERT INTO supplierregistration (name, address, phone, licenceno, email, password) VALUES(:name, :address, :phone, :licenceno, :email, :password)');
+        $this->db->query('INSERT INTO supplierregistration (name, address, phone, licenceno, email, password , licence) VALUES(:name, :address, :phone, :licenceno, :email, :password, :licence)');
 
         // Bind values
         $this->db->bind(':name', $data['name']);
@@ -40,6 +42,7 @@ class User {
         $this->db->bind(':licenceno', $data['licenceno']);
         $this->db->bind(':email', $data['email']);
         $this->db->bind(':password', $data['password']);
+        $this->db->bind(':licence', $data['licence']);
     
 
         // Execute
@@ -169,7 +172,6 @@ class User {
             return false;
         }
     }
-    
 
     public function findRejectedEmailSupplier($email) {
         $this->db->query('SELECT * FROM supplierregistration WHERE email = :email');
@@ -179,14 +181,21 @@ class User {
 
         $row = $this->db->single();
 
-        $status = $row->status;
+        // Check if $row is not null before accessing its properties
+        if ($row) {
+            $status = $row->status;
 
-        if($status == 'rejected') {
-            return true;
+            if($status == 'rejected') {
+                return true;
+            } else {
+                return false;
+            }
         } else {
+            // Handle the case where no row is found for the given email
             return false;
         }
     }
+        
 
 
     public function findUserByEmail($email) {

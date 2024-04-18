@@ -7,8 +7,8 @@
                 <img src="<?php echo URLROOT ?>/public/img/img.jpg" alt="">
             </div>
             <div class="reg-form">
-                <h1> Registration </h1>
-                <form action="<?php echo URLROOT; ?>/users/pharmacy" method="POST">
+                <h1> Pharmacy Registration </h1>
+                <form action="<?php echo URLROOT; ?>/users/pharmacy" method="POST" enctype="multipart/form-data">
                     <div class="input">
                         <label for="name">Pharmacy Name :</label>
                         <br>
@@ -46,16 +46,24 @@
                         <br>
                         <input type="password" name="password" id="password" class="gen-input reg-input" <?php echo (!empty($data['password_err'])) ? 'is-invalid' : ''; ?> value="<?php echo $data['password']; ?>">
                         <div><span class="importantMessage"> <?php echo $data['password_err']; ?> </span> </div>
-                        <input type="checkbox" id="showPassword1" class="check-box-password"> Show Password
+                       
                     </div>
 
                     <div class="input">
-    <label for="#con-password">Confirm Password :</label>
-    <br>
-    <input type="password" name="confirm_password" id="con-password" class="gen-input reg-input" <?php echo (!empty($data['confirm_password_err'])) ? 'is-invalid' : ''; ?> value="<?php echo $data['confirm_password']; ?>">
-    <div><span class="importantMessage"> <?php echo $data['confirm_password_err']; ?> </span> </div>
-    <input type="checkbox" id="showPassword2" class="check-box-password"> Show Password
-</div>
+                     <label for="#con-password">Confirm Password :</label>
+                        <br>
+                          <input type="password" name="confirm_password" id="con-password" class="gen-input reg-input" <?php echo (!empty($data['confirm_password_err'])) ? 'is-invalid' : ''; ?> value="<?php echo $data['confirm_password']; ?>">
+                          <div><span class="importantMessage"> <?php echo $data['confirm_password_err']; ?> </span> </div>
+                       
+                    </div>
+
+                    <div class="upload-container">
+                            <p>Upload your licence (only pdf) :</p>
+                            <label for="licence" class="file-input">
+                                <input type="file" id="file-upload" accept=".pdf" name="licence" id="licence" value="">
+                            </label> 
+                        </div>
+                        <div><span class="importantMessage"> <?php echo $data['licence_err']; ?> </span> </div>
 
 
 
@@ -67,6 +75,7 @@
                     <div class="reg-btn">
                         <input type="submit" name="submit" value="Register" id="registerbtn" disabled />
                     </div>
+                  
                 </form>
 
                 <script type="text/javascript">

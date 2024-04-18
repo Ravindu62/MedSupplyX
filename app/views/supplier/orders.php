@@ -12,12 +12,24 @@
 <?php require APPROOT . '/views/inc/header.php'; ?>
 
 <?php require APPROOT . '/views/inc/supplier_sidebar.php'; ?>
+<div class="content">
+  <div class="anim">
+
+<div class="horizontaltab">
+  <button class="tablinks active" onclick="openEvent(event, 'orders')">ORDERS</button>
+  <button class="tablinks" onclick="openEvent(event, 'approvedOrders')">APPROVED ORDERS</button>
+  <button class="tablinks" onclick="openEvent(event, 'acceptedOrders')">ACCEPTED ORDERS</button>
+</div>
+
 
 <!-- content -->
-  <div class="content">
-  <div class="anim">
+<div id="orders" class="tabcontent">
+
+<div class="smallspace"></div>
     <h2> Order Requests </h2>
-  </div>
+ 
+
+
 
   <div class="anim">
 <form class="search">
@@ -54,16 +66,16 @@
 </tr>
 <?php endforeach; ?>
 
-
-
-
-
-
 </table>
 </div>
+</div>
+  </div>
 
-<div class="space"></div>
 
+<div id="approvedOrders" class="tabcontent">
+
+
+<div class="smallspace"></div>
 <div class="anim">  <h2> Approved Orders (By You) </h2> </div> 
 
 <div class="anim">  
@@ -99,8 +111,11 @@
 </table>
 </div>
 
-<div class="space"></div>
+</div>
 
+
+<div id="acceptedOrders" class="tabcontent">
+<div class="smallspace"></div>
 <div class="anim">  <h2> Accepted Orders (By Pharmacy) </h2> </div> 
 
 <div class="anim">  
@@ -140,7 +155,7 @@
 </tr>
 </table>
 </div>
-
+</div>
 
 
 
@@ -164,7 +179,29 @@
 </div>
 </div>
 
+<script>
+  function openEvent(evt, cityName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(cityName).style.display = "block";
+  if(evt) evt.currentTarget.className += " active";
+    else document.querySelector('button.tablinks').className += " active";
+}
+document.body.addEventListener('DOMContentLoaded', openEvent(event, 'orders'));
+
+
+</script>
+
+
 <?php require APPROOT . '/views/inc/footer.php'; ?>
+
 
 
 </body>
