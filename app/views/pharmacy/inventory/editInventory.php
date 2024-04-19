@@ -48,7 +48,7 @@
                                     Category
                                 </td>
                                 <td> : </td>
-                                <td class="verticleCentered"> <input type="text" name="category" class="smallForm" value="<?php echo $data->category; ?>" required> </td>
+                                <td class="verticleCentered"> <input type="text" name="category" class="smallForm" value="<?php echo $inventory_item->category; ?>" required> </td>
                             </tr>
                             <tr>
                                 <td class="verticleCentered">
@@ -60,7 +60,7 @@
                                     Unit Price
                                 </td>
                                 <td> : </td>
-                                <td class="verticleCentered"> <input type="number" name="unitPrice" class="smallForm" min="1" value="<?php echo $data->unitPrice; ?>" required> </td>
+                                <td class="verticleCentered"> <input type="number" name="unitPrice" class="smallForm" min="1" value="<?php echo $inventory_item->unitPrice; ?>" required> </td>
                             </tr>
                             <tr>
                                 <td class="verticleCentered">
@@ -72,7 +72,7 @@
                                     Expire Date
                                 </td>
                                 <td> : </td>
-                                <td class="verticleCentered"> <input type="Date" class="orderdetails" placeholder="YYYY-MM-DD" name="expireDate" value="<?php echo $data->expireDate; ?>" required> </td>
+                                <td class="verticleCentered"> <input type="Date" class="orderdetails" placeholder="YYYY-MM-DD" name="expireDate" value="<?php echo $inventory_item->expireDate; ?>" required> </td>
                             </tr>
                             <tr>
                                 <td class="verticleCentered"> <input type="submit" class="addBtn" value="Add" name="add"></td>
