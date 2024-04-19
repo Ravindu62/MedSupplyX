@@ -7,13 +7,8 @@
 <link rel="stylesheet" href="<?php echo URLROOT ?>/public/css/style.css">
 </head>
 <body>
-
-
 <?php require APPROOT . '/views/inc/header.php'; ?>
-
 <?php require APPROOT . '/views/inc/cashier_sidebar.php'; ?>
-
-
 <!-- content -->
   <div class="content">
   <h2>
@@ -21,7 +16,6 @@
     Inventory 
   </div>
   </h2>
-
 <div class="anim">    
 <table class="customers">
   <tr>
@@ -32,8 +26,6 @@
     <th> Quantity </th>
     <th> Manufacture Date </th>
     <th> Expire Date </th>
-    
-    
   </tr>
 <tr> 
   <td> </td>
@@ -44,7 +36,6 @@
   <td> </td>
   <td> </td>
 </tr>
-
 <tr> 
   <td> 123 </td>
   <td> Paracitamole </td>
@@ -54,40 +45,27 @@
   <td> 2023/05/09</td>
   <td> 2023/09/30 </td>
 </tr>
-
 </table>
 </div>
 </div>
 </div>
-
 <div class="chat-popup" id="myForm">
   <form action="/action_page.php" class="form-container">
-    
-
     <label for="text"><b> Number of Item </b></label>
     <input class="bar" type="text" placeholder="Enter Your Price for the order" name="price" required>
     <br> <br>
-
     <button type="submit" class="btn"> Update </button>
     <button type="button" class="btn cancel" onclick="closeForm()"> Close </button>
   </form>
 </div>
-
-
 <?php require APPROOT . '/views/inc/footer.php'; ?>
-
-
 <script>
 function openForm() {
   document.getElementById("myForm").style.display = "block";
 }
-
 function closeForm() {
   document.getElementById("myForm").style.display = "none";
 }
 </script>
-
-
 </body>
 </html>
-

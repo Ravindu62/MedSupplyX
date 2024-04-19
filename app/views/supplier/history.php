@@ -7,17 +7,11 @@
 <link rel="stylesheet" href="<?php echo URLROOT ?>/public/css/style.css">
 </head>
 <body>
-
-
 <?php require APPROOT . '/views/inc/header.php'; ?>
-
 <?php require APPROOT . '/views/inc/supplier_sidebar.php'; ?>
-
 <!-- content -->
   <div class="content">
-
   <div class="anim">  <h2> Delivered Orders </h2> </div> 
-
 <div class="anim">  
 <table class="customers">
   <tr>
@@ -28,9 +22,6 @@
     <th class="custom1"> Quantity </th>
     <th class="custom1"> Ordered Date </th>
     <th class="custom1"> Delivered Date </th>
-   
-    
-    
   </tr>
 <tr> 
   <td> </td>
@@ -40,9 +31,7 @@
   <td> </td>
   <td> </td>
   <td> </td>
- 
 </tr>
-
 <tr> 
   <td> </td>
   <td> Gagana Pharmacy </td>
@@ -52,10 +41,8 @@
   <td> 2023/09/02</td>
   <td> 2023/09/15 </td>
 </tr>
-
 </table>
 </div>
-
 <div class="space"></div>
 <div class="anim">   
 <h2> Rejected Orders </h2>
@@ -69,9 +56,6 @@
     <th class="custom2"> Batch No </th>
     <th class="custom2"> Quantity </th>
     <th class="custom2"> Ordered Date </th>
-
-   
-    
   </tr>
 <tr> 
   <td> </td>
@@ -80,10 +64,7 @@
   <td> </td>
   <td> </td>
   <td> </td>
- 
 </tr>
-
-
 <tr> 
   <td> </td>
   <td> Gagana Pharmacy </td>
@@ -94,8 +75,6 @@
 </tr>
 </table>
 </div>
-
-
 <div class="space"></div>
 <div class="anim">  
 <h2> Cancelled Orders (By Pharmacies) </h2>
@@ -109,7 +88,6 @@
     <th class="custom3"> Batch No </th>
     <th class="custom3"> Quantity </th>
     <th class="custom3"> Reason for cancelling </th>
-    
     </tr>
 <tr> 
   <td> </td>
@@ -118,9 +96,7 @@
   <td> </td>
   <td> </td>
   <td> </td>
-
 </tr>
-
 <tr> 
   <td> </td>
   <td> Suhada Pharmacy </td>
@@ -129,16 +105,10 @@
   <td> 1650</td>
   <td> I received donation of Erithropoityne </td>
 </tr>
-
 </table>
 </div>
-
 </div>
 </div>
-
 <?php require APPROOT . '/views/inc/footer.php'; ?>
-
-
 </body>
 </html>
-

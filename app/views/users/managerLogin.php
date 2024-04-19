@@ -12,7 +12,6 @@
                     <i class="fa-brands fa-instagram"></i>
                 </div>
             </div>
-            
             <div class="login">
                 <h2>Log In</h2>
                 <form action="<?php echo URLROOT; ?>/users/login" method="post">
@@ -28,9 +27,7 @@
             <span> <?php echo $data['password_err']; ?> </span>
                     <i class="fa-solid fa-lock"></i>
                 </div>   
-
                 <div class="check">
-                   
                     <a href="#" class="forgot"> Forgot Password?</a>
                 </div>
                 <div class="button">
@@ -40,10 +37,8 @@
                 <div class="sign-up">
                     <pre>Don't have an account?  <a href="<?php echo URLROOT ?>/users/register">Sign up</a></pre>
                 </div>
-
             </div>
         </section>
 <?php require APPROOT . '/views/inc/landing_footer.php'; ?>
     </form>
 </div>
-

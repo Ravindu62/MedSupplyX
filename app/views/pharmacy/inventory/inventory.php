@@ -8,13 +8,8 @@
 <link rel="stylesheet" href="<?php echo URLROOT ?>/public/css/style.css">
 </head>
 <body>
-
-
 <?php require APPROOT . '/views/inc/header.php'; ?>
-
 <?php require APPROOT . '/views/inc/pharmacy_sidebar.php'; ?>
-
-
 <!-- content -->
   <div class="content">
   <h2>
@@ -26,12 +21,10 @@
     Inventory 
   </div>
   </h2>
-
   <form class="search">
   <input type = "text" id="myInput" placeholder="Seach Medicine Names..." onkeyup="pharmacyMedicineSearch()"> 
   <i class="fas fa-search" id="searchicon"></i>
   </form>
-  
 <br>
 <div class="anim">    
 <table class="customers" id="myTable">
@@ -45,10 +38,7 @@
     <th> Expire Date </th>
     <th> Unit Price</th>
     <th> Change / Delete</th>
-    
-    
   </tr>
-
 <?php foreach($data['inventory'] as $inventory) : ?>
 <tr> 
   <td> <?php echo $inventory->medicine_id; ?> </td>
@@ -64,27 +54,18 @@
 </form>
 </tr>
 <?php endforeach; ?>
-
 </table>
 </div>
 </div>
 </div>
-
-
 <?php require APPROOT . '/views/inc/footer.php'; ?>
-
-
 <script>
 function openForm() {
   document.getElementById("myForm").style.display = "block";
 }
-
 function closeForm() {
   document.getElementById("myForm").style.display = "none";
 }
 </script>
-
-
 </body>
 </html>
-

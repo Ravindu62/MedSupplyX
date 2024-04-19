@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <title> Your Ongoing Orders </title>
     <meta charset="utf-8">
@@ -8,25 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="<?php echo URLROOT ?>/public/css/style.css">
 </head>
-
 <body>
-
-
     <?php require APPROOT . '/views/inc/header.php'; ?>
-
     <?php require APPROOT . '/views/inc/pharmacy_sidebar.php'; ?>
-
     <!-- content -->
     <div class="content">
-
         <div class="smallspace"></div>
-
         <div class="anim">
             <h2> Your Ongoing Orders </h2>
         </div>
-
-
-
         <div class="anim">
             <table class="customers">
                 <tr>
@@ -38,7 +27,6 @@
                     <th> Suppliers </th>
                     <th> Status </th>
                 </tr>
-
                 <?php foreach ($data['ongoingOrders'] as $ongoingOrders) : ?>
                     <tr>
                         <td> <?php echo $ongoingOrders->medicine_name; ?> </td>
@@ -55,10 +43,6 @@
         </div>
     </div>
     </div>
-
     <?php require APPROOT . '/views/inc/footer.php'; ?>
-
-
 </body>
-
 </html>

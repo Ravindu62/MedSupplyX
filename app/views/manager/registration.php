@@ -18,8 +18,8 @@
   <div class="content">
 
 <div class="horizontaltab2">
-  <button class="tablinks active" onclick="openEvent(event, 'pharmacy')">Pharmacy Registration </button>
-  <button class="tablinks" onclick="openEvent(event, 'supplier')">Supplier Registration </button>
+  <button class="tablinks active" onclick="openEvent(event, 'pharmacy')"> <i class="fas fa-laptop-medical"></i> Pharmacy Registration </button>
+  <button class="tablinks" onclick="openEvent(event, 'supplier')"> <i class="fas fa-industry"></i> Supplier Registration </button>
 </div>
   
 <div id="pharmacy" class="tabcontent">
@@ -96,6 +96,7 @@
     <th> Physical Address </th>
     <th> Contact No </th>
     <th> Email </th>
+    <th> Licence</th>
     <th colspan="2"> Accept / Reject </th>
   </tr>
 <tr> 
@@ -165,38 +166,7 @@ document.body.addEventListener('DOMContentLoaded', openEvent(event, 'pharmacy'))
 
 <?php require APPROOT . '/views/inc/footer.php'; ?>
 
-<!-- 
-<div id="popup1" class="overlay">
-	<div class="popup">
-  <form class="form-container">
-    
-
-    <label for="text"> Do you want to register ?  </label>
-    
-    <br> <br>
-
-   <a href="<?php echo URLROOT . '/managers/approvePharmacy/' . $pharmacyRegistration->id ;?>"><button type="button" class="smallOpen-button"> Yes </button></a>
-   <a href="#"> <button type="button" class="smallOpen-button"> No </button>  </a>
-  </form>
-	</div>
-</div>
-
-<div id="popup2" class="overlay">
-  <div class="popup">
-  <form class="form-container">
-    
-
-    <label for="text"> Do you want to reject ?  </label>
-    
-    <br> <br>
-
-   <a href ="<?php echo URLROOT . '/managers/rejectPharmacy/' . $pharmacyRegistration->id ;?>"> <button type="button" class="smallOpen-button"> Yes </button> </a>
-   <a href="#"> <button type="button" class="smallOpen-button"> No </button>   </a>
-  </form>
-  </div>
-
-
 
 </body>
-</html> -->
+</html> 
 

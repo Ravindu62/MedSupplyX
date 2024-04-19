@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <title> Order from Supplier </title>
   <meta charset="utf-8">
@@ -8,47 +7,40 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="<?php echo URLROOT ?>/public/css/style.css">
 </head>
-
 <body>
-
-
   <?php require APPROOT . '/views/inc/header.php'; ?>
-
   <?php require APPROOT . '/views/inc/pharmacy_sidebar.php'; ?>
-
   <!-- content -->
   <div class="content">
-
-    <div class="smallspace"></div>
-
-    <div class="alignRight">
+<div class="horizontaltab">
+  <button class="tablinks active" onclick="openEvent(event, 'orders')">ORDERS</button>
+  <button class="tablinks" onclick="openEvent(event, 'acceptedOrders')">ACCEPTED ORDERS</button>
+  <button class="tablinks" onclick="openEvent(event, 'selectedOrders')">SELECTED ORDERS</button>
+</div>
+<div class="smallspace"></div>
+<div class="alignRight">
       <a href="<?php echo URLROOT ?>/pharmacies/addOrder"> <button class="addBtn"> New Order </button> </a>
-    </div>
-
+  </div>
+  <div class="smallspace"></div>
+<div id="orders" class="tabcontent">
+    <div class="smallspace"></div>
     <div class="anim">
       <h2> Your Orders </h2>
     </div>
-
-
-
     <div class="anim">
       <table class="customers">
         <tr>
           <th> Medicine Name </th>
-          <th> Batch No </th>
           <th> Quantity </th>
           <th> Ordered Date </th>
           <th> Delivery Date </th>
           <th> Suppliers </th>
           <th> Status </th>
-          <th colspan="2"> Change / Delete</th>
-
+          <th colspan="2"> Change / Delete </th>
         </tr>
-
         <?php foreach ($data['order'] as $order) : ?>
           <tr>
             <td> <?php echo $order->medicine_name; ?> </td>
-            <td> <?php echo $order->batchno; ?> </td>
             <td> <?php echo $order->quantity; ?> </td>
             <td> <?php echo $order->ordered_date; ?> </td>
             <td> <?php echo $order->deliveryDate; ?> </td>
@@ -58,19 +50,17 @@
             <td> <form action="<?php echo URLROOT; ?>/pharmacies/deleteOrder/<?php echo $order->id; ?>" method="POST">
                 <input type="submit" id="delete" class="smallOpen-button" name="delete" value="Delete">
             </td>
-
             </form>
           </tr>
         <?php endforeach; ?>
       </table>
+        </div>
     </div>
-
-    <div class="space"></div>
-
+    <div id="acceptedOrders" class="tabcontent">
+    <div class="smallspace"></div>
     <div class="anim">
       <h2> Accepted Orders (By Supplier) </h2>
     </div>
-
     <div class="anim">
       <table class="customers">
         <tr>
@@ -82,10 +72,7 @@
           <th> Supplier </th>
           <th> Supplier Price (LKR) </th>
           <th> Accept / Reject </th>
-
-
         </tr>
-        
         <?php foreach ($data['acceptedOrders'] as $acceptedOrders) : ?>
           <tr>
             <td> <?php echo $acceptedOrders->medicine_name; ?> </td>
@@ -99,19 +86,17 @@
               <form action="<?php echo URLROOT; ?>/pharmacies/deleteOrder/<?php echo $order->id; ?>" method="POST">
                 <input type="submit" id="delete" class="smallOpen-button" name="delete" value="Reject">
             </td>
-
             </form>
           </tr>
         <?php endforeach; ?>
       </table>
+        </div>
     </div>
-
-    <div class="space"></div>
-
+    <div id="selectedOrders" class="tabcontent">
+    <div class="smallspace"></div>
     <div class="anim">
       <h2> Selected Orders (By You) </h2>
     </div>
-
     <div class="anim">
       <table class="customers">
         <tr>
@@ -124,9 +109,6 @@
           <th> Supplier</th>
           <th> Price (LKR) </th>
           <th> Delivered </th>
-
-
-
         </tr>
         <?php foreach ($data['selectedOrders'] as $selectedOrders) : ?>
           <tr>
@@ -142,44 +124,48 @@
               <form action="<?php echo URLROOT; ?>/pharmacies/deleteOrder/<?php echo $order->id; ?>" method="POST">
                 <input type="submit" id="delete" class="smallOpen-button" name="delete" value="Reject">
             </td>
-
             </form>
           </tr>
         <?php endforeach; ?>
       </table>
+        </div>
     </div>
-
-
     <div class="chat-popup" id="myForm">
       <form action="/action_page.php" class="form-container">
-
-
         <label for="text"><b> Your Price ? </b></label>
         <input class="bar" type="text" placeholder="Enter Your Price for the order" name="price" required>
         <br> <br>
-
         <button type="submit" class="btn"> Send </button>
         <button type="button" class="btn cancel" onclick="closeForm()"> Close </button>
       </form>
     </div>
-
-
     <script>
       function openForm() {
         document.getElementById("myForm").style.display = "block";
       }
-
       function closeForm() {
         document.getElementById("myForm").style.display = "none";
       }
     </script>
-
   </div>
   </div>
-
+  <script>
+  function openEvent(evt, cityName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(cityName).style.display = "block";
+  if(evt) evt.currentTarget.className += " active";
+    else document.querySelector('button.tablinks').className += " active";
+}
+document.body.addEventListener('DOMContentLoaded', openEvent(event, 'orders'));
+</script>
   <?php require APPROOT . '/views/inc/footer.php'; ?>
-
-
 </body>
-
 </html>

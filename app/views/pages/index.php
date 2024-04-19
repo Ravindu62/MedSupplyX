@@ -1,4 +1,3 @@
-
 <?php require APPROOT . '/views/inc/landing_header.php'; ?>
         <div class="background"> 
             <div class="content">
@@ -21,10 +20,7 @@
                 </div>
             </div>
             <div class="space"> </div>
-        
         </div>
-
-
         <!--------------------About------------------>
         <div id="about">
             <div class="container">
@@ -32,7 +28,6 @@
                     <div class="about-col-one">
                      <img src="<?php echo URLROOT ?>/public/img/about-im.png" alt="logo" class="pic">
                     </div>
-
                     <div class="about-col-two">
                         <h1 class="sub-title">About Us</h1>
                         <br>
@@ -85,7 +80,6 @@
                         <h2>Procument Hadling</h2>
                         <p>
                         Expertly manage the intricacies of procurement. Our system empowers efficient handling of pharmaceutical procurement, minimizing errors and delays.
-
 </p>
                         <a href="#">Learn More</a>
                     </div>
@@ -263,6 +257,4 @@
                             </ul>
                         </section>
                     </div>
-
-
                     <?php require APPROOT . '/views/inc/landing_footer.php'; ?>

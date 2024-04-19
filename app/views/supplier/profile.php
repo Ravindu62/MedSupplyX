@@ -7,19 +7,14 @@
 <link rel="stylesheet" href="<?php echo URLROOT ?>/public/css/style.css">
 </head>
 <body>
-
-
 <?php require APPROOT . '/views/inc/header.php'; ?>
-
 <?php require APPROOT . '/views/inc/supplier_sidebar.php'; ?>
-
 <div class="content">
 <div class="anim">
 <h2> Profile </h2>
 </div>
 <div class="anim"> 
     <div class="profilebox">
-        
         <div class="profilecard">
             <div class="card-body">
                 <table>
@@ -29,7 +24,6 @@
                             <td>:</td>
                             <td> ABC (pvt) Ltd </td>           
                         </tr>
-                      
                         <tr>
                             <td> <p class="profdetails"> Company Address </p> </td>
                             <td>:</td>
@@ -58,18 +52,13 @@
                             <td> *****************</td>
                             <td> <button class="addBtn"> Change </button> </td>
                         </tr>
-                      
                 </table>
             </div>
         </div>
 </div>
-
 </div>
 </div>
 </div>
-
 <?php require APPROOT . '/views/inc/footer.php'; ?>
-
 </body>
 </html>
-

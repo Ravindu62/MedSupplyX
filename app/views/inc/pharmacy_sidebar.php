@@ -6,15 +6,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://kit.fontawesome.com/b01c051a0f.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="./styles/style.css">
-
 </head>
 <body>
-  
 <div class="main">
   <!-- sidebar -->
   <div class="sidebar">
     <div class="space"></div>
-
   <div class="nav-container">
   <ul class="nav">
     <li class="active">
@@ -46,14 +43,12 @@
         <span class="text"> Supplier Orders </span>
       </a>
     </li>
-
     <li>
     <a href="<?php echo URLROOT ?>/pharmacies/customerOrders" class="navbar_section">
     <i class="fa-solid fa-cart-shopping"></i>
         <span class="text"> Cust. Orders </span>
       </a>
     </li>
-
     <li>
     <a href="<?php echo URLROOT ?>/pharmacies/history" class="navbar_section">
     <i class="fa-solid fa-clock-rotate-left"></i>
@@ -74,14 +69,9 @@
     </li>
   </ul>
 </div>
-
 <script>
-  
   $('li').click(function(){
   $(this).addClass('active').siblings().removeClass('active');
 });
 </script>
-         
-     
   </div>
- 

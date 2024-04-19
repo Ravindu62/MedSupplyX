@@ -1,15 +1,12 @@
 <?php
 class Pharmacies extends Controller
 {
-
     public $pharmacyModel;
     private $db;
-
     public function __construct()
     {
         $this->pharmacyModel = $this->model('pharmacy');
     }
-
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////Dashboard Function /////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -17,13 +14,10 @@ class Pharmacies extends Controller
     {
         // Sanitize post inputs
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-    
         // Get the pharmacy ID from the session
         $pharmacyId = $_SESSION['USER_DATA']['id'];
-    
         // Get the current date in the format "YYYY-MM-DD"
         $currentDate = date("Y-m-d");
-    
         // Call the model methods to count various statistics
         $countTotalOrders = $this->pharmacyModel->countTotalOrders($pharmacyId);
         $countAcceptedOrders = $this->pharmacyModel->countAcceptedOrders($pharmacyId);
@@ -33,7 +27,6 @@ class Pharmacies extends Controller
         $countCancelledOrders = $this->pharmacyModel->countCancelledOrders($pharmacyId);
         $countTodaysCustomerOrders = $this->pharmacyModel->countTodaysCustomerOrders($pharmacyId, $currentDate);
         $countBills = $this->pharmacyModel->countBills($pharmacyId);
-    
         // Prepare the data to pass to the view
         $data = [
             'countTotalOrders' => $countTotalOrders,
@@ -45,104 +38,70 @@ class Pharmacies extends Controller
             'countTodaysCustomerOrders' => $countTodaysCustomerOrders,
             'countBills' => $countBills,
         ];
-    
         // Load the view with the data
         $this->view('pharmacy/dashboard/index', $data);
     }
-    
-
     public function ongoingOrders(){
         // Sanitize post inputs
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
         $pharmacyId = trim($_SESSION['USER_DATA']['id']);
-
         $ongoingOrders = $this->pharmacyModel->getOrders();
-
         $data = [
             'ongoingOrders' => $ongoingOrders
         ];
-
         $this->view('pharmacy/dashboard/ongoingOrders', $data);
     }
-
     public function acceptedOrders(){
         // Sanitize post inputs
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
         $pharmacyId = trim($_SESSION['USER_DATA']['id']);
-
         $acceptedOrders = $this->pharmacyModel->acceptedOrders();
-
         $data = [
             'acceptedOrders' => $acceptedOrders
         ];
-
         $this->view('pharmacy/dashboard/acceptedOrders', $data);
-        
     }
-
     public function pendingOrders(){
         // Sanitize post inputs
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
         $pharmacyId = trim($_SESSION['USER_DATA']['id']);
-
         $pendingOrders = $this->pharmacyModel->pendingOrders();
-
         $data = [
             'pendingOrders' => $pendingOrders
         ];
-
         $this->view('pharmacy/dashboard/pendingOrders', $data);
     }
-
     public function rejectedOrders(){
         // Sanitize post inputs
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
         $pharmacyId = trim($_SESSION['USER_DATA']['id']);
-
         $rejectedOrders = $this->pharmacyModel->rejectedOrders();
-
         $data = [
             'rejectedOrders' => $rejectedOrders
         ];
-
         $this->view('pharmacy/dashboard/rejectedOrders', $data);
     }
-
     public function cancelledOrders(){
         // Sanitize post inputs
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
         $pharmacyId = trim($_SESSION['USER_DATA']['id']);
-
         $cancelledOrders = $this->pharmacyModel->getCancelledOrdersByPharmacy($pharmacyId);
-
         $data = [
             'cancelledOrders' => $cancelledOrders
         ];
-
         $this->view('pharmacy/dashboard/cancelledOrders', $data);
     }
-
     public function todaysCustomerOrders(){
         // Sanitize post inputs
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
         $pharmacyId = trim($_SESSION['USER_DATA']['id']);
         $currentDate = date("Y-m-d");
-
         $todaysCustomerOrders = $this->pharmacyModel->todaysCustomerOrders($pharmacyId, $currentDate);
-
         $data = [
             'todaysCustomerOrders' => $todaysCustomerOrders
         ];
-
         $this->view('pharmacy/dashboard/todaysCustomerOrders', $data);
     }
-
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////Inventory Function /////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -150,28 +109,21 @@ class Pharmacies extends Controller
     {
         // Sanitize post inputs
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
         $pharmacyId = trim($_SESSION['USER_DATA']['id']);
-
         // Get inventory items for the pharmacy
         $inventory_items = $this->pharmacyModel->getInventoryItems($pharmacyId);
-
         $data = [
             'inventory' => $inventory_items,
         ];
-
         $this->view('pharmacy/inventory/inventory', $data);
     }
-
     public function addInventory()
     {
         // Check for POST
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Process form
-
             // Sanitize POST data
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
             // Initialize data
             $data = [
                 'medicineId' => trim($_POST['medicineId']),
@@ -191,39 +143,31 @@ class Pharmacies extends Controller
                 'expireDate_err' => '',
                 'unitPrice_err' => '',
             ];
-
             // Validate data
             if (empty($data['medicineId'])) {
                 $data['medicineId_err'] = 'Please enter medicine id';
             }
-
             if (empty($data['medicineName'])) {
                 $data['medicineName'] = 'Please enter medicine name';
             }
-
             if (empty($data['batchNo'])) {
                 $data['batchNo_err'] = 'Please enter batch number';
             }
-
             if (empty($data['category'])) {
                 $data['category_err'] = 'Please enter category of the medicine';
             }
-
             if (empty($data['manufacturedDate'])) {
                 $data['manufacturedDate_err'] = 'Please enter manufacture date medicine';
             }
-
             if (empty($data['expireDate'])) {
                 $data['expireDate_err'] = 'Please enter expire date of the medicine';
             }
-
             if (empty($data['unitPrice'])) {
                 $data['unitPrice_err'] = 'Please enter the unit price of this medicine';
             }
             // Make sure no errors
             if (empty($data['medicineId_err']) && empty($data['medicineName_err']) && empty($data['batchNo_err']) && empty($data['category_err']) && empty($data['quantity_err']) && empty($data['manufacturedDate_err']) && empty($data['expireDate_err']) && empty($data['unitPrice_err'])) {
                 // Validated
-
                 // Inventory model function
                 if ($this->pharmacyModel->addInventory($data)) {
                     // Redirect to order
@@ -259,19 +203,15 @@ class Pharmacies extends Controller
         // Load view
         $this->view('pharmacy/inventory/addInventory', $data);
     }
-
     public function editInventory($id)
 {
     // Fetch the inventory item by its ID
     $inventory_item = $this->pharmacyModel->getInventoryItemById($id);
-
     // Check if the form is submitted
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         // Process form data
-
         // Sanitize POST data
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
         // Initialize data array
         $data = [
             'id' => $id, // Inventory item ID
@@ -292,36 +232,28 @@ class Pharmacies extends Controller
             'expireDate_err' => '',
             'unitPrice_err' => '',
         ];
-
         // Validate data
         if (empty($data['medicineId'])) {
             $data['medicineId_err'] = 'Please enter medicine id';
         }
-
         if (empty($data['medicineName'])) {
             $data['medicineName'] = 'Please enter medicine name';
         }
-
         if (empty($data['batchNo'])) {
             $data['batchNo_err'] = 'Please enter batch number';
         }
-
         if (empty($data['category'])) {
             $data['category_err'] = 'Please enter category of the medicine';
         }
-
         if (empty($data['manufacturedDate'])) {
             $data['manufacturedDate_err'] = 'Please enter manufacture date medicine';
         }
-
         if (empty($data['expireDate'])) {
             $data['expireDate_err'] = 'Please enter expire date of the medicine';
         }
-
         if (empty($data['unitPrice'])) {
             $data['unitPrice_err'] = 'Please enter the unit price of this medicine';
         }
-
         // Call the model function to update inventory item
         if ($this->pharmacyModel->editInventory($data)) {
             // Redirect to inventory page after successful update
@@ -334,8 +266,6 @@ class Pharmacies extends Controller
         $this->view('pharmacy/inventory/editInventory', $inventory_item);
     }
 }
-
-
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////Messages Function /////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -343,27 +273,19 @@ class Pharmacies extends Controller
     {
         //Sanitize inputs
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
         $pharmacyId = trim($_SESSION['USER_DATA']['id']);
-
         $messages = $this->pharmacyModel->getMessages($pharmacyId);
-
         $data = [
             'messages' => $messages
         ];
-
         $this->view('pharmacy/notifications/messages', $data);
     }
-
-    public function newMessage()
-    {
+    public function newMessage() {
         // Check for POST
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Process form
-
             // Sanitize POST data
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
             // Initialize data
             $data = [
                 'receiver' => trim($_POST['receiver']),
@@ -373,24 +295,19 @@ class Pharmacies extends Controller
                 'heading_err' => '',
                 'message_err' => ''
             ];
-
             // Validate data
             if (empty($data['receiver'])) {
                 $data['receiver_err'] = 'Please enter the recipient';
             }
-
             if (empty($data['heading'])) {
                 $data['heading_err'] = 'Please enter the heading';
             }
-
             if (empty($data['message'])) {
                 $data['message_err'] = 'Please enter the message';
             }
-
             // Make sure no errors
             if (empty($data['receiver_err']) && empty($data['heading_err']) && empty($data['message_err'])) {
                 // Validated
-
                 // Inventory model function
                 if ($this->pharmacyModel->addMessage($data)) {
                     // Redirect to order
@@ -412,25 +329,18 @@ class Pharmacies extends Controller
                 'heading_err' => '',
                 'message_err' => ''
             ];
-
             // Load view
             $this->view('pharmacies/messages', $data);
         }
     }
-
-
-
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////Advertisement Function/////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public function advertistments()
     {
         $data = [];
-
         $this->view('pharmacy/advertistments/advertistment', $data);
     }
-
-
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////Supplier Order Function ////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -438,32 +348,23 @@ class Pharmacies extends Controller
     {
         // Sanitize post inputs
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
         $order = $this->pharmacyModel->getOrders();
         $acceptedOrders = $this->pharmacyModel->acceptedOrders();
         $selectedOrders = $this->pharmacyModel->selectedOrders();
-
         $data = [
             'order' => $order,
             'acceptedOrders' => $acceptedOrders,
             'selectedOrders' => $selectedOrders
         ];
-
         $this->view('pharmacy/supplierOrders/order', $data);
     }
-
-
     public function addOrder()
     {
-
-
         // Check for POST
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Process form
-
             // Sanitize POST data
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
             $data = [
                 'Mname' => trim($_POST['Mname']),
                 'Bnum' => trim($_POST['Bnum']),
@@ -477,39 +378,31 @@ class Pharmacies extends Controller
                 'ddate_err' => '',
                 'oedate_err' => ''
             ];
-
             // Validate data
             if (empty($data['Mname'])) {
                 $data['Mname_err'] = 'Please enter medicine name';
             }
-
             if (empty($data['Bnum'])) {
                 $data['Bnum_err'] = 'Please enter batch number';
             }
-
             if (empty($data['quantity'])) {
                 $data['quantity_err'] = 'Please enter quantity';
             }
-
             if (empty($data['ddate'])) {
                 $data['ddate_err'] = 'Please enter delivery date';
             }
-
             if (empty($data['oedate'])) {
                 $data['oedent_err'] = 'Please enter order entry date';
             }
-
             // Make sure no errors
             if (empty($data['Mname_err']) && empty($data['Bnum_err']) && empty($data['quantity_err']) && empty($data['ddate_err']) && empty($data['oedent_err'])) {
                 // Validated
-
                 // Check and set logged in user
                 if (isset($_SESSION['user_id'])) {
                     $data['user_id'] = $_SESSION['user_id'];
                 } else {
                     $data['user_id'] = 0;
                 }
-
                 // Register user from model function
                 if ($this->pharmacyModel->addOrder($data)) {
                     // Redirect to order
@@ -536,36 +429,28 @@ class Pharmacies extends Controller
                 'ddate_err' => '',
                 'oedate_err' => ''
             ];
-
             // Load view
             $this->view('pharmacy/supplierOrders/addorder', $data);
         }
         $this->view('pharmacy/supplierOrders/addorder', $data);
     }
-
-
-
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////Customer Order Function ////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public function customerOrders()
     {
         $data = [];
-
         $this->view('pharmacy/customerOrders/customerOrders', $data);
     }
-
     public function deleteOrder($id)
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Get existing post from model
             $order = $this->pharmacyModel->getOrderById($id);
-
             // Check for owner
             if ($order->pharmacyname != $_SESSION['USER_DATA']['name']) {
                 redirect('pharmacies/supplierOrders/orders');
             }
-
             if ($this->pharmacyModel->deleteOrder($id)) {
                 redirect('pharmacies/supplierOrders/orders');
             } else {
@@ -575,9 +460,6 @@ class Pharmacies extends Controller
             redirect('pharmacies/supplierOrders/orders');
         }
     }
-
-
-
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////History Function /////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -585,26 +467,19 @@ class Pharmacies extends Controller
     {
         //sanitize post inputs
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
         $pharmacyId = trim($_SESSION['USER_DATA']['id']);
-
         $deliveredOrders = $this->pharmacyModel->getDeliveredOrders($pharmacyId);
         $cancelledOrdersByPharmacy = $this->pharmacyModel->getCancelledOrdersByPharmacy($pharmacyId);
         $rejectedOrdersBySuppliers = $this->pharmacyModel->getRejectedOrdersBySuppliers($pharmacyId);
         $rejectedOrdersByPharmacy = $this->pharmacyModel->getRejectedOrdersByPharmacy($pharmacyId);
-
         $data = [
             'deliveredOrders' => $deliveredOrders,
             'cancelledOrdersByPharmacy' => $cancelledOrdersByPharmacy,
             'rejectedOrdersBySuppliers' => $rejectedOrdersBySuppliers,
             'rejectedOrdersByPharmacy' => $rejectedOrdersByPharmacy,
         ];
-
         $this->view('pharmacy/history/history', $data);
     }
-
-
-
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////Profile Function /////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -612,7 +487,6 @@ class Pharmacies extends Controller
     {
         // Sanitize user inputs
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Process form submission
             $updateResult = $this->updateProfile();
@@ -637,23 +511,17 @@ class Pharmacies extends Controller
             $this->view('pharmacy/profile/profile', $data);
         }
     }
-
     // public function profile()
     // {
     //     // sanitize user inputs
     //     $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
     //     $pharmacyName = trim($_SESSION['USER_DATA']['name']);
-
     //     $profile = $this->pharmacyModel->getProfileData($pharmacyName);
-
     //     $data = [
     //         'profile' => $profile
     //     ];
-
     //     $this->view('pharmacy/profile/profile', $data);
     // }
-
-
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////Logout Function ///////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

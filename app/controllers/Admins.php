@@ -1,39 +1,29 @@
 <?php
  class Admins extends Controller {
-
     Public $adminModel;
     public $userModel;
     Public $db;
-
-
     public function __construct() {
         $this->adminModel = $this->model('Admin');
     }
-
 public function index() {
         $countPharmacy = $this->adminModel->countPharmacies();
         $countSuppliers = $this->adminModel->countSuppliers();
         $countManagers = $this->adminModel->countManagers();
         $countMessages = $this->adminModel->countMessages();
-
         $data = [
             'countPharmacies' => $countPharmacy,
             'countSuppliers' => $countSuppliers,
             'countManagers' => $countManagers,
             'countMessages' => $countMessages
         ];
-    
         $this->view('admin/index', $data);
-
 }
-
 public function managerRegistration() {
-
     // Register manager
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Sanitize POST array
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-    
         $data = [
             'mname' => trim($_POST['mname']),
             'memail' => trim($_POST['memail']),
@@ -48,13 +38,10 @@ public function managerRegistration() {
             'mphone_err' => '',
             'maddress_err' => ''
         ];
-    
         // Validated data
         if(empty($data['mname'])) {
             $data['mname_err'] = 'Please enter name';
-       
         }
-
         if(empty($data['memail'])) {
             $data['memail_err'] = 'Please enter email';
         } else {
@@ -63,13 +50,11 @@ public function managerRegistration() {
                 $data['memail_err'] = 'Email is already taken';
             }
         }
-
         if(empty($data['mpassword'])) {
             $data['mpassword_err'] = 'Please enter password';
         } elseif(strlen($data['mpassword']) < 6) {
             $data['mpassword_err'] = 'Password must be at least 6 characters';
         }
-
         if(empty($data['confirm_password'])) {
             $data['confirm_password_err'] = 'Please confirm password';
         } else {
@@ -77,16 +62,12 @@ public function managerRegistration() {
                 $data['confirm_password_err'] = 'Passwords do not match';
             }
         }
-
-
         if(empty($data['mphone'])) {
             $data['mphone_err'] = 'Please enter phone number';
         }
-
         if(empty($data['maddress'])) {
             $data['maddress_err'] = 'Please enter address';
         }
-
         // Make sure errors are empty
         if(empty($data['mname_err']) && empty($data['memail_err']) && empty($data['mpassword_err']) && empty($data['confirm_password_err']) && empty($data['mphone_err']) && empty($data['maddress_err'])) {
             // Validated
@@ -119,110 +100,47 @@ public function managerRegistration() {
             'mphone_err' => '',
             'maddress_err' => ''
         ];
-    
         // Load view
         $this->view('admin/managerRegistration', $data);
     }
 }
-
-
 public function managers() {
-
     $managers = $this->adminModel->getManager();
-
     $data = [
         'managers' => $managers
     ];
-    
     $this->view('admin/managers', $data);
-
 }
-
-public function deleteManager($id){
-    if($_SERVER['REQUEST_METHOD'] == 'POST') {
-        // Get existing post from model
-        $manager = $this->adminModel->getManagerById($id);
-
-        // Check for owner
-        /*if($manager->managername != $_SESSION['USER_DATA']['name']) {
-            redirect('admin/managers');
-        }*/
-
-        if($this->adminModel->deleteManager($id)) {
-            redirect('admin/managers');
-            exit();
-        } else {
-            die('Something went wrong');
-        }
+//deelete manager by Id
+public function deleteManager($id) {
+    if($this->adminModel->deleteManager($id)) {
+        redirect('admins/managers');
     } else {
-        redirect('admin/managers');
+        die('Something went wrong');
     }
-    
 }
-
-/*public function updateManager($id){
-    if($_SERVER['REQUEST_METHOD'] == 'POST'){
-        $manager = $this->adminModel->getManagerById($id);
-
-        $mname = $POST['mname'];
-        $memail = $_POST['memail'];
-
-        if($this->adminModel->updateManager($id,$mname,$memail)){
-            redirect ('admin/managers');
-            exit();
-        }else{
-            die('Something went wrong');
-        }
-    }else{
-        $managerData = $manager->getManagerById($Id);
-        $mname = $managerData['name'];
-        $memail = $managerData['email'];
-
-        $this->view('admin/managers', $data);
-    }
-}*/
-
-
 public function messages() {
     $data = [];
-    
     $this->view('admin/messages', $data);
-
 }
-
 public function advertistments() {
     $data = [];
-    
     $this->view('admin/advertistments', $data);
-
 }
-
 public function all_orders() {
     $data = [];
-    
     $this->view('admin/all_orders', $data);
-
 }
-
 public function history() {
     $data = [];
-    
     $this->view('admin/history', $data);
-
 }
-
 public function profile() {
     $data = [];
-    
     $this->view('admin/profile', $data);
-
 }
-
 public function logout() {
     unset($_SESSION['USER_DATA']);
     redirect('users/login');
  }
-
-
-
 }

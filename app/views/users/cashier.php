@@ -1,4 +1,3 @@
-
       <body>
          <?php require APPROOT . '/views/inc/landing_header.php'; ?>
         <div class="background"></div>
@@ -21,7 +20,6 @@
                             >
                             <div>  <span class="importantMessage"> <?php echo $data['name_err']; ?>  </span> </div>
                         </div>
-
                         <div class="input">
                             <label for="#companyname"> Pharmacy Lience Number :</label>
                             <br>
@@ -33,7 +31,6 @@
                             >
                             <div>  <span class="importantMessage"> <?php echo $data['licence_err']; ?>  </span> </div>
                         </div>
-
                         <div class="input">
                             <label for="#phone">Phone Number :</label>
                             <br>
@@ -56,7 +53,6 @@
                             >
                             <div>  <span class="importantMessage"> <?php echo $data['email_err']; ?>  </span> </div>
                         </div>
-
                             <div class="input">
                             <label for="#passord">Password :</label>
                             <br>
@@ -79,8 +75,6 @@
                             >
                             <div>  <span class="importantMessage"> <?php echo $data['confirm_password_err']; ?>  </span> </div>
                         </div>
- 
-
                         <div class="captcha">
                         <div class="g-recaptcha" 
                              data-sitekey="6LdhetUoAAAAAI3IGcx_nVJZVzLUMu-3clUfSxf8"
@@ -91,7 +85,6 @@
                          <input type="submit" name="submit" value="Register" id="registerbtn" disabled />
                         </div>
                     </form>
-
                     <script type="text/javascript">
                     function callback() {
                         const submitButton = document.getElementById("registerbtn");
@@ -101,7 +94,4 @@
                 </div>
             </div>
         </div>
-        
-
         <?php require APPROOT . '/views/inc/landing_footer.php'; ?>
-

@@ -7,17 +7,11 @@
 <link rel="stylesheet" href="<?php echo URLROOT ?>/public/css/style.css">
 </head>
 <body>
-
-
 <?php require APPROOT . '/views/inc/header.php'; ?>
-
 <?php require APPROOT . '/views/inc/cashier_sidebar.php'; ?>
-
 <!-- content -->
   <div class="content">
-
   <div class="anim">  <h2> Customer Orders </h2> </div> 
-
 <div class="anim">  
 <table class="customers">
   <tr>
@@ -27,9 +21,6 @@
     <th> Quantity </th>
     <th> Date </th>
     <th> Edit </th>
-   
-    
-    
   </tr>
 <tr> 
   <td> </td>
@@ -38,10 +29,7 @@
   <td> </td>
   <td> </td>
   <td> </td>
- 
 </tr>
-
-
 <tr> 
   <td> Nisal </td>
   <td> Aspirine</td>
@@ -49,21 +37,11 @@
   <td> 12</td>
   <td> 2023/10/03</td>
   <td> <button class="smallOpen-button"> Edit </button> </td>   
- 
 </tr>
-
 </table>
 </div>
-
-
-
-
 </div>
 </div>
-
 <?php require APPROOT . '/views/inc/footer.php'; ?>
-
-
 </body>
 </html>
-

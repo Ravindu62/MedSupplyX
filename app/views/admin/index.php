@@ -7,21 +7,13 @@
 <link rel="stylesheet" href="<?php echo URLROOT ?>/public/css/style.css">
 </head>
 <body>
-
-
 <?php require APPROOT . '/views/inc/header.php'; ?>
-
 <?php require APPROOT . '/views/inc/admin_sidebar.php'; ?>
-
-
-
 <!-- content -->
   <div class="content">
-
     <h2 class="anim"> Dashboard</h2>
     <p class="anim"> Here are the important details.</p>
     <br>
-    
     <div class="row">
       <div class="column">
         <div class="card1">
@@ -31,7 +23,6 @@
           <p>  Pharmacies </p>
         </div>
       </div>
-    
       <div class="column">
         <div class="card2">
           <h3> 
@@ -40,14 +31,12 @@
           <p>  Suppliers </p>
         </div>
       </div>
-      
       <div class="column">
         <div class="card3">
           <h3> <?php echo $data['countManagers']; ?> </h3>
           <p>  Managers </p>
         </div>
       </div>
-      
       <div class="column">
         <div class="card4">
           <h3> 0 </h3>
@@ -55,9 +44,7 @@
         </div>
       </div>
     </div>
-
     <div class="smallspace"></div>
-   
    <div class="chartbackground"> 
    <div class="anim"> <div id="piechart" class="chart1"></div> 
     <div id = "barchart" class="chart1"></div>
@@ -65,34 +52,25 @@
 </div>
 </div>
 </div>
-
 <?php require APPROOT . '/views/inc/footer.php'; ?>
-
 <script type="text/javascript">
       google.charts.load('current', {'packages':['corechart']});
       google.charts.setOnLoadCallback(drawChart);
-
       function drawChart() {
-
         var data = google.visualization.arrayToDataTable([
           ['Users', 'Percentage'],
           ['Pharmacies',      <?php echo $data['countPharmacies']; ?>],
           ['Suppliers',      <?php echo $data['countSuppliers']; ?>],
           ['Managers',      <?php echo $data['countManagers']; ?>],
         ]);
-
         var options = {
           title: 'Registered Pharmacies, Suppliers and Managers',
           slices: {0: {color: '#006faf'}, 1:{color: '#4682B4'}, 2:{color: '#87CEEB'}},
           pieSliceText: 'none'
         };
-
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-
         chart.draw(data, options);
       }
-
-
         function drawChart1() {
             /* Define the chart to be drawn.*/
             var data = google.visualization.arrayToDataTable([
@@ -110,10 +88,6 @@
             chart.draw(data, options);
         }
         google.charts.setOnLoadCallback(drawChart1);
-
-
-
 </script>
 </body>
 </html>
-

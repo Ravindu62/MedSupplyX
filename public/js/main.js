@@ -1,7 +1,6 @@
 $("li").click(function () {
   $(this).addClass("active").siblings().removeClass("active");
 });
-
 $(function () {
   $(window).on("scroll", function () {
     if ($(window).scrollTop() > 50) {
@@ -12,23 +11,18 @@ $(function () {
     }
   });
 });
-
 function openForm() {
   document.getElementById("myForm").style.display = "block";
 }
-
 function closeForm() {
   document.getElementById("myForm").style.display = "none";
 }
-
 function openForm1() {
   document.getElementById("myForm1").style.display = "block";
 }
-
 function closeForm1() {
   document.getElementById("myForm1").style.display = "none";
 }
-
 function search() {
   var input, filter, table, tr, td, i, txtValue;
   input = document.getElementById("myInput");
@@ -47,7 +41,6 @@ function search() {
     }
   }
 }
-
 function pharmacyMedicineSearch() {
   var input, filter, table, tr, td, i, txtValue;
   input = document.getElementById("myInput");
@@ -66,7 +59,6 @@ function pharmacyMedicineSearch() {
     }
   }
 }
-
 function showPassword() {
   var x = document.getElementById("password");
   if (x.style.display === "none") {
@@ -75,11 +67,9 @@ function showPassword() {
     x.style.display = "none";
   }
 }
-
 function checkPassword() {
   const passwordInput = document.getElementById("password");
   const showPasswordCheckbox = document.getElementById("showPassword");
-
   showPasswordCheckbox.addEventListener("change", function () {
     if (showPasswordCheckbox.checked) {
       passwordInput.type = "text";
@@ -88,6 +78,3 @@ function checkPassword() {
     }
   });
 }
-
-
-

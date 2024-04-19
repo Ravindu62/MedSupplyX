@@ -7,10 +7,7 @@
 <link rel="stylesheet" href="<?php echo URLROOT ?>/public/css/style.css">
 </head>
 <body>
-
-
 <?php require APPROOT . '/views/inc/header.php'; ?>
-
 <?php require APPROOT . '/views/inc/cashier_sidebar.php'; ?>
 <div class="content">
 <div class="anim">
@@ -18,17 +15,14 @@
 </div>
 <div class="anim"> 
     <div class="profilebox">
-        
         <div class="profilecard">
             <div class="card-body">
                 <table>
                         <tr>
-                        
                         <div class="anim"> <td> <p class="profdetails"> Cashier Name </p> </td> </div>
                             <td>:</td>
                             <td> <?php echo $data['profile']->name; ?></td>           
                         </tr>
-                      
                         <tr>
                             <td> <p class="profdetails">  Pharmacy </p></td>
                             <td>:</td>
@@ -46,18 +40,13 @@
                             <td> *******</td>
                             <td> <button class="addBtn"> Change </button> </td>
                         </tr>
-                       
                 </table>
             </div>
         </div>
 </div>
-
 </div>
 </div>
 </div>
-
 <?php require APPROOT . '/views/inc/footer.php'; ?>
-
 </body>
 </html>
-
