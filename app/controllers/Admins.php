@@ -173,7 +173,6 @@ public function updateManager($id) {
     }
 }
 
-
 public function all_pharmacies() {
 
     $allPharmacies = $this->adminModel->getApprovedPharmacyRegistration();
@@ -210,6 +209,7 @@ public function advertistments() {
     $this->view('admin/advertistments', $data);
 
 }
+
 
 public function all_orders() {
     $data = [];
