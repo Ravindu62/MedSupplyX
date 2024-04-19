@@ -10,6 +10,7 @@ class Managers extends Controller
     }
     public function index()
     {
+    
         $countPharmacy = $this->managerModel->countPharmacies();
         $countSuppliers = $this->managerModel->countSuppliers();
         $countMedicines = $this->managerModel->countMedicines();
@@ -300,6 +301,8 @@ class Managers extends Controller
                 $this->db->bind(':role', 'supplier');
                 // Execute
                 if ($this->db->execute()) {
+                    $mail = new Mail;
+                    $mail->sendConfirmationEmailToSupplier($email, $name);
                     header('location: ' . URLROOT . '/managers/registration');
                     return true;
                 } else {
@@ -339,6 +342,8 @@ class Managers extends Controller
                 $this->db->bind(':role', 'pharmacy');
                 // Execute
                 if ($this->db->execute()) {
+                    $mail = new Mail;
+                    $mail->sendConfirmationEmailToPharmacy($email, $name);
                     header('location: ' . URLROOT . '/managers/registration');
                     return true;
                 } else {
@@ -348,4 +353,6 @@ class Managers extends Controller
             }
         }
     }
+
+ 
 }

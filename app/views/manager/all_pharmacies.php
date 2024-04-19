@@ -1,7 +1,7 @@
 <DOCTYPE html>
   <html lang="en">
   <head>
-    <title> Inventory </title>
+    <title> Pharmacies </title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="<?php echo URLROOT ?>/public/css/style.css">
@@ -11,7 +11,7 @@
     <?php require APPROOT . '/views/inc/manager_sidebar.php'; ?>
     <!-- content -->
     <div class="content">
-      <h2 class="anim"> Pharmacies </h2>
+      <h2 class="anim"> Registered Pharmacies </h2>
       <p class="anim"> Here are all the Pharmacies who registered to the MedSupplyX </p>
       <div class="anim">
         <table class="customers">
@@ -22,9 +22,10 @@
             <th> Physical Address </th>
             <th> Contact No </th>
             <th> Email </th>
-            <th> Document </th>
+            <th colspan="2"> Licence </th>
           </tr>
           <tr>
+            <td> </td>
             <td> </td>
             <td> </td>
             <td> </td>
@@ -41,8 +42,11 @@
               <td> <?php echo $allPharmacies->address; ?> </td>
               <td> <?php echo $allPharmacies->phone; ?> </td>
               <td> <?php echo $allPharmacies->email; ?> </td>
-              <td> <a href="<?php echo URLROOT; ?>/public/uploads/PharmacyLicence/<?php echo $allPharmacies->licence; ?>" target="_blank">
+              <td> <a href="<?php echo URLROOT; ?>/public/uploads/PharmacyLicence/<?php echo $allPharmacies->licence; ?>" target="_blank" >
                   <i class="fa fa-file-pdf-o" style="font-size:20px;color:red;"></i>
+                </a> </td>
+                <td> <a href="<?php echo URLROOT; ?>/public/uploads/PharmacyLicence/<?php echo $allPharmacies->licence; ?>" target="_blank" download>
+                <i class="fa fa-download" aria-hidden="true"></i>
                 </a> </td>
             <?php endforeach; ?>
             </tr>
