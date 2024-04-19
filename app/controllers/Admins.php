@@ -144,7 +144,7 @@ public function managers() {
 
 }
 
-//deelete manager by Id
+
 public function deleteManager($id) {
     if($this->adminModel->deleteManager($id)) {
         redirect('admins/managers');
@@ -154,6 +154,24 @@ public function deleteManager($id) {
 }
 
 
+public function updateManager($id) {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        
+        $name = $_POST['name'];
+        $address = $_POST['address'];
+        $phone = $_POST['phone'];
+        $email = $_POST['email'];
+        
+        // Call the updateManager method in your model to update the manager's information
+        $this->adminModel->updateManager($id, $name, $address, $phone, $email);
+
+        redirect('admins/managers');
+        exit();
+    } else {
+        // If the request method is not POST, redirect to an error page or display an error message
+        die('Invalid request method');
+    }
+}
 
 
 public function all_pharmacies() {
