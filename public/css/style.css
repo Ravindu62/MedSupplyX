@@ -261,6 +261,7 @@ footer {
 
 .row {margin: 0 -5px;}
 
+
 /* Clear floats after the columns */
 .row:after {
   content: "";
@@ -321,6 +322,8 @@ footer {
   animation: 4s anim-lineUp ease-out;
 }
 
+
+
 .card1:hover  {
   background-color:#c9e9ed;
   color:#00607F;
@@ -350,6 +353,8 @@ footer {
   transform: translateY(-6px);
   transition: 0.5s;
 }
+
+
 
 @media screen and (max-width: 1000px) {
   .card1 , .card2 , .card3 , .card4 {
@@ -1378,9 +1383,3 @@ nav ul li:hover::before {
     opacity: 0.3;
   }
 }
-
-
-
-
-
-

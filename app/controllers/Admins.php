@@ -11,15 +11,21 @@
     }
 
 public function index() {
-        $countPharmacy = $this->adminModel->countPharmacies();
-        $countSuppliers = $this->adminModel->countSuppliers();
+        $countapprovedPharmacy = $this->adminModel->countapprovedPharmacies();
+        $countpendingPharmacy = $this->adminModel->countpendingPharmacies();
+        $countapprovedSuppliers = $this->adminModel->countapprovedSuppliers();
+        $countpendingSuppliers = $this->adminModel->countpendingSuppliers();
         $countManagers = $this->adminModel->countManagers();
+        $countOrders = $this->adminModel->countOrders();
         $countMessages = $this->adminModel->countMessages();
 
         $data = [
-            'countPharmacies' => $countPharmacy,
-            'countSuppliers' => $countSuppliers,
+            'countapprovedPharmacies' => $countapprovedPharmacy,
+            'countpendingPharmacies' => $countpendingPharmacy,
+            'countapprovedSuppliers' => $countapprovedSuppliers,
+            'countpendingSuppliers' => $countpendingSuppliers,
             'countManagers' => $countManagers,
+            'countOrders' => $countOrders,
             'countMessages' => $countMessages
         ];
     
@@ -138,51 +144,57 @@ public function managers() {
 
 }
 
-public function deleteManager($id){
-    if($_SERVER['REQUEST_METHOD'] == 'POST') {
-        // Get existing post from model
-        $manager = $this->adminModel->getManagerById($id);
 
-        // Check for owner
-        /*if($manager->managername != $_SESSION['USER_DATA']['name']) {
-            redirect('admin/managers');
-        }*/
-
-        if($this->adminModel->deleteManager($id)) {
-            redirect('admin/managers');
-            exit();
-        } else {
-            die('Something went wrong');
-        }
+public function deleteManager($id) {
+    if($this->adminModel->deleteManager($id)) {
+        redirect('admins/managers');
     } else {
-        redirect('admin/managers');
+        die('Something went wrong');
     }
-    
 }
 
 
-/*public function updateManager($id){
-    if($_SERVER['REQUEST_METHOD'] == 'POST'){
-        $manager = $this->adminModel->getManagerById($id);
+public function updateManager($id) {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        
+        $name = $_POST['name'];
+        $address = $_POST['address'];
+        $phone = $_POST['phone'];
+        $email = $_POST['email'];
+        
+        // Call the updateManager method in your model to update the manager's information
+        $this->adminModel->updateManager($id, $name, $address, $phone, $email);
 
-        $mname = $POST['mname'];
-        $memail = $_POST['memail'];
-
-        if($this->adminModel->updateManager($id,$mname,$memail)){
-            redirect ('admin/managers');
-            exit();
-        }else{
-            die('Something went wrong');
-        }
-    }else{
-        $managerData = $manager->getManagerById($Id);
-        $mname = $managerData['name'];
-        $memail = $managerData['email'];
-
-        $this->view('admin/managers', $data);
+        redirect('admins/managers');
+        exit();
+    } else {
+        // If the request method is not POST, redirect to an error page or display an error message
+        die('Invalid request method');
     }
-}*/
+}
 
+public function all_pharmacies() {
+
+    $allPharmacies = $this->adminModel->getApprovedPharmacyRegistration();
+    
+    $data = [
+        'users' => $allPharmacies
+    ];
+    
+    $this->view('admin/all_pharmacies', $data);
+}
+
+public function all_suppliers() {
+
+    $allSuppliers = $this->adminModel->getApprovedSupplierRegistration();
+        
+    $data = [
+        'allSuppliers' => $allSuppliers
+    ];
+    
+    $this->view('admin/all_suppliers', $data);
+
+}
 
 public function messages() {
     $data = [];
@@ -206,12 +218,12 @@ public function all_orders() {
 
 }
 
-public function history() {
+/*public function history() {
     $data = [];
     
     $this->view('admin/history', $data);
 
-}
+}*/
 
 public function profile() {
     $data = [];

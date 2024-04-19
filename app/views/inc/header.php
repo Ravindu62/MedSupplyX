@@ -27,9 +27,9 @@
         </table>
       </div>
       <div class="greeting">  
-      Hello , <?php echo $_SESSION['USER_DATA']['name']; ?>
+      Hello, <?php echo $_SESSION['USER_DATA']['name']; ?>
       
-      <img class="profile" src="<?php echo URLROOT ?>/public/img/profile.png" alt="profile">
+      <a href="<?php echo URLROOT ?>/pharmacies/profile"><img class="profile" src="<?php echo URLROOT ?>/public/img/profile.png" alt="profile"></a>
       </div>
     </div>
 

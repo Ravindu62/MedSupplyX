@@ -113,23 +113,42 @@ class Admin{
         }
     }
 
-    /*public function updateManager($id,$mname,$memail){
-        $this->db->query('UPDATE managerregistration SET mname= :mname, memail= :memail WHERE id = :id');
+    public function updateManager($id, $name, $address, $phone, $email) {
+        // Prepare SQL statement
+        $this->db->query("UPDATE managerregistration SET name = :name, address = :address, phone = :phone, email = :email WHERE id = :id");
+
         // Bind values
         $this->db->bind(':id', $id);
-        $this->db->bind(':mname', $mname);
-        $this->db->bind(':nemail', $memail);
-        
-        // Execute
-        if($this->db->execute()){
+        $this->db->bind(':name', $name);
+        $this->db->bind(':address', $address);
+        $this->db->bind(':phone', $phone);
+        $this->db->bind(':email', $email);
+
+        // Execute the query
+        if ($this->db->execute()) {
             return true;
         } else {
             return false;
         }
     }
-    */
+    
+    public function getApprovedPharmacyRegistration() {
+        $this->db->query("SELECT * FROM pharmacyregistration WHERE status='approved'");
 
-    public function countPharmacies() {
+        $results = $this->db->resultSet();
+
+        return $results;
+    }
+
+    public function getApprovedSupplierRegistration() {
+        $this->db->query("SELECT * FROM supplierregistration WHERE status='approved'");
+
+        $results = $this->db->resultSet();
+
+        return $results;
+    }
+
+    public function countapprovedPharmacies() {
         $this->query = $this->db->query2("SELECT COUNT(*) as count FROM pharmacyregistration WHERE status='approved'");
     
         if ($this->query) {
@@ -140,9 +159,19 @@ class Admin{
             return 0;
                 }
     }
+    public function countpendingPharmacies() {
+        $this->query = $this->db->query2("SELECT COUNT(*) as count FROM pharmacyregistration WHERE status='pending'");
+    
+        if ($this->query) {
+            return $this->query[0]->count;
+           
+        } else {
+            // Handle the error, e.g., log it or return an appropriate value
+            return 0;
+                }
+    }
 
-
-    public function countSuppliers() {
+    public function countapprovedSuppliers() {
         $this->query = $this->db->query2("SELECT COUNT(*) as count FROM supplierregistration WHERE status='approved'");
     
         if ($this->query) {
@@ -153,6 +182,18 @@ class Admin{
             return 0;
     }
       
+}
+public function countpendingSuppliers() {
+    $this->query = $this->db->query2("SELECT COUNT(*) as count FROM supplierregistration WHERE status='pending'");
+
+    if ($this->query) {
+        return $this->query[0]->count;
+       
+    } else {
+        // Handle the error, e.g., log it or return an appropriate value
+        return 0;
+}
+  
 }
 
     public function countManagers() {
@@ -167,6 +208,17 @@ class Admin{
     }
 }
 
+public function countOrders() {
+    $this->query = $this->db->query2("SELECT COUNT(*) as count FROM approvedorders");
+
+    if ($this->query) {
+        return $this->query[0]->count;
+       
+    } else {
+        // Handle the error, e.g., log it or return an appropriate value
+        return 0;
+}
+}
     public function countMessages(){
         $this->query = $this->db->query2("SELECT COUNT(*) as count FROM messages");
         
@@ -181,7 +233,18 @@ class Admin{
 
          
 }
+
+    /*public function countTotal() {
+        // Query to get data
+        $this->query = $this->db->query2("SELECT COUNT(*) as count,
+                  FROM pharmacyregistration WHERE status='approved',supplierregistration WHERE status='approved',managerregistration");
+
+        $stmt = $this->db->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }*/
 }
+
 
 
     
