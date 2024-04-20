@@ -19,6 +19,13 @@
 </div>
 <div class="anim"> 
     <div class="profilebox">
+    <?php foreach($data['admin'] as $admin) : ?>
+        <tr> 
+        <td>  </td>
+        <td> <?php echo $admin->name; ?> </td>
+        <td> <?php echo $admin->address; ?> </td>
+        <td> <?php echo $admin->phone; ?> </td>
+        <td> <?php echo $admin->email; ?> </td>
         
         <div class="profilecard">
             <div class="card-body">
@@ -27,24 +34,24 @@
                         <div class="anim"> 
                             <td> <p  class="profdetails"> Administrator Name </p> </td> 
                             <td>:</td>
-                            <td> UCSC </td>           
+                            <td> <?php echo $data['admin']->name; ?> </td>           
                         </tr>
                       
                         <tr>
                             <td> <p  class="profdetails">  Administrator Address</p> </td>
                             <td>:</td>
-                            <td> University of Colombo </td>
+                            <td> <?php echo $data['admin']->address; ?> </td>
                         </tr>
                         <tr>
                             <td> <p  class="profdetails"> Contact No </td>
                             <td>:</td>
-                            <td> 0715171421 </td>
+                            <td> <?php echo $data['admin']->contact; ?> </td>
                             
                         </tr>
                         <tr>
                             <td> <p  class="profdetails">Email</td>
                             <td>:</td>
-                            <td> 2021is073@stu.ucsc.cmb.ac.lk </td>
+                            <td><?php echo $data['admin']->email; ?></td>
                             <td> <button class="addBtn"> Change </button> </td>
                         </tr>
                         <tr>

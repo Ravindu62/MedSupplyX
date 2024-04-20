@@ -218,19 +218,19 @@ public function all_orders() {
 
 }
 
-/*public function history() {
-    $data = [];
-    
-    $this->view('admin/history', $data);
-
-}*/
-
 public function profile() {
-    $data = [];
-    
-    $this->view('admin/profile', $data);
+    // Fetch admin data from the model
+    $adminData = $this->adminModel->getAdminData();
 
+    // Prepare the data to be passed to the view
+    $data = [
+        'adminData' => $adminData
+    ];
+
+    // Load the view with the data
+    $this->view('admin/profile', $data);
 }
+
 
 public function logout() {
     unset($_SESSION['USER_DATA']);

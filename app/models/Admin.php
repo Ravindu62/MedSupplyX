@@ -234,15 +234,14 @@ public function countOrders() {
          
 }
 
-    /*public function countTotal() {
-        // Query to get data
-        $this->query = $this->db->query2("SELECT COUNT(*) as count,
-                  FROM pharmacyregistration WHERE status='approved',supplierregistration WHERE status='approved',managerregistration");
+public function getAdminData() {
+    $this->db->query('SELECT * FROM admin WHERE id = :id');
+    $this->db->bind(':id', 1); // Assuming the admin ID is 1
 
-        $stmt = $this->db->prepare($query);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }*/
+    return $this->db->single(); // Assuming you have a method like single() to fetch a single record
+}
+
+
 }
 
 
