@@ -60,7 +60,9 @@
   <td> <?php echo date('Y-m-d', strtotime($inventory->expire_date)); ?> </td>
   <td> <?php echo $inventory->unit_amount; ?> </td>
  <td> <form action="<?php echo URLROOT; ?>/pharmacies/editInventory/<?php echo $inventory->id; ?>" method="POST">
-    <input type="submit" id="delete" class="smallOpen-button" name="edit" value="Edit"> </td>
+    <input type="submit" id="edit" class="smallOpen-button" name="edit" value="Edit"> </td>
+    <td> <form action="<?php echo URLROOT; ?>/pharmacies/removeInventory" method="POST">
+    <input type="submit" id="remove" class="smallOpen-button" name="remove" value="Remove"> </td>
 </form>
 </tr>
 <?php endforeach; ?>
