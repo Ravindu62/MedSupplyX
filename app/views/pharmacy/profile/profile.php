@@ -14,7 +14,7 @@
 
     <?php require APPROOT . '/views/inc/header.php'; ?>
 
-    <?php require APPROOT . '/views/inc/supplier_sidebar.php'; ?>
+    <?php require APPROOT . '/views/inc/pharmacy_sidebar.php'; ?>
 
     <div class="content">
         <div class="anim">
@@ -26,40 +26,153 @@
                 <div class="profilecard">
                     <div class="card-body">
                         <table>
-                        <tr>
-                        <div class="anim"> 
-                            <td> <p class="profdetails"> Company Name </p> </td> </div>
-                            <td>:</td>
-                            <td><?php echo $profile->name; ?></td>           
-                        </tr>
-                        <tr>
-                            <td> <p class="profdetails"> Company Address </p> </td>
-                            <td>:</td>
-                            <td><?php echo $profile->address; ?></td>
-                        </tr>
-                        <tr>
-                            <td> <p class="profdetails">Licence Number </p> </td>
-                            <td>:</td>
-                            <td><?php echo $profile->licenceno; ?></td>
-                        </tr>
-                        <tr>
-                            <td> <p class="profdetails"> Contact Number </p>  </td>
-                            <td> : </td>
-                            <td><?php echo $profile->phone; ?></td>
-                        </tr>
-                        <tr>
-                            <td> <p class="profdetails"> Email </p> </td>
-                            <td>:</td>
-                            <td><?php echo $profile->email; ?> </td>
-                        </tr>
-                        <tr>
-                            <td> <p class="profdetails"> Password </p> </td>
-                            <td> : </td>
-                            <td> <?php echo $profile->password; ?></td>
-                        </tr>
+                            <tr>
+                                <div class="anim">
+                                    <td>
+                                        <p class="profdetails"> Company Name </p>
+                                    </td>
+                                </div>
+                                <td>:</td>
+                                <td> <?php echo isset($data['profile']) ? $data['profile']->name : ''; ?></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p class="profdetails"> Company Address </p>
+                                </td>
+                                <td>:</td>
+                                <td><?php echo isset($data['profile']) ? $data['profile']->address : ''; ?></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p class="profdetails">Licence Number </p>
+                                </td>
+                                <td>:</td>
+                                <td><?php echo isset($data['profile']) ? $data['profile']->licenceno : ''; ?></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p class="profdetails"> Contact Number </p>
+                                </td>
+                                <td> : </td>
+                                <td colspan="3"><?php echo isset($data['profile']) ? $data['profile']->phone : ''; ?></td>
+                                <td><a href="#popup1"> <button class="addBtn"> Change </button></a> </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p class="profdetails"> Email </p>
+                                </td>
+                                <td>:</td>
+                                <td colspan="3"><?php echo isset($data['profile']) ? $data['profile']->email : ''; ?></td>
+                                <td> <a href="#popup2"><button class="addBtn"> Change </button></a> </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p class="profdetails"> Password </p>
+                                </td>
+                                <td> : </td>
+                                <td colspan="3"> <b>
+                                        <p id="password" style="display:none;"><?php echo isset($data['profile']) ? $data['profile']->password : ''; ?> </p>
+                                    </b>
+                                    <input type="checkbox" onclick="showPassword()"> show password
+                                </td>
+                                <td> <a href="#popup3"><button class="addBtn"> Change </button></a> </td>
+                            </tr>
 
                         </table>
                     </div>
+                </div>
+            </div>
+
+            <div id="popup1" class="overlay">
+                <div class="popup-profile-change">
+                    <form action="<?php echo URLROOT; ?>/pharmacies/changeContactNumber" method="POST" class="form-container">
+                        <h2>Set Your Contact Number</h2>
+                        <table>
+                            <tr>
+                                <td >
+                                    <p class="editprofile-maintag"> Current Number </p>
+                                </td>
+                                <td> : </td>
+                                <td><input class="editprofile-input" type="text" name="currentContactNumber" readonly value="<?php echo $data['profile']->phone; ?>"></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p class="editprofile-maintag"> New Password </p>
+                                </td>
+                                <td> : </td>
+                                <td><input class="editprofile-input" type="text" placeholder="Enter New Contact Number" name="newPhone"></td>
+                            </tr>
+                        </table>
+                        <div class="editprofile-btnsetup">
+                        <a href="<?php echo URLROOT; ?>/pharmacies/changeContactNumber"><button type="submit" class="editprofile-updatebtn "> Update Contact Number </button></a>
+                        <a href="#"><button type="button" class="btn cancel"> Close </button></a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div id="popup2" class="overlay">
+                <div class="popup-profile-change">
+                    <form action="<?php echo URLROOT; ?>/pharmacies/changeEmail" method="POST" class="form-container">
+                        <h2>Set Your Email Address</h2>
+                        <table>
+                            <tr>
+                                <td >
+                                    <p class="editprofile-maintag"> Current Email </p>
+                                </td>
+                                <td> : </td>
+                                <td><input class="editprofile-input" type="text" name="currentEmail" readonly value="<?php echo $data['profile']->email; ?>"></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p class="editprofile-maintag"> New Email </p>
+                                </td>
+                                <td> : </td>
+                                <td><input class="editprofile-input" type="text" placeholder="Enter New Email" name="newEmail"></td>
+                            </tr>                                
+                        </table>
+                        <div class="editprofile-btnsetup">
+                        <a href="<?php echo URLROOT; ?>/pharmacies/changeEmail"><button type="submit" class="editprofile-updatebtn "> Update Email </button></a>
+                        <a href="#"><button type="button" class="btn cancel"> Close </button></a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+            <div id="popup3" class="overlay">
+                <div class="popup-profile-change">
+                    <form action="<?php echo URLROOT; ?>/pharmacies/changePassword" method="POST" class="form-container">
+                        <h2>Set Your Password</h2>
+                        <table>
+                            <tr>
+                                <td >
+                                    <p class="editprofile-maintag"> Current Password </p>
+                                </td>
+                                <td> : </td>
+                                <td><input class="editprofile-input" type="text" name="currentPassword" readonly value="<?php echo $data['profile']->password; ?>"></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p class="editprofile-maintag"> New Password </p>
+                                </td>
+                                <td> : </td>
+                                <td><input class="editprofile-input" type="password" placeholder="Enter Your New Password" name="newPassword"></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p class="editprofile-maintag"> Confirm Password </p>
+                                </td>
+                                <td> : </td>
+                                <td><input class="editprofile-input" type="password" placeholder="Enter Your New Password" name="newPassword"></td>
+                            </tr>
+                                
+                        </table>
+                        <div class="editprofile-btnsetup">
+                        <a href="<?php echo URLROOT; ?>/pharmacies/changePassword"><button type="submit" class="editprofile-updatebtn "> Update Password </button></a>
+                        <a href="#"><button type="button" class="btn cancel"> Close </button></a>
+                        </div>
+                    </form>
                 </div>
             </div>
 
