@@ -22,7 +22,7 @@
             <h2> Add Inventory </h2>
         </div>
         <div class="smallspace"></div>
-
+        <?php echo $inventoryId; ?>
         <div class="anim">
             <div class="container-fluid">
                 <div class="d-flex">
