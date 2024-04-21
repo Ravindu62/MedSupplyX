@@ -113,21 +113,25 @@ class Admin{
         }
     }
 
-    /*public function updateManager($id,$mname,$memail){
-        $this->db->query('UPDATE managerregistration SET mname= :mname, memail= :memail WHERE id = :id');
+    public function updateManager($id, $name, $address, $phone, $email) {
+        // Prepare SQL statement
+        $this->db->query("UPDATE managerregistration SET name = :name, address = :address, phone = :phone, email = :email WHERE id = :id");
+
         // Bind values
         $this->db->bind(':id', $id);
-        $this->db->bind(':mname', $mname);
-        $this->db->bind(':nemail', $memail);
-        
-        // Execute
-        if($this->db->execute()){
+        $this->db->bind(':name', $name);
+        $this->db->bind(':address', $address);
+        $this->db->bind(':phone', $phone);
+        $this->db->bind(':email', $email);
+
+        // Execute the query
+        if ($this->db->execute()) {
             return true;
         } else {
             return false;
         }
     }
-    */
+    
     public function getApprovedPharmacyRegistration() {
         $this->db->query("SELECT * FROM pharmacyregistration WHERE status='approved'");
 

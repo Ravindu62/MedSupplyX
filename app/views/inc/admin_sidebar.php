@@ -37,8 +37,14 @@
     </li>
     <li>
     <a href="<?php echo URLROOT ?>/admins/all_pharmacies" class="navbar_section">
-    <i class="fa-solid fa-users"></i>
-        <span class="text">Users </span>
+    <i class="fa-solid fa-prescription-bottle-medical"></i>
+        <span class="text">Pharmacies </span>
+      </a>
+    </li>
+    <li>
+    <a href="<?php echo URLROOT ?>/admins/all_suppliers" class="navbar_section">
+    <i class="fa-solid fa-truck-ramp-box"></i>
+        <span class="text">Suppliers </span>
       </a>
     </li>
     <li>
