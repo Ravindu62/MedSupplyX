@@ -134,10 +134,10 @@ public function managerRegistration() {
 
 public function managers() {
 
-    $managers = $this->adminModel->getManager();
+    $manager = $this->adminModel->getManager();
 
     $data = [
-        'managers' => $managers
+        'managers' => $manager
     ];
     
     $this->view('admin/managers', $data);
@@ -156,22 +156,46 @@ public function deleteManager($id) {
 
 public function updateManager($id) {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        
-        $name = $_POST['name'];
-        $address = $_POST['address'];
-        $phone = $_POST['phone'];
-        $email = $_POST['email'];
-        
-        // Call the updateManager method in your model to update the manager's information
-        $this->adminModel->updateManager($id, $name, $address, $phone, $email);
+        // Retrieve the manager's current data from the database
+        $currentManager = $this->adminModel->getManagerById($id);
 
-        redirect('admins/managers');
-        exit();
+        // Assign the current data to variables
+        $name = $currentManager->name;
+        $address = $currentManager->address;
+        $phone = $currentManager->phone;
+        $email = $currentManager->email;
+
+        // Check if the posted data is not empty and update the corresponding variables
+        if (!empty($_POST['newName'])) {
+            $name = $_POST['newName'];
+        }
+        if (!empty($_POST['newAddress'])) {
+            $address = $_POST['newAddress'];
+        }
+        if (!empty($_POST['newPhone'])) {
+            $phone = $_POST['newPhone'];
+        }
+        if (!empty($_POST['newEmail'])) {
+            $email = $_POST['newEmail'];
+        }
+
+        // Update the manager in your database
+        if ($this->adminModel->updateManager($id, $name, $address, $phone, $email)) {
+            redirect('admins/managers');
+        } else {
+            // Handle the case where the update fails
+            die('Update failed');
+        }
     } else {
-        // If the request method is not POST, redirect to an error page or display an error message
-        die('Invalid request method');
+        // Retrieve the manager's data from the database
+        $manager = $this->adminModel->getManagerById($id);
+        $data = [
+            'manager' => $manager
+        ];
+        $this->view('admins/managers', $data); // Assuming your view file is named manager.php
     }
 }
+
 
 public function all_pharmacies() {
 
@@ -219,24 +243,76 @@ public function all_orders() {
 }
 
 public function profile() {
-    // Fetch admin data from the model
-    $adminData = $this->adminModel->getAdminData();
+    // Fetch the profile data from the model
+    $profile = $this->adminModel->getProfile();
 
-    // Prepare the data to be passed to the view
+    // Pass the profile data to the view
     $data = [
-        'adminData' => $adminData
+        'profile' => $profile
     ];
-
-    // Load the view with the data
+    
+    // Load the profile view and pass the data
     $this->view('admin/profile', $data);
 }
+
+public function changeContactNumber()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Get current contact number and new contact number from the form
+            $currentContactNumber = $_POST['currentContactNumber'];
+            $newContactNumber = $_POST['newPhone'];
+
+            // Validate the new contact number if needed
+
+            // Update the contact number in the database
+            if ($this->adminModel->updateContactNumber($currentContactNumber, $newContactNumber)) {
+                redirect('admins/profile');
+            } else {
+                redirect('admins/profile');
+            }
+        } else {
+            redirect('admins/profile');
+        }
+    }
+
+    public function changeEmail()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Sanitize POST data
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+            $currentEmail = trim($_POST['currentEmail']);
+            $newEmail = trim($_POST['newEmail']);
+
+
+            // Check if the current email exists
+            if ($this->adminModel->findAdminByEmail($currentEmail)) {
+                // Update the email
+                if ($this->adminModel->updateEmail($currentEmail, $newEmail)) {
+                    // Email updated successfully
+                    redirect('admins/profile');
+                } else {
+                    die('Something went wrong');
+                }
+            } else {
+                // Current email not found
+                redirect('admins/profile');
+            }
+        } else {
+            redirect('admins/profile');
+        }
+    }
+    
+    
+
+
+
+
 
 
 public function logout() {
     unset($_SESSION['USER_DATA']);
     redirect('users/login');
  }
-
-
 
 }

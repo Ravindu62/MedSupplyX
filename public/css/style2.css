@@ -1,8 +1,9 @@
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  font-family:"poppins", sans-serif;
 }
 
 .header {
@@ -1433,4 +1434,3 @@ button:active {
 .sign-up a:hover {
   text-decoration: underline;
 }
-

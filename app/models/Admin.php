@@ -54,49 +54,25 @@ class Admin{
         }
     }
     
-    /*public function deleteManager($email)
-    {
-        $this->db->query('UPDATE managerregistration SET status = "deleted" WHERE email = :email');
-        // Bind values
-        $this->db->bind(':email', $email);
-        
-        // Execute
-        if($this->db->execute()){
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public function getManagerByEmail($email) {
-        $this->db->query("SELECT * FROM managerregistration WHERE email = :email");
-
-        // Bind values
-        $this->db->bind(':email', $email);
-
-        $row = $this->db->single();
-
-        return $row;
-    }*/
 
     public function getManager() {
         $this->db->query('SELECT * FROM managerregistration');
         $results = $this->db->resultSet();
         return $results;
-
-        
+   
     }
 
     public function getManagerById($id) {
         $this->db->query("SELECT * FROM managerregistration WHERE id = :id");
-
+    
         // Bind values
         $this->db->bind(':id', $id);
-
+    
         $row = $this->db->single();
-
+    
         return $row;
     }
+    
 
 
     public function deleteManager($id)
@@ -112,25 +88,23 @@ class Admin{
             return false;
         }
     }
-
+    
     public function updateManager($id, $name, $address, $phone, $email) {
-        // Prepare SQL statement
-        $this->db->query("UPDATE managerregistration SET name = :name, address = :address, phone = :phone, email = :email WHERE id = :id");
-
-        // Bind values
+        $this->db->query('UPDATE managerregistration SET name = :name, address = :address, phone = :phone, email = :email WHERE id = :id');
         $this->db->bind(':id', $id);
         $this->db->bind(':name', $name);
         $this->db->bind(':address', $address);
         $this->db->bind(':phone', $phone);
         $this->db->bind(':email', $email);
-
-        // Execute the query
+        
+        // Execute
         if ($this->db->execute()) {
             return true;
         } else {
             return false;
         }
     }
+    
     
     public function getApprovedPharmacyRegistration() {
         $this->db->query("SELECT * FROM pharmacyregistration WHERE status='approved'");
@@ -229,17 +203,60 @@ public function countOrders() {
         } else {
             // Handle the error, e.g., log it or return an appropriate value
             return 0;
+    }    
+}
+
+    public function getProfile() {
+        $this->db->query('SELECT * FROM admin');
+        $results = $this->db->resultSet();
+        return $results;
     }
 
-         
-}
 
-public function getAdminData() {
-    $this->db->query('SELECT * FROM admin WHERE id = :id');
-    $this->db->bind(':id', 1); // Assuming the admin ID is 1
+    public function updateContactNumber($currentContactNumber, $newContactNumber)
+    {
+        $this->db->query('UPDATE admin SET phone = :newContactNumber WHERE phone = :currentContactNumber');
+        $this->db->bind(':newContactNumber', $newContactNumber);
+        $this->db->bind(':currentContactNumber', $currentContactNumber);
 
-    return $this->db->single(); // Assuming you have a method like single() to fetch a single record
-}
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function updateEmail($currentEmail, $newEmail) {
+        $this->db->query('UPDATE admin SET email = :new_email WHERE email = :current_email');
+        $this->db->bind(':new_email', $newEmail);
+        $this->db->bind(':current_email', $currentEmail);
+
+        // Execute
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // Find admin by email
+    public function findAdminByEmail($email) {
+        $this->db->query('SELECT * FROM admin WHERE email = :email');
+        $this->db->bind(':email', $email);
+
+        $row = $this->db->single();
+
+        // Check row
+        if ($this->db->rowCount() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    
+
+
 
 
 }
