@@ -451,9 +451,16 @@ class Pharmacies extends Controller
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////Advertisement Function/////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public function advertistments()
+    public function advertisements()
     {
-        $data = [];
+        // Sanitize post inputs
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+        $advertisement = $this->pharmacyModel->getAdvertisement();
+
+        $data = [
+            'advertisement' => $advertisement
+        ];
 
         $this->view('pharmacy/advertistments/advertistment', $data);
     }
@@ -665,7 +672,7 @@ public function changeContactNumber()
         // Initialize data
         $data = [
             'phone' => trim($_POST['newPhone']),
-            'id' => $_SESSION['USER_DATA']['id'],
+            'email' => trim($_POST['email']),
             'phone_err' => ''
         ];
 
@@ -678,17 +685,10 @@ public function changeContactNumber()
         if (empty($data['phone_err'])) {
             // Validated
 
-            // Check and set logged in user
-            if (isset($_SESSION['USER_DATA']['id'])) {
-                $data['id'] = $_SESSION['USER_DATA']['id'];
-            } else {
-                $data['id'] = 0;
-            }
-
             // Register user from model function
             if ($this->pharmacyModel->changeContactNumber($data)) {
                 // Fetch updated profile data
-                $profile = $this->pharmacyModel->getProfileData(trim($_SESSION['USER_DATA']['id']));
+                $profile = $this->pharmacyModel->getUpdateProfileData($data['email']);
 
                 // Pass the updated profile data to the view
                 $data['profile'] = $profile;
@@ -714,8 +714,7 @@ public function changeContactNumber()
     }
 }
 
-public function changeEmail()
-{
+public function changeEmail(){
     // Check for POST
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Process form
@@ -725,31 +724,24 @@ public function changeEmail()
 
         // Initialize data
         $data = [
-            'email' => trim($_POST['newEmail']),
-            'id' => $_SESSION['USER_DATA']['id'],
+            'newEmail' => trim($_POST['newEmail']),
+            'email' => trim($_POST['email']),
             'email_err' => ''
         ];
 
         // Validate data
-        if (empty($data['email'])) {
-            $data['email_err'] = 'Please enter the new email';
+        if (empty($data['newEmail'])) {
+            $data['email_err'] = 'Please enter the new email address';
         }
 
         // Make sure no errors
         if (empty($data['email_err'])) {
             // Validated
 
-            // Check and set logged in user
-            if (isset($_SESSION['USER_DATA']['id'])) {
-                $data['id'] = $_SESSION['USER_DATA']['id'];
-            } else {
-                $data['id'] = 0;
-            }
-
             // Register user from model function
             if ($this->pharmacyModel->changeEmail($data)) {
                 // Fetch updated profile data
-                $profile = $this->pharmacyModel->getProfileData(trim($_SESSION['USER_DATA']['id']));
+                $profile = $this->pharmacyModel->getUpdateProfileData($data['newEmail']);
 
                 // Pass the updated profile data to the view
                 $data['profile'] = $profile;
@@ -773,7 +765,6 @@ public function changeEmail()
         // Load view
         $this->view('pharmacy/profile/profile', $data);
     }
-    
 }
 
 public function changePassword()
@@ -787,13 +778,11 @@ public function changePassword()
 
         // Initialize data
         $data = [
-            'currentPassword' => trim($_POST['currentPassword']),
+            'email' => trim($_POST['email']),
             'newPassword' => trim($_POST['newPassword']),
-            'confirmNewPassword' => trim($_POST['confirmNewPassword']),
-            'id' => $_SESSION['USER_DATA']['id'],
-            'currentPassword_err' => '',
+            'confirmPassword' => trim($_POST['confirmPassword']),
             'newPassword_err' => '',
-            'confirmNewPassword_err' => ''
+            'confirmPassword_err' => ''
         ];
 
         // Validate data
@@ -805,29 +794,22 @@ public function changePassword()
             $data['newPassword_err'] = 'Please enter the new password';
         }
 
-        if (empty($data['confirmNewPassword'])) {
-            $data['confirmNewPassword_err'] = 'Please confirm the new password';
+        if (empty($data['confirmPassword'])) {
+            $data['confirmPassword_err'] = 'Please confirm the new password';
         }
 
-        if ($data['newPassword'] != $data['confirmNewPassword']) {
-            $data['confirmNewPassword_err'] = 'Passwords do not match';
+        if ($data['newPassword'] != $data['confirmPassword']) {
+            $data['confirmPassword_err'] = 'Passwords do not match';
         }
 
         // Make sure no errors
-        if (empty($data['currentPassword_err']) && empty($data['newPassword_err']) && empty($data['confirmNewPassword_err'])) {
+        if (empty($data['currentPassword_err']) && empty($data['newPassword_err']) && empty($data['confirmPassword_err'])) {
             // Validated
-
-            // Check and set logged in user
-            if (isset($_SESSION['USER_DATA']['id'])) {
-                $data['id'] = $_SESSION['USER_DATA']['id'];
-            } else {
-                $data['id'] = 0;
-            }
 
             // Register user from model function
             if ($this->pharmacyModel->changePassword($data)) {
                 // Fetch updated profile data
-                $profile = $this->pharmacyModel->getProfileData(trim($_SESSION['USER_DATA']['id']));
+                $profile = $this->pharmacyModel->getUpdateProfileData($data['email']);
 
                 // Pass the updated profile data to the view
                 $data['profile'] = $profile;
@@ -855,9 +837,7 @@ public function changePassword()
         // Load view
         $this->view('pharmacy/profile/profile', $data);
     }
-    
 }
-
 
 
 
