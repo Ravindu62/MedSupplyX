@@ -44,7 +44,8 @@
     <th> Manufacture Date </th>
     <th> Expire Date </th>
     <th> Unit Price</th>
-    <th> Change / Delete</th>
+    <th> Update</th>
+    <th> Remove</th>
     
     
   </tr>

@@ -35,7 +35,7 @@
         <span class="text"> Notifications</span>
       </a>
     </li>
-    <a href="<?php echo URLROOT ?>/pharmacies/advertistments" class="navbar_section">
+    <a href="<?php echo URLROOT ?>/pharmacies/advertisements" class="navbar_section">
     <i class="fa-solid fa-rectangle-ad"></i>
         <span class="text"> Advertistments </span>
       </a>

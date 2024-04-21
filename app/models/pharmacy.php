@@ -274,7 +274,13 @@ class pharmacy
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////Advertisetment data/////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+    public function getAdvertisement()
+    {
+        $this->db->query("SELECT * FROM advertisement");
+        $results = $this->db->resultSet();
+        return $results;
+        
+    }
 
 
 
@@ -439,13 +445,61 @@ class pharmacy
         }
     }
 
+    public function getUpdateProfileData($pharmacyEmail)
+    {
+        // Execute the query
+        $this->db->query("SELECT * FROM pharmacyregistration 
+        INNER JOIN users ON pharmacyregistration.user_id = users.id 
+        WHERE pharmacyregistration.email = :pharmacyEmail");
+
+        // Bind the parameter
+        $this->db->bind(':pharmacyEmail', $pharmacyEmail);
+
+        // Retrieve a single row
+        $row = $this->db->single();
+
+        // Check if a row was returned
+        if ($row) {
+            return $row; // Return the data
+        } else {
+            // Log or echo an error message
+            error_log("No profile data found for pharmacy: $pharmacyEmail");
+            return false; // Or handle the error in any other way you prefer
+        }
+    }
 
     public function changeContactNumber($data)
     {
-        $this->db->query('UPDATE pharmacyregistration SET phone = :phone WHERE id = :id');
+        $this->db->query('UPDATE pharmacyregistration SET phone = :phone WHERE email = :email');
         // Bind values
-        $this->db->bind(':id', $data['id']);
+        $this->db->bind(':email', $data['email']);
         $this->db->bind(':phone', $data['phone']);
+
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function changeEmail($data){
+        $this->db->query('UPDATE pharmacyregistration SET email = :newEmail WHERE email = :email');
+        // Bind values
+        $this->db->bind(':email', $data['email']);
+        $this->db->bind(':newEmail', $data['newEmail']);
+
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function changePassword($data){
+        $this->db->query('UPDATE phamacyregistration SET password = :newPassword WHERE email = :email');
+        // Bind values
+        $this->db->bind(':email', $data['email']);
+        $this->db->bind(':newPassword', $data['newPassword']);
 
         if ($this->db->execute()) {
             return true;
