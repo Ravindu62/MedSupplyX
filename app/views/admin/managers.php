@@ -58,53 +58,89 @@
 
 
 
-            <td><button type="submit" class="smallOpen-button" onclick="showForm(<?php echo $manager->id; ?>)">Update</button>
-                <div id="formContainer<?php echo $manager->id; ?>" style="display:none;"><br>
-                    <form method="post" action="<?php echo URLROOT;?>/admins/updateManager/<?php echo $manager->id; ?>">
-                      <label for="name">Name:</label><br>
-                      <input type="text" id="name" name="name" value="<?php echo $manager->name; ?>"><br>
-                      <label for="address">Address:</label><br>
-                      <input type="text" id="address" name="address" value="<?php echo $manager->address; ?>"><br>
-                      <label for="phone">Phone:</label><br>
-                      <input type="text" id="phone" name="phone" value="<?php echo $manager->phone; ?>"><br>
-                      <label for="email">Email:</label><br>
-                      <input type="text" id="email" name="email" value="<?php echo $manager->email; ?>"><br><br>
-                      <input type="submit" class="smallOpen-button" value="Submit">
-                      <button type="button" class="smallOpen-button-red" onclick="hideForm(<?php echo $manager->id; ?>)">Cancel</button>
-                    </form>
-            </div> 
-         
+            <td><a href="#popup"><button type="button" class="smallOpen-button">Update</button></a>
 
+         
+            
             <br><br><form action="<?php echo URLROOT;?>/admins/deleteManager/<?php echo $manager->id; ?>" method="POST">
                   <input type="submit" class="smallOpen-button-red" name="delete" value="Delete">    
                 </form> 
-  </td>   
+            </td>   
 
 
 </tr>
 <?php endforeach; ?>
 </table>
-    
+
+<?php foreach($data['managers'] as $manager) : ?>
+<div id="popup" class="overlay">
+    <div class="popup-update">
+    <form action="<?php echo URLROOT; ?>/admins/updateManager/<?php echo $manager->id; ?>" method="POST" class="form-container">
+            <h2>Update Manager</h2>
+            <table>
+                <tr>
+                    <td>
+                        <p class="editprofile-maintag"> Manager Name </p>
+                    </td>
+                    <td> : </td>
+                    <td><?php echo $manager->name; ?></td>
+                    <td>
+                        <p class="editprofile-maintag"> Update Name </p>
+                        </td>
+                        <td> : </td>
+                        <td><input class="editprofile-input" type="text" placeholder="Enter New Name" name="newName"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <p class="editprofile-maintag"> Physical Address </p>
+                    </td>
+                    <td> : </td>
+                    <td><?php echo $manager->address; ?></td>
+                    <td>
+                      <p class="editprofile-maintag"> Update Address </p>
+                      </td>
+                      <td> : </td>
+                      <td><input class="editprofile-input" type="text" placeholder="Enter New Address" name="newAddress"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <p class="editprofile-maintag"> Contact Info </p>
+                    </td>
+                    <td> : </td>
+                    <td><?php echo $manager->phone; ?></td>
+                    <td>
+                        <p class="editprofile-maintag"> Update Contact Info </p>
+                        </td>
+                        <td> : </td>
+                        <td><input class="editprofile-input" type="text" placeholder="Enter New Contact Info" name="newPhone"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <p class="editprofile-maintag"> Email </p>
+                    </td>
+                    <td> : </td>
+                    <td><?php echo $manager->email; ?></td>
+                    <td>
+                        <p class="editprofile-maintag"> Update Email </p>
+                        </td>
+                        <td> : </td>
+                        <td><input class="editprofile-input" type="text" placeholder="Enter New Email" name="newEmail"></td>
+                </tr>
+            </table>
+            <div class="editprofile-btnsetup">
+                <a href="<?php echo URLROOT; ?>/admins/updateManager"><button type="submit" class="editprofile-updatebutton "> Update Manager </button></a>
+                <a href="#"><button type="button" class="editprofile-button-red"> Close </button></a>
+            </div>
+        </form>
+    </div>
 </div>
+<?php endforeach; ?>
 </div>
 </div>
 </div>
 
-<script>
-function showForm(id) {
-    var formContainer = document.getElementById('formContainer' + id);
-    formContainer.style.display = 'block';
-  }
+</div>
 
-  function hideForm(id) {
-    var formContainer = document.getElementById('formContainer' + id);
-    formContainer.style.display = 'none';
-  }
-
-function closeForm() {
-  document.getElementById("myForm").style.display = "none";
-}
-</script>
 </body>
 </html>
 
