@@ -395,6 +395,7 @@ class Pharmacies extends Controller
             // Initialize data
             $data = [
                 'receiver' => trim($_POST['receiver']),
+                'sender' => trim($_SESSION['USER_DATA']['name']),
                 'heading' => trim($_POST['heading']),
                 'message' => trim($_POST['message']),
                 'receiver_err' => '',
@@ -407,6 +408,10 @@ class Pharmacies extends Controller
                 $data['receiver_err'] = 'Please enter the recipient';
             }
 
+            if (empty($data['sender'])) {
+                $data['sender_err'] = 'Please enter the sender';
+            }
+
             if (empty($data['heading'])) {
                 $data['heading_err'] = 'Please enter the heading';
             }
@@ -416,7 +421,7 @@ class Pharmacies extends Controller
             }
 
             // Make sure no errors
-            if (empty($data['receiver_err']) && empty($data['heading_err']) && empty($data['message_err'])) {
+            if (empty($data['receiver_err']) && empty($data['sender_err']) && empty($data['heading_err']) && empty($data['message_err'])) {
                 // Validated
 
                 // Inventory model function
