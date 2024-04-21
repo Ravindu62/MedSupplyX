@@ -20,11 +20,20 @@
     <div class="anim">
       <div class="container-fluid">
         <div class="d-flex">
-          <form action="<?php echo URLROOT; ?>/suppliers/acceptBid" method="POST" class="orderform">
+          <form action="<?php echo URLROOT; ?>/suppliers/place_bid/<?php echo $request_order_details->id; ?>" method="post">
             <table>
               <tr>
                 <td colspan="2">
                   <h3> <br> Order Details </h3>
+                </td>
+              </tr>
+              <tr>
+                <td class="verticleCentered">
+                  Ordered Date
+                </td>
+                <td> : </td>
+                <td class="verticleCentered">
+                  <p class="detailText"> <?php echo date('Y-m-d', strtotime($data['orderDetails']->createdAt)); ?> </p>
                 </td>
               </tr>
               <tr>
@@ -43,6 +52,42 @@
                 <td> : </td>
                 <td class="verticleCentered">
                   <p class="detailText"> <?php echo $data['orderDetails']->medicine_name; ?> </p>
+                </td>
+              </tr>
+              <tr>
+                <td class="verticleCentered">
+                  Category
+                </td>
+                <td> : </td>
+                <td class="verticleCentered">
+                  <p class="detailText"> <?php echo $data['orderDetails']->category; ?> </p>
+                </td>
+              </tr>
+              <tr>
+                <td class="verticleCentered">
+                  Type
+                </td>
+                <td> : </td>
+                <td class="verticleCentered">
+                  <p class="detailText"> <?php echo $data['orderDetails']->type; ?> </p>
+                </td>
+              </tr>
+              <tr>
+                <td class="verticleCentered">
+                  Volume
+                </td>
+                <td> : </td>
+                <td class="verticleCentered">
+                  <p class="detailText"> <?php echo $data['orderDetails']->volume; ?> </p>
+                </td>
+              </tr>
+              <tr>
+                <td class="verticleCentered">
+                  Brand
+                </td>
+                <td> : </td>
+                <td class="verticleCentered">
+                  <p class="detailText"> <?php echo $data['orderDetails']->brand; ?> </p>
                 </td>
               </tr>
               <tr>
@@ -68,19 +113,23 @@
                   Place a Bid
                 </td>
                 <td> : </td>
-                <td class="verticleCentered"> Rs. <input type="number" name="bid" class="orderdetails" required> </td>
-                <td class="verticleCentered"> <button class="addBtn"> Place Bid </button> </td>
+                <td class="verticleCentered"> Rs. <input type="number" min="1" name="bidAmount" class="orderdetails"> </td>
+                <td class="verticleCentered"> <input type="submit" class="addBtn" value="Place Bid">  </td>
+                <p> <?php echo $data['bidAmount_err']; ?> </p>
                 <td class certicleCentered>
-                  <p class="grey"> (Lowest Bid is )</p>
+                  <p class="grey"> (Lowest Bid is ) </p>
                 </td>
               </tr>
               <input hidden name="medicineId" value="<?php echo $data['orderDetails']->medicineId; ?>">
               <input hidden name="pharmacyId" value="<?php echo $data['orderDetails']->pharmacyId; ?>">
               <input hidden name="pharmacyName" value="<?php echo $data['orderDetails']->pharmacyname; ?>">
               <input hidden name="medicineName" value="<?php echo $data['orderDetails']->medicine_name; ?>">
+              <input hidden name="category" value="<?php echo $data['orderDetails']->category; ?>">
+              <input hidden name="type" value="<?php echo $data['orderDetails']->type; ?>">
+              <input hidden name="volume" value="<?php echo $data['orderDetails']->volume; ?>">
+              <input hidden name="brand" value="<?php echo $data['orderDetails']->brand; ?>">
+              <input hidden name="quantity" value="<?php echo $data['orderDetails']->quantity; ?>">
               <input hidden name="deliveryDate" value="<?php echo $data['orderDetails']->deliveryDate; ?>">
-              <input hidden name="supplierId" value=" <?php echo $_SESSION['USER_DATA']['id']; ?>">
-              <input hidden name="supplierName" value=" <?php echo $_SESSION['USER_DATA']['name']; ?>">
           </form>
           <tr>
             <td> <a href="<?php echo URLROOT ?>/suppliers/orders" class="link">

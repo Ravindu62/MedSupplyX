@@ -242,6 +242,7 @@ class Manager
         $row = $this->db->single();
         return $row;
     }
+    
     public function getMessageDetailsByReceiver($receiver)
     {
         $this->db->query("SELECT * FROM messages WHERE receiver = :receiver");
@@ -250,20 +251,12 @@ class Manager
         $results = $this->db->resultSet();
         return $results;
     }
-    public function sendMessage($data)
+    
+    public function getMessages()
     {
-        $this->db->query('INSERT INTO messages (sender, receiver, heading, message) VALUES(:sender, :receiver, :heading, :message)');
-        // Bind values
-        $this->db->bind(':sender', $data['sender']);
-        $this->db->bind(':receiver', $data['receiver']);
-        $this->db->bind(':heading', $data['heading']);
-        $this->db->bind(':message', $data['message']);
-        // Execute
-        if ($this->db->execute()) {
-            return true;
-        } else {
-            return false;
-        }
+        $this->db->query("SELECT * FROM messages WHERE receiver = 'manager' ORDER BY createdDate DESC");
+        $results = $this->db->resultSet();
+        return $results;
     }
 
     

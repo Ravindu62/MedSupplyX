@@ -14,10 +14,13 @@
         <h2>Log In</h2>
         <form action="<?php echo URLROOT; ?>/login" method="post">
             <div class="input">
+                <label for="email">Email</label>
                 <input class="input1" type="email" name="email" value="">
                 <span> <i class="fa-solid fa-envelope" style="color:#275BA1;"></i> </span>
             </div>
             <div class="input">
+
+                <label for="password">Password</label>
                 <input class="input1 pass" type="password" name="password" value="">
                 <span> <i class="fa-solid fa-lock" style="color:#275BA1;"> </i> </span>
                 <?php if (isset($data['errors']['err']) || isset($data['errors']['err'])) : ?>
@@ -27,7 +30,9 @@
                 <?php endif; ?>
             </div>
             <div class="middlespace"></div>
-            <div class="smallspace"></div>
+            <div calss="middlespace"></div>
+            <div class="middlespace"></div>
+            
             <div class="button">
                 <a href="#"> <input type="submit" value="Sign In" name="submit" class="userbtn2"> </a>
             </div>
@@ -37,17 +42,7 @@
             <input class="input2" type="checkbox" name="remember_me" id="remember_me">
             <label for="remember_me">Remember me</label>
         </div>
-        <!-- <form action="<?php echo URLROOT; ?>/users/forgotPassword" method="post">
-        <!-- <form action="<?php echo URLROOT; ?>/users/forgotPassword" method="post">
-            <div class="input">
-                <input class="input1" type="email" name="email" value="">
-                <span></span>
-                <i class="fa-solid fa-envelope"></i>
-            </div>
-            <div class="button">
-                <input type="submit" value="Reset Password" name="submit" class="userbtn2">
-            </div>
-        </form> -->
+    
         <div class="sign-up">
             <pre>Don't have an account?  <a href="<?php echo URLROOT ?>/users/register">Sign up</a></pre>
         </div>

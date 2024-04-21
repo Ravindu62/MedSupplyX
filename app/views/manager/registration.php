@@ -37,10 +37,11 @@
     <th> Physical Address </th>
     <th> Contact No </th>
     <th> Email </th>
-    <th> Licence </th>
+    <th colspan="2"> Licence </th>
     <th colspan="2"> Accept / Reject </th>
   </tr>
 <tr> 
+  <td> </td>
   <td> </td>
   <td> </td>
   <td> </td>
@@ -62,6 +63,10 @@
   <td> <?php echo $pharmacyRegistration->email; ?> </td>
   <td> <a href="<?php echo URLROOT; ?>/public/uploads/PharmacyLicence/<?php echo $pharmacyRegistration->licence; ?>" target="_blank">
           <i class="fa fa-file-pdf-o" style="font-size:24px;color:red;"></i> 
+       </a> 
+  </td>
+  <td> <a href="<?php echo URLROOT; ?>/public/uploads/PharmacyLicence/<?php echo $pharmacyRegistration->licence; ?>" target="_blank" download>
+          <i class="fa fa-download" aria-hidden="true" style="font-size:22px;"></i> 
        </a> 
   </td>
   <td> <button class="smallOpen-button" name="acceptpharmacy" value="<?php echo $pharmacyRegistration->email?>"> Accept </button> </form></td>
@@ -96,11 +101,12 @@
     <th> Physical Address </th>
     <th> Contact No </th>
     <th> Email </th>
-    <th> Licence</th>
+    <th colspan="2"> Licence</th>
     <th colspan="2"> Accept / Reject </th>
   </tr>
 <tr> 
  
+  <td> </td>
   <td> </td>
   <td> </td>
   <td> </td>
@@ -122,6 +128,11 @@
   <td> <?php echo $supplierRegistration->email; ?> </td>
   <td> <a href="<?php echo URLROOT; ?>/public/uploads/SupplierLicence/<?php echo $supplierRegistration->licence; ?>" target="_blank">
           <i class="fa fa-file-pdf-o" style="font-size:24px;color:red;"></i> 
+       </a> 
+       </td>
+       <td>
+       <a href="<?php echo URLROOT; ?>/public/uploads/SupplierLicence/<?php echo $supplierRegistration->licence; ?>" target="_blank" download>
+          <i class="fa fa-download" aria-hidden="true" style="font-size:22px;"> </i> 
        </a> 
   </td>
   <td> <button class="smallOpen-button" name="acceptsupplier" value="<?php echo $supplierRegistration->email?>"> Accept </button>  </td>

@@ -45,6 +45,7 @@ class Mail
         <button style="background-color:#00607f;color:white;padding:10px 25px;border-radius:5px;"> LOGIN </button> </a>';
         return $this->send($email, $subject, $body);
     }
+    
 
     public function sendConfirmationEmailToSupplier($email, $name)
     {

@@ -8,14 +8,43 @@
 <link rel="stylesheet" href="<?php echo URLROOT ?>/public/css/style.css">
 </head>
 <body>
+
+
 <?php require APPROOT . '/views/inc/header.php'; ?>
+
 <?php require APPROOT . '/views/inc/pharmacy_sidebar.php'; ?>
+
+
 <!-- content -->
-  <div class="content">
- <div class="anim"> <h2> Advertistments </h2> </div>
- <div class="anim"> <p> Here are the newly Addvertistments </p> </div>
+<div class="content">
+    <div class="anim">
+        <h2>Advertisements</h2>
+    </div>
+    <div class="anim">
+        <p>Here are the newly advertisements</p>
+    </div>
+
+    <div class="advertisements-grid">
+        <?php foreach($data['advertisement'] as $advertisement) : ?>
+        <div class="ad-container">
+            <img src="<?php echo URLROOT ?>/public/img/<?php echo $advertisement->adImage ?>" alt="advertisement">
+            <div class="ad-layer-container">
+                <div class="ad-text-content">
+                    <div>
+                        <p class="ad-heading"><?php echo $advertisement->heading ?></p>
+                        <p class="ad-description"><?php echo $advertisement->description ?></p>
+                    </div>
+                    <a href="#" class="ad-a"><button class="ad-btn">Contact Supplier</button></a>
+                </div>
+            </div>
+        </div>
+        <?php endforeach; ?>
+    </div>
 </div>
-</div>
+
+
 <?php require APPROOT . '/views/inc/footer.php'; ?>
+
+
 </body>
 </html>

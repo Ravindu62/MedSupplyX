@@ -9,6 +9,7 @@
 <body>
   <?php require APPROOT . '/views/inc/header.php'; ?>
   <?php require APPROOT . '/views/inc/manager_sidebar.php'; ?>
+ 
   <!-- content -->
   <div class="content">
     <div class="horizontaltab2">
@@ -21,18 +22,28 @@
       </div>
       <div class="middlespace"></div>
       <h2> Messages </h2>
+      <?php foreach($data['getMessages'] as $getMessages) : ?>
       <div class="container-custom">
         <div class="card-custom">
           <div class="header-custom">
-            <p> <b> John Doe : </b>
-              new friend request </p>
+          <p> <b> <?php echo $getMessages->sender; ?> : </b>
+              <?php echo $getMessages->heading; ?> </p>
           </div>
           <div class="content-custom">
-            <p> CEO at Mighty Schools. Marketing and Advertising. Seeking a new job and new opportunities.</p>
+            <p> <?php echo $getMessages->message; ?> </p>
+           
           </div>
-        </div>
-      </div>
+        </div>        
+      </div> 
+      <?php endforeach; ?>    
     </div>
+    
+
+
+
+
+
+    
     <div id="sentbox" class="tabcontent">
       <h2> Your Message </h2>
       <div class="container-custom">

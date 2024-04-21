@@ -5,7 +5,11 @@
     Public $db;
     public function __construct() {
         $this->adminModel = $this->model('Admin');
+        if (!Auth::is_admin()) {
+            redirect('users/login');
+        }
     }
+
 public function index() {
         $countPharmacy = $this->adminModel->countPharmacies();
         $countSuppliers = $this->adminModel->countSuppliers();
@@ -19,6 +23,7 @@ public function index() {
         ];
         $this->view('admin/index', $data);
 }
+
 public function managerRegistration() {
     // Register manager
     if($_SERVER['REQUEST_METHOD'] == 'POST') {

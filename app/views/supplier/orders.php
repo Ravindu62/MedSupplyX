@@ -27,21 +27,27 @@
           </form>
           <table class="customers" id="myTable">
             <tr>
+              <th> Ordered Date</th>
               <th> Pharmacy Name</th>
               <th> Medicine Name </th>
-              <th> Product Code </th>
+              <th> Category </th>
+              <th> Type </th>
+              <th> Volume </th>
+              <th> Brand </th>
               <th> Quantity </th>
               <th> Delivery Date </th>
-              <th> Ordered Date </th>
             </tr>
             <?php foreach ($data['order'] as $order) : ?>
               <tr onclick=window.location.href='<?php echo URLROOT; ?>/suppliers/place_bid/<?php echo $order->id; ?>'>
+                <td> <?php echo date('Y-m-d', strtotime($order->createdAt)); ?> </td>
                 <td> <?php echo $order->pharmacyname; ?> </td>
                 <td> <?php echo $order->medicine_name; ?> </td>
-                <td> <?php echo $order->batchno; ?> </td>
+                <td> <?php echo $order->category; ?> </td>
+                <td> <?php echo $order->type; ?> </td>
+                <td> <?php echo $order->volume; ?> </td>
+                <td> <?php echo $order->brand; ?> </td>
                 <td> <?php echo $order->quantity; ?> </td>
                 <td> <?php echo $order->deliveryDate; ?> </td>
-                <td> <?php echo $order->orderEndDate; ?> </td>
               </tr>
             <?php endforeach; ?>
           </table>

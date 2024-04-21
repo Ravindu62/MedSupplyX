@@ -7,9 +7,11 @@ class Managers extends Controller
     public function __construct()
     {
         $this->managerModel = $this->model('Manager');
+        if (!Auth::is_manager()) {
+            redirect('users/login');
+        }
     }
-    public function index()
-    {
+    public function index() {
     
         $countPharmacy = $this->managerModel->countPharmacies();
         $countSuppliers = $this->managerModel->countSuppliers();
@@ -74,6 +76,8 @@ class Managers extends Controller
         $medicines = $this->managerModel->getMedicineById($medicineId);
         // Check for POST
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            
+
             // Process form
             // Sanitize POST data
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
@@ -245,14 +249,18 @@ class Managers extends Controller
         // Load view 
         $this->view('manager/new_medicine', $data);
     }
-    public function messages()
-    {
-        $data = [];
+    public function messages() {
+
+        $getMessages = $this->managerModel->getMessages();
+        $data = [
+            'getMessages' => $getMessages
+        ];
         $this->view('manager/messages', $data);
     }
     public function profile()
     {
         $getUserData = $this->managerModel->getUserData();
+        
         $data = [
             'getUserData' => $getUserData
         ];
