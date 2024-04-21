@@ -253,10 +253,10 @@ class pharmacy
 
     public function addMessage($data)
     {
-        $this->db->query('INSERT INTO messages (pharmacyId, sender, receiver, heading, message) VALUES(:pharmacyId, :message, :receiver, :heading, :message)');
+        $this->db->query('INSERT INTO messages (pharmacyId, sender, receiver, heading, message) VALUES(:pharmacyId, :sender, :receiver, :heading, :message)');
         // Bind values
         $this->db->bind(':pharmacyId', $_SESSION['USER_DATA']['id']);
-        $this->db->bind(':sender', $_SESSION['USER_DATA']['name']);
+        $this->db->bind(':sender', $data['sender']);
         $this->db->bind(':receiver', $data['receiver']);
         $this->db->bind(':heading', $data['heading']);
         $this->db->bind(':message', $data['message']);
@@ -445,15 +445,13 @@ class pharmacy
         }
     }
 
-    public function getUpdateProfileData($pharmacyEmail)
+    public function getUpdateProfileData($email)
     {
         // Execute the query
-        $this->db->query("SELECT * FROM pharmacyregistration 
-        INNER JOIN users ON pharmacyregistration.user_id = users.id 
-        WHERE pharmacyregistration.email = :pharmacyEmail");
+        $this->db->query("SELECT * FROM pharmacyregistration WHERE email = :email");
 
         // Bind the parameter
-        $this->db->bind(':pharmacyEmail', $pharmacyEmail);
+        $this->db->bind(':email', $email);
 
         // Retrieve a single row
         $row = $this->db->single();
@@ -463,7 +461,7 @@ class pharmacy
             return $row; // Return the data
         } else {
             // Log or echo an error message
-            error_log("No profile data found for pharmacy: $pharmacyEmail");
+            error_log("No profile data found for pharmacy: $email");
             return false; // Or handle the error in any other way you prefer
         }
     }
