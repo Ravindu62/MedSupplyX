@@ -17,13 +17,13 @@ class Pharmacies extends Controller
     {
         // Sanitize post inputs
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-    
+
         // Get the pharmacy ID from the session
         $pharmacyId = $_SESSION['USER_DATA']['id'];
-    
+
         // Get the current date in the format "YYYY-MM-DD"
         $currentDate = date("Y-m-d");
-    
+
         // Call the model methods to count various statistics
         $countTotalOrders = $this->pharmacyModel->countTotalOrders($pharmacyId);
         $countAcceptedOrders = $this->pharmacyModel->countAcceptedOrders($pharmacyId);
@@ -33,7 +33,7 @@ class Pharmacies extends Controller
         $countCancelledOrders = $this->pharmacyModel->countCancelledOrders($pharmacyId);
         $countTodaysCustomerOrders = $this->pharmacyModel->countTodaysCustomerOrders($pharmacyId, $currentDate);
         $countBills = $this->pharmacyModel->countBills($pharmacyId);
-    
+
         // Prepare the data to pass to the view
         $data = [
             'countTotalOrders' => $countTotalOrders,
@@ -45,13 +45,14 @@ class Pharmacies extends Controller
             'countTodaysCustomerOrders' => $countTodaysCustomerOrders,
             'countBills' => $countBills,
         ];
-    
+
         // Load the view with the data
         $this->view('pharmacy/dashboard/index', $data);
     }
-    
 
-    public function ongoingOrders(){
+
+    public function ongoingOrders()
+    {
         // Sanitize post inputs
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
@@ -66,7 +67,8 @@ class Pharmacies extends Controller
         $this->view('pharmacy/dashboard/ongoingOrders', $data);
     }
 
-    public function acceptedOrders(){
+    public function acceptedOrders()
+    {
         // Sanitize post inputs
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
@@ -79,10 +81,10 @@ class Pharmacies extends Controller
         ];
 
         $this->view('pharmacy/dashboard/acceptedOrders', $data);
-        
     }
 
-    public function pendingOrders(){
+    public function pendingOrders()
+    {
         // Sanitize post inputs
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
@@ -97,7 +99,8 @@ class Pharmacies extends Controller
         $this->view('pharmacy/dashboard/pendingOrders', $data);
     }
 
-    public function rejectedOrders(){
+    public function rejectedOrders()
+    {
         // Sanitize post inputs
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
@@ -112,7 +115,8 @@ class Pharmacies extends Controller
         $this->view('pharmacy/dashboard/rejectedOrders', $data);
     }
 
-    public function cancelledOrders(){
+    public function cancelledOrders()
+    {
         // Sanitize post inputs
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
@@ -127,7 +131,8 @@ class Pharmacies extends Controller
         $this->view('pharmacy/dashboard/cancelledOrders', $data);
     }
 
-    public function todaysCustomerOrders(){
+    public function todaysCustomerOrders()
+    {
         // Sanitize post inputs
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
@@ -235,7 +240,7 @@ class Pharmacies extends Controller
                 // Load view with errors
                 $this->view('pharmacy/inventory/addInventory', $data);
             }
-        }else{
+        } else {
             // Init data
             $data = [
                 'medicineId' => '',
@@ -260,82 +265,105 @@ class Pharmacies extends Controller
         $this->view('pharmacy/inventory/addInventory', $data);
     }
 
-    public function editInventory($id)
-{
-    // Fetch the inventory item by its ID
-    $inventory_item = $this->pharmacyModel->getInventoryItemById($id);
+    public function editInventory()
+    {
+        $inventoryId = $_GET['id'];
+        // Fetch the inventory item by its ID
+        $inventory_item = $this->pharmacyModel->getInventoryItemById($inventoryId);
 
-    // Check if the form is submitted
-    if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-        // Process form data
+        // Check if the form is submitted
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Process form data
 
-        // Sanitize POST data
-        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            // Sanitize POST data
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-        // Initialize data array
-        $data = [
-            'id' => $id, // Inventory item ID
-            'medicineId' => trim($_POST['medicineId']),
-            'medicineName' => trim($_POST['medicineName']),
-            'batchNo' => trim($_POST['batchNo']),
-            'category' => trim($_POST['category']),
-            'quantity' => trim($_POST['quantity']),
-            'manufacturedDate' => trim($_POST['manufacturedDate']),
-            'expireDate' => trim($_POST['expireDate']),
-            'unitPrice' => trim($_POST['unitPrice']),
-            'medicineId_err' => '',
-            'medicineName_err' => '',
-            'batchNo_err' => '',
-            'category_err' => '',
-            'quantity_err' => '',
-            'manufacturedDate_err' => '',
-            'expireDate_err' => '',
-            'unitPrice_err' => '',
-        ];
+            // Initialize data array
+            $data = [
+                'id' => $_GET['id'], // Inventory item ID
+                'medicineId' => trim($_POST['medicineId']),
+                'medicineName' => trim($_POST['medicineName']),
+                'batchNo' => trim($_POST['batchNo']),
+                'category' => trim($_POST['category']),
+                'quantity' => trim($_POST['quantity']),
+                'manufacturedDate' => trim($_POST['manufacturedDate']),
+                'expireDate' => trim($_POST['expireDate']),
+                'unitPrice' => trim($_POST['unitPrice']),
+                'medicineId_err' => '',
+                'medicineName_err' => '',
+                'batchNo_err' => '',
+                'category_err' => '',
+                'quantity_err' => '',
+                'manufacturedDate_err' => '',
+                'expireDate_err' => '',
+                'unitPrice_err' => '',
+            ];
 
-        // Validate data
-        if (empty($data['medicineId'])) {
-            $data['medicineId_err'] = 'Please enter medicine id';
-        }
+            // Validate data
+            if (empty($data['medicineId'])) {
+                $data['medicineId_err'] = 'Please enter medicine id';
+            }
 
-        if (empty($data['medicineName'])) {
-            $data['medicineName'] = 'Please enter medicine name';
-        }
+            if (empty($data['medicineName'])) {
+                $data['medicineName'] = 'Please enter medicine name';
+            }
 
-        if (empty($data['batchNo'])) {
-            $data['batchNo_err'] = 'Please enter batch number';
-        }
+            if (empty($data['batchNo'])) {
+                $data['batchNo_err'] = 'Please enter batch number';
+            }
 
-        if (empty($data['category'])) {
-            $data['category_err'] = 'Please enter category of the medicine';
-        }
+            if (empty($data['category'])) {
+                $data['category_err'] = 'Please enter category of the medicine';
+            }
 
-        if (empty($data['manufacturedDate'])) {
-            $data['manufacturedDate_err'] = 'Please enter manufacture date medicine';
-        }
+            if (empty($data['manufacturedDate'])) {
+                $data['manufacturedDate_err'] = 'Please enter manufacture date medicine';
+            }
 
-        if (empty($data['expireDate'])) {
-            $data['expireDate_err'] = 'Please enter expire date of the medicine';
-        }
+            if (empty($data['expireDate'])) {
+                $data['expireDate_err'] = 'Please enter expire date of the medicine';
+            }
 
-        if (empty($data['unitPrice'])) {
-            $data['unitPrice_err'] = 'Please enter the unit price of this medicine';
-        }
+            if (empty($data['unitPrice'])) {
+                $data['unitPrice_err'] = 'Please enter the unit price of this medicine';
+            }
 
-        // Call the model function to update inventory item
-        if ($this->pharmacyModel->editInventory($data)) {
-            // Redirect to inventory page after successful update
-            redirect('pharmacies/inventory');
+            // Call the model function to update inventory item
+            if ($this->pharmacyModel->editInventory($data)) {
+                // Redirect to inventory page after successful update
+                redirect('pharmacies/inventory');
+            } else {
+                die('Something went wrong');
+            }
         } else {
-            die('Something went wrong');
+            // Load view with inventory item data for editing
+            $this->view('pharmacy/inventory/editInventory', $inventory_item);
         }
-    } else {
-        // Load view with inventory item data for editing
-        $this->view('pharmacy/inventory/editInventory', $inventory_item);
     }
-}
 
 
+    public function removeInventory(){
+        // Check for POST
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Process form
+
+            // Sanitize POST data
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+            // Get the inventory item ID from the form
+            $inventoryId = trim($_POST['inventoryId']);
+
+            // Call the model function to delete the inventory item
+            if ($this->pharmacyModel->removeInventory($inventoryId)) {
+                // Redirect to inventory page after successful deletion
+                redirect('pharmacies/inventory');
+            } else {
+                die('Something went wrong');
+            }
+        } else {
+            redirect('pharmacies/inventory');
+        }
+    }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////Messages Function /////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -367,6 +395,7 @@ class Pharmacies extends Controller
             // Initialize data
             $data = [
                 'receiver' => trim($_POST['receiver']),
+                'sender' => trim($_SESSION['USER_DATA']['name']),
                 'heading' => trim($_POST['heading']),
                 'message' => trim($_POST['message']),
                 'receiver_err' => '',
@@ -379,6 +408,10 @@ class Pharmacies extends Controller
                 $data['receiver_err'] = 'Please enter the recipient';
             }
 
+            if (empty($data['sender'])) {
+                $data['sender_err'] = 'Please enter the sender';
+            }
+
             if (empty($data['heading'])) {
                 $data['heading_err'] = 'Please enter the heading';
             }
@@ -388,7 +421,7 @@ class Pharmacies extends Controller
             }
 
             // Make sure no errors
-            if (empty($data['receiver_err']) && empty($data['heading_err']) && empty($data['message_err'])) {
+            if (empty($data['receiver_err']) && empty($data['sender_err']) && empty($data['heading_err']) && empty($data['message_err'])) {
                 // Validated
 
                 // Inventory model function
@@ -423,9 +456,16 @@ class Pharmacies extends Controller
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////Advertisement Function/////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public function advertistments()
+    public function advertisements()
     {
-        $data = [];
+        // Sanitize post inputs
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+        $advertisement = $this->pharmacyModel->getAdvertisement();
+
+        $data = [
+            'advertisement' => $advertisement
+        ];
 
         $this->view('pharmacy/advertistments/advertistment', $data);
     }
@@ -610,48 +650,201 @@ class Pharmacies extends Controller
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public function profile()
     {
-        // Sanitize user inputs
+        // sanitize user inputs
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        
+        $pharmacyId = trim($_SESSION['USER_DATA']['id']);
 
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            // Process form submission
-            $updateResult = $this->updateProfile();
-            if ($updateResult) {
-                // Profile updated successfully, reload the page
-                redirect('pharmacy/profile');
-            } else {
-                // Error updating profile, handle accordingly
-                // For example, set an error message and reload the page
-                $data = [
-                    'error' => 'Failed to update profile.'
-                ];
-                $this->view('pharmacy/profile/profile', $data);
-            }
-        } else {
-            // Load profile data
-            $pharmacyName = trim($_SESSION['USER_DATA']['name']);
-            $profile = $this->pharmacyModel->getProfileData($pharmacyName);
-            $data = [
-                'profile' => $profile
-            ];
-            $this->view('pharmacy/profile/profile', $data);
-        }
+        $profile = $this->pharmacyModel->getProfileData($pharmacyId);
+
+        $data = [
+            'profile' => $profile
+        ];
+
+        $this->view('pharmacy/profile/profile', $data);
     }
 
-    // public function profile()
-    // {
-    //     // sanitize user inputs
-    //     $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-    //     $pharmacyName = trim($_SESSION['USER_DATA']['name']);
+    // Controller Function
+public function changeContactNumber()
+{
+    // Check for POST
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        // Process form
 
-    //     $profile = $this->pharmacyModel->getProfileData($pharmacyName);
+        // Sanitize POST data
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-    //     $data = [
-    //         'profile' => $profile
-    //     ];
+        // Initialize data
+        $data = [
+            'phone' => trim($_POST['newPhone']),
+            'email' => trim($_POST['email']),
+            'phone_err' => ''
+        ];
 
-    //     $this->view('pharmacy/profile/profile', $data);
-    // }
+        // Validate data
+        if (empty($data['phone'])) {
+            $data['phone_err'] = 'Please enter the new contact number';
+        }
+
+        // Make sure no errors
+        if (empty($data['phone_err'])) {
+            // Validated
+
+            // Register user from model function
+            if ($this->pharmacyModel->changeContactNumber($data)) {
+                // Fetch updated profile data
+                $profile = $this->pharmacyModel->getUpdateProfileData($data['email']);
+
+                // Pass the updated profile data to the view
+                $data['profile'] = $profile;
+
+                // Redirect to profile with updated data
+                $this->view('pharmacy/profile/profile', $data);
+            } else {
+                die('Something went wrong');
+            }
+        } else {
+            // Load view with errors
+            $this->view('pharmacy/profile/profile', $data);
+        }
+    } else {
+        // Init data
+        $data = [
+            'phone' => '',
+            'phone_err' => ''
+        ];
+
+        // Load view
+        $this->view('pharmacy/profile/profile', $data);
+    }
+}
+
+public function changeEmail(){
+    // Check for POST
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        // Process form
+
+        // Sanitize POST data
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+        // Initialize data
+        $data = [
+            'newEmail' => trim($_POST['newEmail']),
+            'email' => trim($_POST['email']),
+            'email_err' => ''
+        ];
+
+        // Validate data
+        if (empty($data['newEmail'])) {
+            $data['email_err'] = 'Please enter the new email address';
+        }
+
+        // Make sure no errors
+        if (empty($data['email_err'])) {
+            // Validated
+
+            // Register user from model function
+            if ($this->pharmacyModel->changeEmail($data)) {
+                // Fetch updated profile data
+                $profile = $this->pharmacyModel->getUpdateProfileData($data['newEmail']);
+
+                // Pass the updated profile data to the view
+                $data['profile'] = $profile;
+
+                // Redirect to profile with updated data
+                $this->view('pharmacy/profile/profile', $data);
+            } else {
+                die('Something went wrong');
+            }
+        } else {
+            // Load view with errors
+            $this->view('pharmacy/profile/profile', $data);
+        }
+    } else {
+        // Init data
+        $data = [
+            'email' => '',
+            'email_err' => ''
+        ];
+
+        // Load view
+        $this->view('pharmacy/profile/profile', $data);
+    }
+}
+
+public function changePassword()
+{
+    // Check for POST
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        // Process form
+
+        // Sanitize POST data
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+        // Initialize data
+        $data = [
+            'email' => trim($_POST['email']),
+            'newPassword' => trim($_POST['newPassword']),
+            'confirmPassword' => trim($_POST['confirmPassword']),
+            'newPassword_err' => '',
+            'confirmPassword_err' => ''
+        ];
+
+        // Validate data
+        if (empty($data['currentPassword'])) {
+            $data['currentPassword_err'] = 'Please enter the current password';
+        }
+
+        if (empty($data['newPassword'])) {
+            $data['newPassword_err'] = 'Please enter the new password';
+        }
+
+        if (empty($data['confirmPassword'])) {
+            $data['confirmPassword_err'] = 'Please confirm the new password';
+        }
+
+        if ($data['newPassword'] != $data['confirmPassword']) {
+            $data['confirmPassword_err'] = 'Passwords do not match';
+        }
+
+        // Make sure no errors
+        if (empty($data['currentPassword_err']) && empty($data['newPassword_err']) && empty($data['confirmPassword_err'])) {
+            // Validated
+
+            // Register user from model function
+            if ($this->pharmacyModel->changePassword($data)) {
+                // Fetch updated profile data
+                $profile = $this->pharmacyModel->getUpdateProfileData($data['email']);
+
+                // Pass the updated profile data to the view
+                $data['profile'] = $profile;
+
+                // Redirect to profile with updated data
+                $this->view('pharmacy/profile/profile', $data);
+            } else {
+                die('Something went wrong');
+            }
+        } else {
+            // Load view with errors
+            $this->view('pharmacy/profile/profile', $data);
+        }
+    } else {
+        // Init data
+        $data = [
+            'currentPassword' => '',
+            'newPassword' => '',
+            'confirmNewPassword' => '',
+            'currentPassword_err' => '',
+            'newPassword_err' => '',
+            'confirmNewPassword_err' => ''
+        ];
+
+        // Load view
+        $this->view('pharmacy/profile/profile', $data);
+    }
+}
+
+
 
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
