@@ -91,21 +91,22 @@
                             <tr>
                                 <td >
                                     <p class="editprofile-maintag"> Current Number </p>
+                                    <input type="hidden" name="email" value="<?php echo $data['profile']->email ; ?>">
                                 </td>
                                 <td> : </td>
                                 <td><input class="editprofile-input" type="text" name="currentContactNumber" readonly value="<?php echo $data['profile']->phone; ?>"></td>
                             </tr>
                             <tr>
                                 <td>
-                                    <p class="editprofile-maintag"> New Password </p>
+                                    <p class="editprofile-maintag"> New Number </p>
                                 </td>
                                 <td> : </td>
                                 <td><input class="editprofile-input" type="text" placeholder="Enter New Contact Number" name="newPhone"></td>
                             </tr>
                         </table>
                         <div class="editprofile-btnsetup">
-                        <a href="<?php echo URLROOT; ?>/pharmacies/changeContactNumber"><button type="submit" class="editprofile-updatebtn "> Update Contact Number </button></a>
-                        <a href="#"><button type="button" class="btn cancel"> Close </button></a>
+                        <a href="<?php echo URLROOT; ?>/pharmacies/changeContactNumber"><button type="submit" class="editprofile-updatebutton"> Update Number </button></a>
+                        <a href="#"><button type="button" class="editprofile-button-red"> Close </button></a>
                         </div>
                     </form>
                 </div>
@@ -119,6 +120,7 @@
                             <tr>
                                 <td >
                                     <p class="editprofile-maintag"> Current Email </p>
+                                    <input type="hidden" name="email" value="<?php echo $data['profile']->email ; ?>">
                                 </td>
                                 <td> : </td>
                                 <td><input class="editprofile-input" type="text" name="currentEmail" readonly value="<?php echo $data['profile']->email; ?>"></td>
@@ -132,8 +134,8 @@
                             </tr>                                
                         </table>
                         <div class="editprofile-btnsetup">
-                        <a href="<?php echo URLROOT; ?>/pharmacies/changeEmail"><button type="submit" class="editprofile-updatebtn "> Update Email </button></a>
-                        <a href="#"><button type="button" class="btn cancel"> Close </button></a>
+                        <a href="<?php echo URLROOT; ?>/pharmacies/changeEmail"><button type="submit" class="editprofile-updatebutton "> Update Email </button></a>
+                        <a href="#"><button type="button" class="editprofile-button-red"> Close </button></a>
                         </div>
                     </form>
                 </div>
@@ -148,6 +150,7 @@
                             <tr>
                                 <td >
                                     <p class="editprofile-maintag"> Current Password </p>
+                                    <input type="hidden" name="email" value="<?php echo $data['profile']->email ; ?>">
                                 </td>
                                 <td> : </td>
                                 <td><input class="editprofile-input" type="text" name="currentPassword" readonly value="<?php echo $data['profile']->password; ?>"></td>
@@ -164,13 +167,13 @@
                                     <p class="editprofile-maintag"> Confirm Password </p>
                                 </td>
                                 <td> : </td>
-                                <td><input class="editprofile-input" type="password" placeholder="Enter Your New Password" name="newPassword"></td>
+                                <td><input class="editprofile-input" type="password" placeholder="Confirm Password" name="confirmPassword"></td>
                             </tr>
                                 
                         </table>
                         <div class="editprofile-btnsetup">
-                        <a href="<?php echo URLROOT; ?>/pharmacies/changePassword"><button type="submit" class="editprofile-updatebtn "> Update Password </button></a>
-                        <a href="#"><button type="button" class="btn cancel"> Close </button></a>
+                        <a href="<?php echo URLROOT; ?>/pharmacies/changePassword"><button type="submit" class="editprofile-updatebutton  "> Update Password </button></a>
+                        <a href="#"><button type="button" class="editprofile-button-red"> Close </button></a>
                         </div>
                     </form>
                 </div>
