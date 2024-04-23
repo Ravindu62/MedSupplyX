@@ -31,6 +31,7 @@
     <th> Physical Address </th>
     <th> Contact No </th>
     <th> Email </th>
+    <th> Status</th>
     
   </tr>
 <tr> 
@@ -51,6 +52,7 @@
   <td> <?php echo $allSuppliers->address; ?> </td>
   <td> <?php echo $allSuppliers->phone; ?> </td>
   <td> <?php echo $allSuppliers->email; ?> </td>
+  <td> <?php echo $allSuppliers->status; ?> </td>
 
   <?php endforeach; ?>
 </tr>

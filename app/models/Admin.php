@@ -104,20 +104,79 @@ class Admin{
     }
     
     
-    public function getApprovedPharmacyRegistration() {
-        $this->db->query("SELECT * FROM pharmacyregistration WHERE status='approved'");
+    public function getPharmacyRegistration() {
+        $this->db->query("SELECT * FROM pharmacyregistration");
 
         $results = $this->db->resultSet();
 
         return $results;
     }
 
-    public function getApprovedSupplierRegistration() {
-        $this->db->query("SELECT * FROM supplierregistration WHERE status='approved'");
+    public function approvedPharmacy(){
+        $this->db->query("SELECT * FROM pharmacyregistration WHERE status = 'approved'");
+        $results = $this->db->resultSet();
+        return $results;
+    }
+
+    public function pendingPharmacy(){
+        $this->db->query("SELECT * FROM pharmacyregistration WHERE status = 'pending'");
+        $results = $this->db->resultSet();
+        return $results;
+    }
+
+    public function rejectedPharmacy(){
+        $this->db->query("SELECT * FROM pharmacyregistration WHERE status = 'rejected'");
+        $results = $this->db->resultSet();
+        return $results;
+
+    }
+
+    public function getSupplierRegistration() {
+        $this->db->query("SELECT * FROM supplierregistration");
 
         $results = $this->db->resultSet();
 
         return $results;
+    }
+
+    public function approvedSupplier(){
+        $this->db->query("SELECT * FROM supplierregistration WHERE status = 'approved'");
+        $results = $this->db->resultSet();
+        return $results;
+    }
+
+    public function pendingSupplier(){
+        $this->db->query("SELECT * FROM supplierregistration WHERE status = 'pending'");
+        $results = $this->db->resultSet();
+        return $results;
+    }
+
+    public function rejectedSupplier(){
+        $this->db->query("SELECT * FROM supplierregistration WHERE status = 'rejected'");
+        $results = $this->db->resultSet();
+        return $results;
+
+    }
+
+    public function medicines() {
+        $this->db->query("SELECT * FROM regmedicines");
+
+        $results = $this->db->resultSet();
+
+        return $results;
+    }
+
+
+    public function countPharmacies() {
+        $this->query = $this->db->query2("SELECT COUNT(*) as count FROM pharmacyregistration");
+    
+        if ($this->query) {
+            return $this->query[0]->count;
+           
+        } else {
+            // Handle the error, e.g., log it or return an appropriate value
+            return 0;
+                }
     }
 
     public function countapprovedPharmacies() {
@@ -143,6 +202,30 @@ class Admin{
                 }
     }
 
+    public function countrejectedPharmacies() {
+        $this->query = $this->db->query2("SELECT COUNT(*) as count FROM pharmacyregistration WHERE status='rejected'");
+    
+        if ($this->query) {
+            return $this->query[0]->count;
+           
+        } else {
+            // Handle the error, e.g., log it or return an appropriate value
+            return 0;
+                }
+    }
+
+    public function countSuppliers() {
+        $this->query = $this->db->query2("SELECT COUNT(*) as count FROM supplierregistration");
+    
+        if ($this->query) {
+            return $this->query[0]->count;
+           
+        } else {
+            // Handle the error, e.g., log it or return an appropriate value
+            return 0;
+    }
+      
+}
     public function countapprovedSuppliers() {
         $this->query = $this->db->query2("SELECT COUNT(*) as count FROM supplierregistration WHERE status='approved'");
     
@@ -157,6 +240,18 @@ class Admin{
 }
 public function countpendingSuppliers() {
     $this->query = $this->db->query2("SELECT COUNT(*) as count FROM supplierregistration WHERE status='pending'");
+
+    if ($this->query) {
+        return $this->query[0]->count;
+       
+    } else {
+        // Handle the error, e.g., log it or return an appropriate value
+        return 0;
+}
+  
+}
+public function countrejectedSuppliers() {
+    $this->query = $this->db->query2("SELECT COUNT(*) as count FROM supplierregistration WHERE status='rejected'");
 
     if ($this->query) {
         return $this->query[0]->count;
@@ -182,6 +277,18 @@ public function countpendingSuppliers() {
 
 public function countOrders() {
     $this->query = $this->db->query2("SELECT COUNT(*) as count FROM approvedorders");
+
+    if ($this->query) {
+        return $this->query[0]->count;
+       
+    } else {
+        // Handle the error, e.g., log it or return an appropriate value
+        return 0;
+}
+}
+
+public function countMedicines() {
+    $this->query = $this->db->query2("SELECT COUNT(*) as count FROM regmedicines");
 
     if ($this->query) {
         return $this->query[0]->count;

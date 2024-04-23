@@ -11,25 +11,112 @@
     }
 
 public function index() {
+        $countPharmacies = $this ->adminModel -> countPharmacies();
         $countapprovedPharmacy = $this->adminModel->countapprovedPharmacies();
         $countpendingPharmacy = $this->adminModel->countpendingPharmacies();
+        $countrejectedPharmacy = $this-> adminModel->countrejectedPharmacies();
+        $countSuppliers = $this -> adminModel->countSuppliers();
         $countapprovedSuppliers = $this->adminModel->countapprovedSuppliers();
         $countpendingSuppliers = $this->adminModel->countpendingSuppliers();
+        $countrejectedSuppliers = $this->adminModel->countrejectedSuppliers();
         $countManagers = $this->adminModel->countManagers();
         $countOrders = $this->adminModel->countOrders();
+        $countMedicines = $this->adminModel->countMedicines();
         $countMessages = $this->adminModel->countMessages();
 
         $data = [
+            'countPharmacies' => $countPharmacies,
             'countapprovedPharmacies' => $countapprovedPharmacy,
             'countpendingPharmacies' => $countpendingPharmacy,
+            'countrejectedPharmacies' => $countrejectedPharmacy,
+            'countSuppliers' => $countSuppliers,
             'countapprovedSuppliers' => $countapprovedSuppliers,
             'countpendingSuppliers' => $countpendingSuppliers,
+            'countrejectedSuppliers' => $countrejectedSuppliers,
             'countManagers' => $countManagers,
             'countOrders' => $countOrders,
+            'countMedicines' => $countMedicines,
             'countMessages' => $countMessages
         ];
     
-        $this->view('admin/index', $data);
+        $this->view('admin/dashboard/index', $data);
+
+}
+
+public function approvedPharmacy(){
+    $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+    $approvedPharmacy = $this->adminModel->approvedPharmacy();
+
+    $data =[
+        'approvedPharmacy'=>$approvedPharmacy
+    ];
+    $this->view('admin/dashboard/approvedPharmacy',$data);
+}
+
+public function pendingPharmacy(){
+    $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+    $pendingPharmacy = $this->adminModel->pendingPharmacy();
+
+    $data =[
+        'pendingPharmacy'=>$pendingPharmacy
+    ];
+    $this->view('admin/dashboard/pendingPharmacy',$data);
+}
+
+public function rejectedPharmacy(){
+    $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+    $rejectedPharmacy = $this->adminModel->rejectedPharmacy();
+
+    $data =[
+        'rejectedPharmacy'=>$rejectedPharmacy
+    ];
+    $this->view('admin/dashboard/rejectedPharmacy',$data);
+}
+
+public function approvedSupplier(){
+    $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+    $approvedSupplier = $this->adminModel->approvedSupplier();
+
+    $data =[
+        'approvedSupplier'=>$approvedSupplier
+    ];
+    $this->view('admin/dashboard/approvedSupplier',$data);
+}
+
+public function pendingSupplier(){
+    $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+    $pendingSupplier = $this->adminModel->pendingSupplier();
+
+    $data =[
+        'pendingSupplier'=>$pendingSupplier
+    ];
+    $this->view('admin/dashboard/pendingSupplier',$data);
+}
+
+public function rejectedSupplier(){
+    $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+    $rejectedSupplier = $this->adminModel->rejectedSupplier();
+
+    $data =[
+        'rejectedSupplier'=>$rejectedSupplier
+    ];
+    $this->view('admin/dashboard/rejectedSupplier',$data);
+}
+
+public function medicines() {
+    $medicines = $this->adminModel->medicines();
+    $data = [
+        'medicines' => $medicines
+    ];
+    
+    
+    $this->view('admin/dashboard/medicines', $data);
 
 }
 
@@ -196,7 +283,7 @@ public function updateManager($id) {
 
 public function all_pharmacies() {
 
-    $allPharmacies = $this->adminModel->getApprovedPharmacyRegistration();
+    $allPharmacies = $this->adminModel->getPharmacyRegistration();
     
     $data = [
         'users' => $allPharmacies
@@ -207,7 +294,7 @@ public function all_pharmacies() {
 
 public function all_suppliers() {
 
-    $allSuppliers = $this->adminModel->getApprovedSupplierRegistration();
+    $allSuppliers = $this->adminModel->getSupplierRegistration();
         
     $data = [
         'allSuppliers' => $allSuppliers
