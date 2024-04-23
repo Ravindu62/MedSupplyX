@@ -89,14 +89,12 @@ class Admin{
         }
     }
     
-    public function updateManager($id, $name, $address, $phone, $email) {
-        $this->db->query('UPDATE managerregistration SET name = :name, address = :address, phone = :phone, email = :email WHERE id = :id');
+    public function updateManager($id, $name, $address, $phone) {
+        $this->db->query('UPDATE managerregistration SET name = :name, address = :address, phone = :phone WHERE id = :id');
         $this->db->bind(':id', $id);
         $this->db->bind(':name', $name);
         $this->db->bind(':address', $address);
         $this->db->bind(':phone', $phone);
-        $this->db->bind(':email', $email);
-        
         // Execute
         if ($this->db->execute()) {
             return true;
@@ -206,6 +204,34 @@ public function countOrders() {
     }    
 }
 
+public function getMessages()
+{
+    $this->db->query("SELECT * FROM messages");
+
+    $results = $this->db->resultSet();
+
+    return $results;
+}
+
+public function addMessage($data)
+{
+    $this->db->query('INSERT INTO messages (id, sender, receiver, heading, message) VALUES(:id, :sender, :receiver, :heading, :message)');
+    // Bind values
+    $this->db->bind(':id', $_SESSION['USER_DATA']['id']);
+    $this->db->bind(':sender', $data['sender']);
+    $this->db->bind(':receiver', $data['receiver']);
+    $this->db->bind(':heading', $data['heading']);
+    $this->db->bind(':message', $data['message']);
+
+    // Execute
+    if ($this->db->execute()) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
     public function getProfile() {
         $this->db->query('SELECT * FROM admin');
         $results = $this->db->resultSet();
@@ -254,12 +280,29 @@ public function countOrders() {
         }
     }
 
+    public function updatePassword($newPassword, $confirmPassword) {
+    if ($newPassword === $confirmPassword) {
+        $this->db->query('UPDATE admin SET password = :password');
+        $this->db->bind(':password', $newPassword);
+
+        // Execute the query
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        return false; // Passwords do not match
+    }
+}
+
+}
     
 
 
 
 
-}
+
 
 
 

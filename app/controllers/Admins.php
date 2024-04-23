@@ -175,12 +175,9 @@ public function updateManager($id) {
         if (!empty($_POST['newPhone'])) {
             $phone = $_POST['newPhone'];
         }
-        if (!empty($_POST['newEmail'])) {
-            $email = $_POST['newEmail'];
-        }
 
         // Update the manager in your database
-        if ($this->adminModel->updateManager($id, $name, $address, $phone, $email)) {
+        if ($this->adminModel->updateManager($id, $name, $address, $phone)) {
             redirect('admins/managers');
         } else {
             // Handle the case where the update fails
@@ -220,12 +217,88 @@ public function all_suppliers() {
 
 }
 
-public function messages() {
-    $data = [];
-    
-    $this->view('admin/messages', $data);
+public function messages()
+    {
+        //Sanitize inputs
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-}
+        $messages = $this->adminModel->getMessages();
+
+        $data = [
+            'messages' => $messages
+        ];
+
+        $this->view('admin/messages', $data);
+    }
+
+    public function newMessage()
+    {
+        // Check for POST
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Process form
+
+            // Sanitize POST data
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+            // Initialize data
+            $data = [
+                'receiver' => trim($_POST['receiver']),
+                'sender' => trim($_SESSION['USER_DATA']['name']),
+                'heading' => trim($_POST['heading']),
+                'message' => trim($_POST['message']),
+                'receiver_err' => '',
+                'heading_err' => '',
+                'message_err' => ''
+            ];
+
+            // Validate data
+            if (empty($data['receiver'])) {
+                $data['receiver_err'] = 'Please enter the recipient';
+            }
+
+            if (empty($data['sender'])) {
+                $data['sender_err'] = 'Please enter the sender';
+            }
+
+            if (empty($data['heading'])) {
+                $data['heading_err'] = 'Please enter the heading';
+            }
+
+            if (empty($data['message'])) {
+                $data['message_err'] = 'Please enter the message';
+            }
+
+            // Make sure no errors
+            if (empty($data['receiver_err']) && empty($data['sender_err']) && empty($data['heading_err']) && empty($data['message_err'])) {
+                // Validated
+
+                // Inventory model function
+                if ($this->adminModel->addMessage($data)) {
+                    // Redirect to order
+                    redirect('admins/messages');
+                } else {
+                    die('Something went wrong');
+                }
+            } else {
+                // Load view with errors
+                $this->view('admins/messages', $data);
+            }
+        } else {
+            // Init data
+            $data = [
+                'to' => '',
+                'heading' => '',
+                'message' => '',
+                'to_err' => '',
+                'heading_err' => '',
+                'message_err' => ''
+            ];
+
+            // Load view
+            $this->view('admins/messages', $data);
+        }
+    }
+
 
 public function advertistments() {
     $data = [];
@@ -262,7 +335,6 @@ public function changeContactNumber()
             $currentContactNumber = $_POST['currentContactNumber'];
             $newContactNumber = $_POST['newPhone'];
 
-            // Validate the new contact number if needed
 
             // Update the contact number in the database
             if ($this->adminModel->updateContactNumber($currentContactNumber, $newContactNumber)) {
@@ -302,13 +374,53 @@ public function changeContactNumber()
             redirect('admins/profile');
         }
     }
+
+    public function changePassword() {
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+        $newPassword = trim($_POST['newPassword']);
+        $confirmPassword = trim($_POST['confirmPassword']);
+        $newPassword_err = '';
+        $confirmPassword_err = '';
+
+        if(empty($newPassword)) {
+            $newPassword_err = 'Please enter password';
+        } elseif(strlen($newPassword) < 6) {
+            $newPassword_err = 'Password must be at least 6 characters';
+        }
+
+        if(empty($confirmPassword)) {
+            $confirmPassword_err = 'Please confirm password';
+        } else {
+            if($newPassword != $confirmPassword) {
+                $confirmPassword_err = 'Passwords do not match';
+            }
+        }
+
+        if(empty($newPassword_err) && empty($confirmPassword_err)){
+            if($this->adminModel->updatePassword($newPassword, $confirmPassword)) {
+                redirect('admins/profile');
+            } else {
+                die('Something went wrong');
+            }
+        } else {
+            // Load view with errors
+            $data = [
+                'newPassword' => $newPassword,
+                'confirmPassword' => $confirmPassword,
+                'newPassword_err' => $newPassword_err,
+                'confirmPassword_err' => $confirmPassword_err,
+            ];
+            $this->view('admins/profile', $data);
+        }
+    } else {
+        // Load view
+        $this->view('admins/profile');
+    }
+}
+
     
-    
-
-
-
-
-
 
 public function logout() {
     unset($_SESSION['USER_DATA']);
