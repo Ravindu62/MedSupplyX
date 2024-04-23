@@ -419,12 +419,22 @@ public function changeContactNumber()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Get current contact number and new contact number from the form
-            $currentContactNumber = $_POST['currentContactNumber'];
-            $newContactNumber = $_POST['newPhone'];
+            $data =[
+                'currentContactNumber' => $_POST['currentContactNumber'],
+                'newContactNumber' => $_POST['newPhone'],
+                'phone_err' => '',
+                'success_message'=>'',
+                'change_pw_success' =>'',
+            ];
 
+            if (empty($data['phone'])) {
+                $data['phone_err'] = 'Please enter the new contact number';
+            }
 
             // Update the contact number in the database
-            if ($this->adminModel->updateContactNumber($currentContactNumber, $newContactNumber)) {
+            elseif ($this->adminModel->updateContactNumber($data['currentContactNumber'], $data['newContactNumber'])) {
+                $data['success_message']="Email changed successfully";
+                $data['change_pw_success']='True';
                 redirect('admins/profile');
             } else {
                 redirect('admins/profile');
@@ -440,74 +450,84 @@ public function changeContactNumber()
             // Sanitize POST data
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-            $currentEmail = trim($_POST['currentEmail']);
-            $newEmail = trim($_POST['newEmail']);
-
+            $data = [
+                'currentEmail' => trim($_POST['currentEmail']),
+                'newEmail' => trim($_POST['newEmail']),
+                'email_err' => '',
+                'success_message'=>'',
+                'change_pw_success' =>'',
+                ];
 
             // Check if the current email exists
-            if ($this->adminModel->findAdminByEmail($currentEmail)) {
+            if ($this->adminModel->findAdminByEmail($data['currentEmail'])) {
+
+                if (empty($data['newEmail'])) {
+                    $data['email_err'] = 'Please enter the new email address';
+                }
                 // Update the email
-                if ($this->adminModel->updateEmail($currentEmail, $newEmail)) {
+                elseif ($this->adminModel->updateEmail($data['currentEmail'], $data['newEmail'])) {
                     // Email updated successfully
-                    redirect('admins/profile');
+                    $data['success_message']="Email changed successfully";
+                    $data['change_pw_success']='True';
+                    redirect('admins/profile',$data);
                 } else {
                     die('Something went wrong');
                 }
             } else {
                 // Current email not found
-                redirect('admins/profile');
+                redirect('admins/profile',$data);
             }
         } else {
-            redirect('admins/profile');
+            redirect('admins/profile',$data);
         }
     }
 
     public function changePassword() {
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
-        $newPassword = trim($_POST['newPassword']);
-        $confirmPassword = trim($_POST['confirmPassword']);
-        $newPassword_err = '';
-        $confirmPassword_err = '';
-
-        if(empty($newPassword)) {
-            $newPassword_err = 'Please enter password';
-        } elseif(strlen($newPassword) < 6) {
-            $newPassword_err = 'Password must be at least 6 characters';
-        }
-
-        if(empty($confirmPassword)) {
-            $confirmPassword_err = 'Please confirm password';
-        } else {
-            if($newPassword != $confirmPassword) {
-                $confirmPassword_err = 'Passwords do not match';
-            }
-        }
-
-        if(empty($newPassword_err) && empty($confirmPassword_err)){
-            if($this->adminModel->updatePassword($newPassword, $confirmPassword)) {
-                redirect('admins/profile');
-            } else {
-                die('Something went wrong');
-            }
-        } else {
-            // Load view with errors
-            $data = [
-                'newPassword' => $newPassword,
-                'confirmPassword' => $confirmPassword,
-                'newPassword_err' => $newPassword_err,
-                'confirmPassword_err' => $confirmPassword_err,
-            ];
-            $this->view('admins/profile', $data);
-        }
-    } else {
-        // Load view
-        $this->view('admins/profile');
-    }
-}
-
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
     
+            $data = [
+                'newPassword' => trim($_POST['newPassword']),
+                'confirmPassword' => trim($_POST['confirmPassword']),
+                'newPassword_err' => '',
+                'confirmPassword_err' => '',
+                'change_pw_success' => '',
+                'success_message' => '',
+            ];
+    
+            if (empty($data['newPassword'])) {
+                $data['newPassword_err'] = 'Please Enter New Password';
+            } elseif (strlen($data['newPassword']) < 8 || strlen($data['newPassword']) > 30) {
+                $data['newPassword_err'] = 'Password must be between 8 and 30 characters';
+            } elseif (!preg_match('/[^\w\s]/', $data['newPassword'])) {
+                $data['newPassword_err'] = 'Password must include at least one symbol';
+            } elseif (!preg_match('/[A-Z]/', $data['newPassword'])) {
+                $data['newPassword_err'] = 'Password must include at least one uppercase letter';
+            } elseif (!preg_match('/[a-z]/', $data['newPassword'])) {
+                $data['newPassword_err'] = 'Password must include at least one lowercase letter';
+            } elseif (!preg_match('/[0-9]/', $data['newPassword'])) {
+                $data['newPassword_err'] = 'Password must include at least one number';
+            }
+    
+            if (empty($data['confirmPassword'])) {
+                $data['confirmPassword_err'] = 'Please confirm password';
+            } elseif ($data['newPassword'] != $data['confirmPassword']) {
+                $data['newPassword_err'] = 'Passwords do not match';
+            }
+    
+            if (empty($data['newPassword_err']) && empty($data['confirmPassword_err'])) {
+                if ($this->adminModel->updatePassword($data['confirmPassword'])) {
+                    $data['success_message'] = "Password changed successfully";
+                    $data['change_pw_success'] = 'True';
+                    $this->view('admins/profile', $data);
+                }
+            }
+    
+            $this->view('admin/profile', $data);
+        }
+    }
+    
+
 
 public function logout() {
     unset($_SESSION['USER_DATA']);

@@ -363,7 +363,7 @@ public function addMessage($data)
         $this->db->query('UPDATE admin SET email = :new_email WHERE email = :current_email');
         $this->db->bind(':new_email', $newEmail);
         $this->db->bind(':current_email', $currentEmail);
-
+    
         // Execute
         if ($this->db->execute()) {
             return true;
@@ -371,14 +371,14 @@ public function addMessage($data)
             return false;
         }
     }
-
+    
     // Find admin by email
     public function findAdminByEmail($email) {
         $this->db->query('SELECT * FROM admin WHERE email = :email');
         $this->db->bind(':email', $email);
-
+    
         $row = $this->db->single();
-
+    
         // Check row
         if ($this->db->rowCount() > 0) {
             return true;
@@ -386,22 +386,22 @@ public function addMessage($data)
             return false;
         }
     }
+    
 
-    public function updatePassword($newPassword, $confirmPassword) {
-    if ($newPassword === $confirmPassword) {
-        $this->db->query('UPDATE admin SET password = :password');
-        $this->db->bind(':password', $newPassword);
+    public function updatePassword($id, $newPassword) {
+        
+        $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
 
-        // Execute the query
+        $this->db->query('UPDATE admin SET password = :password WHERE id = :id');
+        $this->db->bind(':password', $hashedPassword);
+        $this->db->bind(':id', $id);
+    
         if ($this->db->execute()) {
-            return true;
+            return true; 
         } else {
-            return false;
+            return false; 
         }
-    } else {
-        return false; // Passwords do not match
     }
-}
 
 }
     
