@@ -388,23 +388,19 @@ public function addMessage($data)
     }
     
 
-    public function updatePassword($id, $newPassword) {
-        
-        $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+    public function updatePassword($newPassword, $confirmPassword) {
+        $this->db->query('UPDATE admin SET password = :password');
+        $this->db->bind(':password', $newPassword);
 
-        $this->db->query('UPDATE admin SET password = :password WHERE id = :id');
-        $this->db->bind(':password', $hashedPassword);
-        $this->db->bind(':id', $id);
-    
+        // Execute the query
         if ($this->db->execute()) {
-            return true; 
+            return true;
         } else {
-            return false; 
+            return false;
         }
     }
-
-}
     
+}
 
 
 

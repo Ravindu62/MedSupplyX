@@ -65,7 +65,7 @@
 
 <div id="popup1" class="overlay">
                 <div class="popup-profile-change">
-                    <form action="<?php echo URLROOT; ?>/admins/changeContactNumber" method="POST" class="form-container">
+                    <form action="<?php echo URLROOT; ?>/admins/changeContactNumber#popup1" method="POST" class="form-container">
                         <h2>Set Your Contact Number</h2>
                         <table>
                             <tr>
@@ -80,21 +80,22 @@
                                     <p class="editprofile-maintag"> New Number </p>
                                 </td>
                                 <td> : </td>
-                                <td><input class="editprofile-input" type="text" placeholder="Enter New Contact Number" name="newPhone"></td>
-                                <div class="importantMessage"><?php echo $data['phone_err']?>
-                            </tr>
+                                <td><input class="editprofile-input" type="text" placeholder="Enter New Contact Number" name="newContactNumber"></td>
+                                <div class="importantMessage"><?php echo $data['phone_err']?></div>
+                            </tr>                                
                         </table>
                         <div class="editprofile-btnsetup">
-                        <a href="<?php echo URLROOT; ?>/admins/changeContactNumber"><button type="submit" class="editprofile-updatebutton "> Update Contact </button></a>
-                        <a href="#"><button type="button" class="editprofile-button-red"> Close </button></a>
+                        <a href="<?php echo URLROOT; ?>/admins/changeContactNumber"><button type="submit" class="editprofile-updatebutton"> Update Contact </button></a>
+                        <a href="<?php echo URLROOT; ?>/admins/profile"><button type="button" class="editprofile-button-red"> Close </button></a>
                         </div>
                     </form>
                 </div>
             </div>
 
+
             <div id="popup2" class="overlay">
                 <div class="popup-profile-change">
-                    <form action="<?php echo URLROOT; ?>/admins/changeEmail" method="POST" class="form-container">
+                    <form action="<?php echo URLROOT; ?>/admins/changeEmail#popup2" method="POST" class="form-container">
                         <h2>Set Your Email Address</h2>
                         <table>
                             <tr>
@@ -110,21 +111,21 @@
                                 </td>
                                 <td> : </td>
                                 <td><input class="editprofile-input" type="text" placeholder="Enter New Email" name="newEmail"></td>
-                                <div class="importantMessage"><?php echo $data['email_err']?>
+                                <div class="importantMessage"><?php echo $data['email_err']?></div>
                             </tr>                                
                         </table>
                         <div class="editprofile-btnsetup">
-                        <a href="<?php echo URLROOT; ?>/admins/changeEmail"><button type="submit" class="editprofile-updatebutton "> Update Email </button></a>
-                        <a href="#"><button type="button" class="editprofile-button-red"> Close </button></a>
+                        <a href="<?php echo URLROOT; ?>/admins/changeEmail"><button type="submit" class="editprofile-updatebutton"> Update Email </button></a>
+                        <a href="<?php echo URLROOT; ?>/admins/profile"><button type="button" class="editprofile-button-red"> Close </button></a>
                         </div>
                     </form>
                 </div>
             </div>
 
 
-            <div id="popup3" class="overlay">
+    <div id="popup3" class="overlay">
     <div class="popup-profile-change">
-        <form action="<?php echo URLROOT; ?>/admins/changePassword" method="POST" class="form-container">
+        <form action="<?php echo URLROOT; ?>/admins/changePassword#popup3" method="POST" class="form-container">
             <h2>Set Your Password</h2>
             <table>
                 <tr>
@@ -153,7 +154,7 @@
             </table>
             <div class="editprofile-btnsetup">
                 <a href="<?php echo URLROOT; ?>/admins/changePassword"><button type="submit" class="editprofile-updatebutton"> Update Password </button></a>
-                <a href="#"><button type="button" class="editprofile-button-red"> Close </button></a>
+                <a href="<?php echo URLROOT; ?>/admins/profile"><button type="button" class="editprofile-button-red"> Close </button></a>
             </div>
         </form>
     </div>
@@ -164,6 +165,7 @@
     </div>
 
     <?php require APPROOT . '/views/inc/footer.php'; ?>
+
 
 </body>
 
