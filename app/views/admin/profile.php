@@ -81,6 +81,7 @@
                                 </td>
                                 <td> : </td>
                                 <td><input class="editprofile-input" type="text" placeholder="Enter New Contact Number" name="newPhone"></td>
+                                <div class="importantMessage"><?php echo $data['phone_err']?>
                             </tr>
                         </table>
                         <div class="editprofile-btnsetup">
@@ -109,6 +110,7 @@
                                 </td>
                                 <td> : </td>
                                 <td><input class="editprofile-input" type="text" placeholder="Enter New Email" name="newEmail"></td>
+                                <div class="importantMessage"><?php echo $data['email_err']?>
                             </tr>                                
                         </table>
                         <div class="editprofile-btnsetup">
@@ -137,8 +139,8 @@
                         <p class="editprofile-maintag"> New Password </p>
                     </td>
                     <td> : </td>
-                    <td><input class="editprofile-input" type="password" placeholder="Enter Your New Password" name="newPassword" <?php echo (!empty($newPassword_err)) ? 'is-invalid' : ''; ?>></td>
-                    <tr><td colspan="3"><span class="importantMessage"><?php echo $newPassword_err; ?></span></td></tr>
+                    <td><input class="editprofile-input" type="password" placeholder="Enter Your New Password" name="newPassword"></td>
+                    <div class="importantMessage"><?php echo $data['newPassword_err']?></div>
                 </tr>
                 <tr>
                     <td>
@@ -146,7 +148,7 @@
                     </td>
                     <td> : </td>
                     <td><input class="editprofile-input" type="password" placeholder="Confirm Your New Password" name="confirmPassword"></td>
-                    <tr><td colspan="3"><span class="importantMessage"><?php echo $confirmPassword_err; ?></span></td></tr>
+                    <div class="importantMessage"><?php echo $data['confirmPassword_err']?></div>
                 </tr>
             </table>
             <div class="editprofile-btnsetup">

@@ -28,8 +28,16 @@
       </div>
       <div class="greeting">  
       Hello, <?php echo $_SESSION['USER_DATA']['name']; ?>
+      <?php if ($_SESSION['USER_DATA']['role'] === 'admin') : ?>
+                <a href="<?php echo URLROOT; ?>/admins/profile"><img class="profile" src="<?php echo URLROOT ?>/public/img/profile.png" alt="profile"></a>
+            <?php elseif ($_SESSION['USER_DATA']['role'] === 'pharmacy') : ?>
+                <a href="<?php echo URLROOT; ?>/pharmacies/profile/profile"><img class="profile" src="<?php echo URLROOT ?>/public/img/profile.png" alt="profile"></a>
+            <?php elseif ($_SESSION['USER_DATA']['role'] === 'supplier') : ?>
+                <a href="<?php echo URLROOT; ?>/suppliers/profile"><img class="profile" src="<?php echo URLROOT ?>/public/img/profile.png" alt="profile"></a>
+            <?php elseif ($_SESSION['USER_DATA']['role'] === 'manager') : ?>
+                <a href="<?php echo URLROOT; ?>/managers/profile"><img class="profile" src="<?php echo URLROOT ?>/public/img/profile.png" alt="profile"></a>
+            <?php endif; ?>
       
-      <a href="<?php echo URLROOT ?>/pharmacies/profile"><img class="profile" src="<?php echo URLROOT ?>/public/img/profile.png" alt="profile"></a>
       </div>
     </div>
 
