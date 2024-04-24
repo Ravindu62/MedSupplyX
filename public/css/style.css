@@ -1010,7 +1010,15 @@ nav ul li:hover::before {
   position: relative;
   transition: all 5s ease-in-out;
 }
-
+.popup-update {
+  margin: 200px auto;
+  padding: 30px 50px;
+  background: #fff;
+  border-radius: 5px;
+  width: 900px;
+  position: relative;
+  transition: all 5s ease-in-out;
+}
 .popup-profile-change {
   margin: 200px auto;
   padding: 30px 50px;
