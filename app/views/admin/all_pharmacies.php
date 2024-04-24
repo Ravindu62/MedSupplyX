@@ -31,6 +31,7 @@
     <th> Physical Address </th>
     <th> Contact No </th>
     <th> Email </th>
+    <th> status </th>
   </tr>
 <tr> 
   
@@ -50,6 +51,7 @@
   <td> <?php echo $allPharmacies->address; ?> </td>
   <td> <?php echo $allPharmacies->phone; ?> </td>
   <td> <?php echo $allPharmacies->email; ?> </td>
+  <td> <?php echo $allPharmacies->status; ?></td>
   <?php endforeach; ?>
 </tr>
 
@@ -57,3 +59,12 @@
 </div>
 </div>
 </div>
+
+
+<?php require APPROOT . '/views/inc/footer.php'; ?>
+
+
+
+
+</body>
+</html>

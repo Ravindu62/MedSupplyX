@@ -11,25 +11,112 @@
     }
 
 public function index() {
+        $countPharmacies = $this ->adminModel -> countPharmacies();
         $countapprovedPharmacy = $this->adminModel->countapprovedPharmacies();
         $countpendingPharmacy = $this->adminModel->countpendingPharmacies();
+        $countrejectedPharmacy = $this-> adminModel->countrejectedPharmacies();
+        $countSuppliers = $this -> adminModel->countSuppliers();
         $countapprovedSuppliers = $this->adminModel->countapprovedSuppliers();
         $countpendingSuppliers = $this->adminModel->countpendingSuppliers();
+        $countrejectedSuppliers = $this->adminModel->countrejectedSuppliers();
         $countManagers = $this->adminModel->countManagers();
         $countOrders = $this->adminModel->countOrders();
+        $countMedicines = $this->adminModel->countMedicines();
         $countMessages = $this->adminModel->countMessages();
 
         $data = [
+            'countPharmacies' => $countPharmacies,
             'countapprovedPharmacies' => $countapprovedPharmacy,
             'countpendingPharmacies' => $countpendingPharmacy,
+            'countrejectedPharmacies' => $countrejectedPharmacy,
+            'countSuppliers' => $countSuppliers,
             'countapprovedSuppliers' => $countapprovedSuppliers,
             'countpendingSuppliers' => $countpendingSuppliers,
+            'countrejectedSuppliers' => $countrejectedSuppliers,
             'countManagers' => $countManagers,
             'countOrders' => $countOrders,
+            'countMedicines' => $countMedicines,
             'countMessages' => $countMessages
         ];
     
-        $this->view('admin/index', $data);
+        $this->view('admin/dashboard/index', $data);
+
+}
+
+public function approvedPharmacy(){
+    $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+    $approvedPharmacy = $this->adminModel->approvedPharmacy();
+
+    $data =[
+        'approvedPharmacy'=>$approvedPharmacy
+    ];
+    $this->view('admin/dashboard/approvedPharmacy',$data);
+}
+
+public function pendingPharmacy(){
+    $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+    $pendingPharmacy = $this->adminModel->pendingPharmacy();
+
+    $data =[
+        'pendingPharmacy'=>$pendingPharmacy
+    ];
+    $this->view('admin/dashboard/pendingPharmacy',$data);
+}
+
+public function rejectedPharmacy(){
+    $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+    $rejectedPharmacy = $this->adminModel->rejectedPharmacy();
+
+    $data =[
+        'rejectedPharmacy'=>$rejectedPharmacy
+    ];
+    $this->view('admin/dashboard/rejectedPharmacy',$data);
+}
+
+public function approvedSupplier(){
+    $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+    $approvedSupplier = $this->adminModel->approvedSupplier();
+
+    $data =[
+        'approvedSupplier'=>$approvedSupplier
+    ];
+    $this->view('admin/dashboard/approvedSupplier',$data);
+}
+
+public function pendingSupplier(){
+    $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+    $pendingSupplier = $this->adminModel->pendingSupplier();
+
+    $data =[
+        'pendingSupplier'=>$pendingSupplier
+    ];
+    $this->view('admin/dashboard/pendingSupplier',$data);
+}
+
+public function rejectedSupplier(){
+    $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+    $rejectedSupplier = $this->adminModel->rejectedSupplier();
+
+    $data =[
+        'rejectedSupplier'=>$rejectedSupplier
+    ];
+    $this->view('admin/dashboard/rejectedSupplier',$data);
+}
+
+public function medicines() {
+    $medicines = $this->adminModel->medicines();
+    $data = [
+        'medicines' => $medicines
+    ];
+    
+    
+    $this->view('admin/dashboard/medicines', $data);
 
 }
 
@@ -175,12 +262,9 @@ public function updateManager($id) {
         if (!empty($_POST['newPhone'])) {
             $phone = $_POST['newPhone'];
         }
-        if (!empty($_POST['newEmail'])) {
-            $email = $_POST['newEmail'];
-        }
 
         // Update the manager in your database
-        if ($this->adminModel->updateManager($id, $name, $address, $phone, $email)) {
+        if ($this->adminModel->updateManager($id, $name, $address, $phone)) {
             redirect('admins/managers');
         } else {
             // Handle the case where the update fails
@@ -199,7 +283,7 @@ public function updateManager($id) {
 
 public function all_pharmacies() {
 
-    $allPharmacies = $this->adminModel->getApprovedPharmacyRegistration();
+    $allPharmacies = $this->adminModel->getPharmacyRegistration();
     
     $data = [
         'users' => $allPharmacies
@@ -210,7 +294,7 @@ public function all_pharmacies() {
 
 public function all_suppliers() {
 
-    $allSuppliers = $this->adminModel->getApprovedSupplierRegistration();
+    $allSuppliers = $this->adminModel->getSupplierRegistration();
         
     $data = [
         'allSuppliers' => $allSuppliers
@@ -220,12 +304,88 @@ public function all_suppliers() {
 
 }
 
-public function messages() {
-    $data = [];
-    
-    $this->view('admin/messages', $data);
+public function messages()
+    {
+        //Sanitize inputs
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-}
+        $messages = $this->adminModel->getMessages();
+
+        $data = [
+            'messages' => $messages
+        ];
+
+        $this->view('admin/messages', $data);
+    }
+
+    public function newMessage()
+    {
+        // Check for POST
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Process form
+
+            // Sanitize POST data
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+            // Initialize data
+            $data = [
+                'receiver' => trim($_POST['receiver']),
+                'sender' => trim($_SESSION['USER_DATA']['name']),
+                'heading' => trim($_POST['heading']),
+                'message' => trim($_POST['message']),
+                'receiver_err' => '',
+                'heading_err' => '',
+                'message_err' => ''
+            ];
+
+            // Validate data
+            if (empty($data['receiver'])) {
+                $data['receiver_err'] = 'Please enter the recipient';
+            }
+
+            if (empty($data['sender'])) {
+                $data['sender_err'] = 'Please enter the sender';
+            }
+
+            if (empty($data['heading'])) {
+                $data['heading_err'] = 'Please enter the heading';
+            }
+
+            if (empty($data['message'])) {
+                $data['message_err'] = 'Please enter the message';
+            }
+
+            // Make sure no errors
+            if (empty($data['receiver_err']) && empty($data['sender_err']) && empty($data['heading_err']) && empty($data['message_err'])) {
+                // Validated
+
+                // Inventory model function
+                if ($this->adminModel->addMessage($data)) {
+                    // Redirect to order
+                    redirect('admins/messages');
+                } else {
+                    die('Something went wrong');
+                }
+            } else {
+                // Load view with errors
+                $this->view('admins/messages', $data);
+            }
+        } else {
+            // Init data
+            $data = [
+                'to' => '',
+                'heading' => '',
+                'message' => '',
+                'to_err' => '',
+                'heading_err' => '',
+                'message_err' => ''
+            ];
+
+            // Load view
+            $this->view('admins/messages', $data);
+        }
+    }
+
 
 public function advertistments() {
     $data = [];
@@ -259,13 +419,22 @@ public function changeContactNumber()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Get current contact number and new contact number from the form
-            $currentContactNumber = $_POST['currentContactNumber'];
-            $newContactNumber = $_POST['newPhone'];
+            $data =[
+                'currentContactNumber' => $_POST['currentContactNumber'],
+                'newContactNumber' => $_POST['newPhone'],
+                'phone_err' => '',
+                'success_message'=>'',
+                'change_pw_success' =>'',
+            ];
 
-            // Validate the new contact number if needed
+            if (empty($data['phone'])) {
+                $data['phone_err'] = 'Please enter the new contact number';
+            }
 
             // Update the contact number in the database
-            if ($this->adminModel->updateContactNumber($currentContactNumber, $newContactNumber)) {
+            elseif ($this->adminModel->updateContactNumber($data['currentContactNumber'], $data['newContactNumber'])) {
+                $data['success_message']="Email changed successfully";
+                $data['change_pw_success']='True';
                 redirect('admins/profile');
             } else {
                 redirect('admins/profile');
@@ -281,33 +450,83 @@ public function changeContactNumber()
             // Sanitize POST data
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-            $currentEmail = trim($_POST['currentEmail']);
-            $newEmail = trim($_POST['newEmail']);
-
+            $data = [
+                'currentEmail' => trim($_POST['currentEmail']),
+                'newEmail' => trim($_POST['newEmail']),
+                'email_err' => '',
+                'success_message'=>'',
+                'change_pw_success' =>'',
+                ];
 
             // Check if the current email exists
-            if ($this->adminModel->findAdminByEmail($currentEmail)) {
+            if ($this->adminModel->findAdminByEmail($data['currentEmail'])) {
+
+                if (empty($data['newEmail'])) {
+                    $data['email_err'] = 'Please enter the new email address';
+                }
                 // Update the email
-                if ($this->adminModel->updateEmail($currentEmail, $newEmail)) {
+                elseif ($this->adminModel->updateEmail($data['currentEmail'], $data['newEmail'])) {
                     // Email updated successfully
-                    redirect('admins/profile');
+                    $data['success_message']="Email changed successfully";
+                    $data['change_pw_success']='True';
+                    redirect('admins/profile',$data);
                 } else {
                     die('Something went wrong');
                 }
             } else {
                 // Current email not found
-                redirect('admins/profile');
+                redirect('admins/profile',$data);
             }
         } else {
-            redirect('admins/profile');
+            redirect('admins/profile',$data);
+        }
+    }
+
+    public function changePassword() {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+    
+            $data = [
+                'newPassword' => trim($_POST['newPassword']),
+                'confirmPassword' => trim($_POST['confirmPassword']),
+                'newPassword_err' => '',
+                'confirmPassword_err' => '',
+                'change_pw_success' => '',
+                'success_message' => '',
+            ];
+    
+            if (empty($data['newPassword'])) {
+                $data['newPassword_err'] = 'Please Enter New Password';
+            } elseif (strlen($data['newPassword']) < 8 || strlen($data['newPassword']) > 30) {
+                $data['newPassword_err'] = 'Password must be between 8 and 30 characters';
+            } elseif (!preg_match('/[^\w\s]/', $data['newPassword'])) {
+                $data['newPassword_err'] = 'Password must include at least one symbol';
+            } elseif (!preg_match('/[A-Z]/', $data['newPassword'])) {
+                $data['newPassword_err'] = 'Password must include at least one uppercase letter';
+            } elseif (!preg_match('/[a-z]/', $data['newPassword'])) {
+                $data['newPassword_err'] = 'Password must include at least one lowercase letter';
+            } elseif (!preg_match('/[0-9]/', $data['newPassword'])) {
+                $data['newPassword_err'] = 'Password must include at least one number';
+            }
+    
+            if (empty($data['confirmPassword'])) {
+                $data['confirmPassword_err'] = 'Please confirm password';
+            } elseif ($data['newPassword'] != $data['confirmPassword']) {
+                $data['newPassword_err'] = 'Passwords do not match';
+            }
+    
+            if (empty($data['newPassword_err']) && empty($data['confirmPassword_err'])) {
+                if ($this->adminModel->updatePassword($data['confirmPassword'])) {
+                    $data['success_message'] = "Password changed successfully";
+                    $data['change_pw_success'] = 'True';
+                    $this->view('admins/profile', $data);
+                }
+            }
+    
+            $this->view('admin/profile', $data);
         }
     }
     
-    
-
-
-
-
 
 
 public function logout() {
