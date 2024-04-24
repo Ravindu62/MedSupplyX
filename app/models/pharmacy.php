@@ -171,7 +171,7 @@ class pharmacy
 
     public function addInventory($data)
     {
-        $this->db->query('INSERT INTO inventory (pharmacy_id, medicine_id, name, batch_no, category_no, quantity, manu_date, expire_date, unit_amount) VALUES(:pharmacyId, :medicineId, :medicineName, :batchNo, :category, :quantity, :manufacturedDate, :expireDate, :unitPrice)');
+        $this->db->query('INSERT INTO inventory (pharmacy_id, medicine_id, name, batch_no, category, quantity, manu_date, expire_date, unit_amount) VALUES(:pharmacyId, :medicineId, :medicineName, :batchNo, :category, :quantity, :manufacturedDate, :expireDate, :unitPrice)');
         // Bind values
         $this->db->bind(':pharmacyId', $_SESSION['USER_DATA']['id']);
         $this->db->bind(':medicineId', $data['medicineId']);
@@ -233,7 +233,6 @@ class pharmacy
         } else {
             return false;
         }
-
     }
 
 
@@ -241,9 +240,10 @@ class pharmacy
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////Notification data//////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public function getMessages($receiver)
+    public function getMessages($pharmacyId)
     {
-        $this->db->query("SELECT * FROM messages WHERE receiver = :pharmacyId");
+        //get the mess
+        $this->db->query("SELECT * FROM messages WHERE pharmacyId = :pharmacyId");
         $this->db->bind(':pharmacyId', $pharmacyId);
 
         $results = $this->db->resultSet();
@@ -253,10 +253,10 @@ class pharmacy
 
     public function addMessage($data)
     {
-        $this->db->query('INSERT INTO messages (pharmacyId, sender, receiver, heading, message) VALUES(:pharmacyId, :sender, :receiver, :heading, :message)');
+        $this->db->query('INSERT INTO messages (pharmacyId, sender, receiver, heading, message) VALUES(:pharmacyId, :message, :receiver, :heading, :message)');
         // Bind values
         $this->db->bind(':pharmacyId', $_SESSION['USER_DATA']['id']);
-        $this->db->bind(':sender', $data['sender']);
+        $this->db->bind(':sender', $_SESSION['USER_DATA']['name']);
         $this->db->bind(':receiver', $data['receiver']);
         $this->db->bind(':heading', $data['heading']);
         $this->db->bind(':message', $data['message']);
@@ -279,7 +279,6 @@ class pharmacy
         $this->db->query("SELECT * FROM advertisement");
         $results = $this->db->resultSet();
         return $results;
-        
     }
 
 
@@ -293,11 +292,117 @@ class pharmacy
     {
         $pharmacyId = trim($_SESSION['USER_DATA']['id']);
 
-        $this->db->query("SELECT * FROM requestorder WHERE pharmacy_id = '$pharmacyId'");
+        //show only orders after current date
+        $this->db->query("SELECT * FROM requestorder WHERE pharmacy_id = '$pharmacyId' AND deliveryDate >= CURDATE() AND status = 'pending'");
         /* $this->db->bind(':pharmacy_id', $id); */
 
         $results = $this->db->resultSet();
         return $results;
+    }
+
+    public function getRegisteredMedicines()
+    {
+        $this->db->query("SELECT * FROM regmedicines");
+        $results = $this->db->resultSet();
+        return $results;
+    }
+
+    public function getMedicineById($id)
+    {
+        $this->db->query("SELECT * FROM regmedicines WHERE medicineId = :id");
+        // Bind values
+        $this->db->bind(':id', $id);
+        $row = $this->db->single();
+        return $row;
+    }
+
+    public function getBrandById($id)
+    {
+        $this->db->query("SELECT * FROM medicinebrands WHERE medicineId = :id");
+        // Bind values
+        $this->db->bind(':id', $id);
+        $row = $this->db->resultSet();
+        return $row;
+    }
+
+    public function submitOrder($data)
+    {
+
+        //submit order details to requestorder table and bidtable
+        $this->db->query('INSERT INTO requestorder (pharmacy_id, pharmacyname, medicine_id, medicine_name, batchno, type, brand, volume, category, quantity, deliveryDate) VALUES(:pharmacy_id, :pharmacy
+        name, :medicine_id, :medicine_name, :batchno, :type, :brand, :volume, :category, :quantity, :deliveryDate)');
+
+
+
+        // Bind valuee
+        $this->db->bind(':pharmacy_id', $_SESSION['USER_DATA']['id']);
+        $this->db->bind(':pharmacyname', $_SESSION['USER_DATA']['name']);
+        $this->db->bind(':medicine_id', $data['medicineId']);
+        $this->db->bind(':medicine_name', $data['medicineName']);
+        $this->db->bind(':batchno', $data['refno']);
+        $this->db->bind(':type', $data['type']);
+        $this->db->bind(':brand', $data['brands']);
+        $this->db->bind(':volume', $data['volume']);
+        $this->db->bind(':category', $data['category']);
+        $this->db->bind(':quantity', $data['quantity']);
+        $this->db->bind(':deliveryDate', $data['deliveryDate']);
+
+        // Execute
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+
+
+
+    public function getOrderId($data)
+    {
+        $this->db->query('SELECT id FROM requestorder WHERE pharmacy_id = :pharmacy_id AND medicine_id = :medicine_id AND batchno = :batchno AND quantity = :quantity AND deliveryDate = :deliveryDate');
+
+        // Bind values
+        $this->db->bind(':pharmacy_id', $_SESSION['USER_DATA']['id']);
+        $this->db->bind(':medicine_id', $data['medicineId']);
+        $this->db->bind(':batchno', $data['refno']);
+        $this->db->bind(':quantity', $data['quantity']);
+        $this->db->bind(':deliveryDate', $data['deliveryDate']);
+
+        $row = $this->db->single();
+        return $row;
+    }
+
+    public function updateBidTable($data)
+    {
+        // get orderid from requestorder table
+        $this->db->query('INSERT INTO bidtable (orderId, pharmacyId, pharmacyName, medicineId, medicineName, type, volume, category, quantity, brand, deliveryDate) VALUES(:orderId, :pharmacyId, :pharmacyName, :medicineId, :medicineName, :type, :volume, :category, :quantity, :brand, :deliveryDate)');
+
+        //load order id
+
+
+        // Bind values
+        // $this->db->bind(':orderId', $orderId);
+        $this->db->bind(':pharmacyId', $_SESSION['USER_DATA']['id']);
+        $this->db->bind(':pharmacyName', $_SESSION['USER_DATA']['name']);
+        $this->db->bind(':medicineId', $data['medicineId']);
+        $this->db->bind(':medicineName', $data['medicineName']);
+        $this->db->bind(':type', $data['type']);
+        $this->db->bind(':brand', $data['brand']);
+        $this->db->bind(':volume', $data['volume']);
+        $this->db->bind(':category', $data['category']);
+        $this->db->bind(':quantity', $data['quantity']);
+        $this->db->bind(':deliveryDate', $data['deliveryDate']);
+
+        // Execute
+        if ($this->db->execute()) {
+            // print order Id
+
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public function addOrder($data)
@@ -323,12 +428,28 @@ class pharmacy
     {
 
         $pharmacyId = trim($_SESSION['USER_DATA']['id']);
+        //get all accepted orders from bidtable
+        $this->db->query("SELECT * FROM bidtable WHERE pharmacyId = :pharmacyId AND status = 'accepted'");
 
-        $this->db->query("SELECT * FROM requestorder WHERE pharmacy_id = '$pharmacyId' AND status = 'accepted'");
-        /* $this->db->bind(':pharmacy_id', $id); */
+        $this->db->bind(':pharmacyId', $pharmacyId);
 
         $results = $this->db->resultSet();
         return $results;
+    }
+
+    public function changeStatus($data)
+    {
+        $this->db->query('UPDATE bidtable SET status = "approved" WHERE id = :id AND pharmacyId = :pharmacyId');
+        // Bind values
+        $this->db->bind(':id', $data['bidId']);
+        $this->db->bind(':pharmacyId', $data['pharmacyId']);
+
+        // Execute
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public function selectedOrders()
@@ -366,13 +487,65 @@ class pharmacy
         return $row;
     }
 
+    public function changeOrderDetails($data)
+    {
+        $this->db->query('UPDATE requestorder SET quantity = :quantity, deliveryDate = :deliveryDate, brand= :brand WHERE id = :id');
+        // Bind values
+        $this->db->bind(':id', $data['id']);
+        $this->db->bind(':quantity', $data['quantity']);
+        $this->db->bind(':deliveryDate', $data['deliveryDate']);
+        $this->db->bind(':brand', $data['brand']);
+
+        // Execute
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////Customer Order data/////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public function customerDetails($data)
+    {
+        $this->db->query('INSERT INTO customerdetails (pharmacyId, pharmacyName, name, phone, address, email ) 
+        VALUES(:pharmacyId, :pharmacyName, :name, :phone, :address, :email)');
+        // Bind values
+        $this->db->bind(':pharmacyId', $_SESSION['USER_DATA']['id']);
+        $this->db->bind(':pharmacyName', $_SESSION['USER_DATA']['name']);
+        $this->db->bind(':name', $data['customerName']);
+        $this->db->bind(':phone', $data['customerPhone']);
+        $this->db->bind(':address', $data['customerAddress']);
+        $this->db->bind(':email', $data['customerEmail']);
 
+        // Execute
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
+    public function fetchCustomerDetailsByName($customerName)
+{
+    // Query the database to fetch customer details by name
+    // Assuming your database table is named 'customerdetails'
+    $this->db->query('SELECT * FROM customerdetails WHERE name = :name');
+    $this->db->bind(':name', $customerName);
+    $customerDetails = $this->db->single();
 
+    return $customerDetails;
+}
+
+public function getCustomerById($id){
+    $this->db->query('SELECT * FROM customerdetails WHERE id = :id');
+    $this->db->bind(':id', $id);
+    $row = $this->db->single();
+
+    return $row;
+}
 
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -445,13 +618,15 @@ class pharmacy
         }
     }
 
-    public function getUpdateProfileData($email)
+    public function getUpdateProfileData($pharmacyEmail)
     {
         // Execute the query
-        $this->db->query("SELECT * FROM pharmacyregistration WHERE email = :email");
+        $this->db->query("SELECT * FROM pharmacyregistration 
+        INNER JOIN users ON pharmacyregistration.user_id = users.id 
+        WHERE pharmacyregistration.email = :pharmacyEmail");
 
         // Bind the parameter
-        $this->db->bind(':email', $email);
+        $this->db->bind(':pharmacyEmail', $pharmacyEmail);
 
         // Retrieve a single row
         $row = $this->db->single();
@@ -461,7 +636,7 @@ class pharmacy
             return $row; // Return the data
         } else {
             // Log or echo an error message
-            error_log("No profile data found for pharmacy: $email");
+            error_log("No profile data found for pharmacy: $pharmacyEmail");
             return false; // Or handle the error in any other way you prefer
         }
     }
@@ -480,7 +655,8 @@ class pharmacy
         }
     }
 
-    public function changeEmail($data){
+    public function changeEmail($data)
+    {
         $this->db->query('UPDATE pharmacyregistration SET email = :newEmail WHERE email = :email');
         // Bind values
         $this->db->bind(':email', $data['email']);
@@ -493,7 +669,8 @@ class pharmacy
         }
     }
 
-    public function changePassword($data){
+    public function changePassword($data)
+    {
         $this->db->query('UPDATE phamacyregistration SET password = :newPassword WHERE email = :email');
         // Bind values
         $this->db->bind(':email', $data['email']);
@@ -506,3 +683,4 @@ class pharmacy
         }
     }
 }
+
