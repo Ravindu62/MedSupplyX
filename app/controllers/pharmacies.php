@@ -170,36 +170,46 @@ class Pharmacies extends Controller
 
     public function addInventory()
     {
+
         // Check for POST
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Process form
+            print_r($_POST);
 
             // Sanitize POST data
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
             // Initialize data
             $data = [
-                'medicineId' => trim($_POST['medicineId']),
+                'refno' => trim($_POST['refno']),
                 'medicineName' => trim($_POST['medicineName']),
                 'batchNo' => trim($_POST['batchNo']),
                 'category' => trim($_POST['category']),
+                'volume' => trim($_POST['volume']),
+                'type' => trim($_POST['type']),
+                'brand' => trim($_POST['brand']),
                 'quantity' => trim($_POST['quantity']),
+                'unitPrice' => trim($_POST['unitPrice']),
                 'manufacturedDate' => trim($_POST['manufacturedDate']),
                 'expireDate' => trim($_POST['expireDate']),
-                'unitPrice' => trim($_POST['unitPrice']),
-                'medicineId_err' => '',
+                'description' => trim($_POST['description']),
+                'refno_err' => '',
                 'medicineName_err' => '',
                 'batchNo_err' => '',
                 'category_err' => '',
+                'volume_err' => '',
+                'type_err' => '',
+                'brand_err' => '',
                 'quantity_err' => '',
                 'manufacturedDate_err' => '',
                 'expireDate_err' => '',
                 'unitPrice_err' => '',
+                'description_err' => '',
             ];
 
             // Validate data
-            if (empty($data['medicineId'])) {
-                $data['medicineId_err'] = 'Please enter medicine id';
+            if (empty($data['refno'])) {
+                $data['refno_err'] = 'Please enter refno';
             }
 
             if (empty($data['medicineName'])) {
@@ -208,12 +218,32 @@ class Pharmacies extends Controller
 
             if (empty($data['batchNo'])) {
                 $data['batchNo_err'] = 'Please enter batch number';
-            }elseif(!preg_match('/^BCH.{6}$/', $data['batchNo'])){
+            } elseif (!preg_match('/^BCH.{6}$/', $data['batchNo'])) {
                 $data['batchNo_err'] = 'Batch number should start with BCH followed by 6 digits';
             }
 
             if (empty($data['category'])) {
                 $data['category_err'] = 'Please enter category of the medicine';
+            }
+
+            if (empty($data['volume'])) {
+                $data['volume_err'] = 'Please enter volume';
+            }
+
+            if (empty($data['type'])) {
+                $data['type_err'] = 'Please enter type';
+            }
+
+            if (empty($data['brand'])) {
+                $data['brand_err'] = 'Please enter brand';
+            }
+
+            if (empty($data['quantity'])) {
+                $data['quantity_err'] = 'Please enter valid quantity';
+            }
+
+            if (empty($data['unitPrice'])) {
+                $data['unitPrice_err'] = 'Please enter the unit price of this medicine';
             }
 
             if (empty($data['manufacturedDate'])) {
@@ -223,12 +253,12 @@ class Pharmacies extends Controller
             if (empty($data['expireDate'])) {
                 $data['expireDate_err'] = 'Please enter expire date of the medicine';
             }
-
-            if (empty($data['unitPrice'])) {
-                $data['unitPrice_err'] = 'Please enter the unit price of this medicine';
+            if (empty($data['description'])) {
+                $data['description_err'] = 'Please describe the medicine';
             }
+
             // Make sure no errors
-            if (empty($data['medicineId_err']) && empty($data['medicineName_err']) && empty($data['batchNo_err']) && empty($data['category_err']) && empty($data['quantity_err']) && empty($data['manufacturedDate_err']) && empty($data['expireDate_err']) && empty($data['unitPrice_err'])) {
+            if (empty($data['ref_err']) && empty($data['medicineName_err']) && empty($data['batchNo_err']) && empty($data['category_err']) && empty($data['volume_err']) && empty($data['type_err']) && empty($data['brand_err']) && empty($data['quantity_err']) && empty($data['manufacturedDate_err']) && empty($data['expireDate_err']) && empty($data['unitPrice_err']) && empty($data['description_err'])) {
                 // Validated
 
                 // Inventory model function
@@ -245,33 +275,59 @@ class Pharmacies extends Controller
         } else {
             // Init data
             $data = [
-                'medicineId' => '',
+                'refno' => '',
                 'medicineName' => '',
                 'batchNo' => '',
                 'category' => '',
+                'volume' => '',
+                'type' => '',
+                'brand' => '',
                 'quantity' => '',
+                'unitPrice' => '',
                 'manufacturedDate' => '',
                 'expireDate' => '',
-                'unitPrice' => '',
-                'medicineId_err' => '',
+                'description' => '',
+                'refno_err' => '',
                 'medicineName_err' => '',
                 'batchNo_err' => '',
                 'category_err' => '',
+                'volume_err' => '',
+                'type_err' => '',
+                'brand_err' => '',
                 'quantity_err' => '',
                 'manufacturedDate_err' => '',
                 'expireDate_err' => '',
                 'unitPrice_err' => '',
+                'description_err' => '',
             ];
         }
         // Load view
         $this->view('pharmacy/inventory/addInventory', $data);
     }
 
+    public function showInventoryDetails($id)
+    {
+        // Fetch the inventory item by its ID
+        $pharmacyId = trim($_SESSION['USER_DATA']['id']);
+        $inventory_item = $this->pharmacyModel->getInventoryItemById($id, $pharmacyId);
+
+        $data = [
+            'inventory_item' => $inventory_item
+        ];
+
+        // Load view with inventory item data
+        $this->view('pharmacy/inventory/showInventoryDetails', $data);
+    }
+
+    // public function editInventory() according to the addInventory function
     public function editInventory()
     {
-        $inventoryId = $_GET['id'];
+        print_r($_POST);
         // Fetch the inventory item by its ID
-        $inventory_item = $this->pharmacyModel->getInventoryItemById($inventoryId);
+        $pharmacyId = trim($_SESSION['USER_DATA']['id']);
+
+        $inventoryId = trim($_POST['id']);
+        $inventory_item = $this->pharmacyModel->getInventoryItemById($inventoryId, $pharmacyId);
 
         // Check if the form is submitted
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -282,28 +338,38 @@ class Pharmacies extends Controller
 
             // Initialize data array
             $data = [
-                'id' => $_GET['id'], // Inventory item ID
-                'medicineId' => trim($_POST['medicineId']),
+                'id' => $inventoryId, // Inventory item ID
+                'inventory_item' => $inventory_item,
+                'pharmacyId' => $pharmacyId,
+                'refno' => trim($_POST['refno']),
                 'medicineName' => trim($_POST['medicineName']),
                 'batchNo' => trim($_POST['batchNo']),
                 'category' => trim($_POST['category']),
+                'volume' => trim($_POST['volume']),
+                'type' => trim($_POST['type']),
+                'brand' => trim($_POST['brand']),
                 'quantity' => trim($_POST['quantity']),
+                'unitPrice' => trim($_POST['unitPrice']),
                 'manufacturedDate' => trim($_POST['manufacturedDate']),
                 'expireDate' => trim($_POST['expireDate']),
-                'unitPrice' => trim($_POST['unitPrice']),
-                'medicineId_err' => '',
+                'description' => trim($_POST['description']),
+                'refno_err' => '',
                 'medicineName_err' => '',
                 'batchNo_err' => '',
                 'category_err' => '',
+                'volume_err' => '',
+                'type_err' => '',
+                'brand_err' => '',
                 'quantity_err' => '',
                 'manufacturedDate_err' => '',
                 'expireDate_err' => '',
                 'unitPrice_err' => '',
+                'description_err' => '',
             ];
 
             // Validate data
-            if (empty($data['medicineId'])) {
-                $data['medicineId_err'] = 'Please enter medicine id';
+            if (empty($data['refno'])) {
+                $data['refno_err'] = 'Please enter refno';
             }
 
             if (empty($data['medicineName'])) {
@@ -312,10 +378,32 @@ class Pharmacies extends Controller
 
             if (empty($data['batchNo'])) {
                 $data['batchNo_err'] = 'Please enter batch number';
+            } elseif (!preg_match('/^BCH.{6}$/', $data['batchNo'])) {
+                $data['batchNo_err'] = 'Batch number should start with BCH followed by 6 digits';
             }
 
             if (empty($data['category'])) {
                 $data['category_err'] = 'Please enter category of the medicine';
+            }
+
+            if (empty($data['volume'])) {
+                $data['volume_err'] = 'Please enter volume';
+            }
+
+            if (empty($data['type'])) {
+                $data['type_err'] = 'Please enter type';
+            }
+
+            if (empty($data['brand'])) {
+                $data['brand_err'] = 'Please enter brand';
+            }
+
+            if (empty($data['quantity'])) {
+                $data['quantity_err'] = 'Please enter valid quantity';
+            }
+
+            if (empty($data['unitPrice'])) {
+                $data['unitPrice_err'] = 'Please enter the unit price of this medicine';
             }
 
             if (empty($data['manufacturedDate'])) {
@@ -325,24 +413,30 @@ class Pharmacies extends Controller
             if (empty($data['expireDate'])) {
                 $data['expireDate_err'] = 'Please enter expire date of the medicine';
             }
-
-            if (empty($data['unitPrice'])) {
-                $data['unitPrice_err'] = 'Please enter the unit price of this medicine';
+            if (empty($data['description'])) {
+                $data['description_err'] = 'Please describe the medicine';
             }
 
-            // Call the model function to update inventory item
-            if ($this->pharmacyModel->editInventory($data)) {
-                // Redirect to inventory page after successful update
-                redirect('pharmacies/inventory');
+            // Make sure no errors
+            if (empty($data['ref_err']) && empty($data['medicineName_err']) && empty($data['batchNo_err']) && empty($data['category_err']) && empty($data['volume_err']) && empty($data['type_err']) && empty($data['brand_err']) && empty($data['quantity_err']) && empty($data['manufacturedDate_err']) && empty($data['expireDate_err']) && empty($data['unitPrice_err']) && empty($data['description_err'])) {
+                // Validated
+
+                // Call the model function to update inventory item
+                if ($this->pharmacyModel->editInventory($data)) {
+                    // Redirect to inventory page after successful update
+                    redirect('pharmacies/inventory');
+                } else {
+                    die('Something went wrong');
+                }
             } else {
-                die('Something went wrong');
+                // Load view with inventory item data for editing
+                $this->view('pharmacy/inventory/editInventory', $data);
             }
-        } else {
-            // Load view with inventory item data for editing
-            $this->view('pharmacy/inventory/editInventory', $inventory_item);
         }
-    }
 
+        // Load view with inventory item data for editing
+        $this->view('pharmacy/inventory/editInventory', $data);
+    }
 
     public function removeInventory()
     {
@@ -354,7 +448,7 @@ class Pharmacies extends Controller
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
             // Get the inventory item ID from the form
-            $inventoryId = trim($_POST['inventoryId']);
+            $inventoryId = trim($_POST['id']);
 
             // Call the model function to delete the inventory item
             if ($this->pharmacyModel->removeInventory($inventoryId)) {
@@ -367,6 +461,107 @@ class Pharmacies extends Controller
             redirect('pharmacies/inventory');
         }
     }
+
+    // public function editInventory()
+    // {
+    //     $inventoryId = $_GET['id'];
+    //     // Fetch the inventory item by its ID
+    //     $inventory_item = $this->pharmacyModel->getInventoryItemById($inventoryId);
+
+    //     // Check if the form is submitted
+    //     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    //         // Process form data
+
+    //         // Sanitize POST data
+    //         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+    //         // Initialize data array
+    //         $data = [
+    //             'id' => $_GET['id'], // Inventory item ID
+    //             'medicineId' => trim($_POST['medicineId']),
+    //             'medicineName' => trim($_POST['medicineName']),
+    //             'batchNo' => trim($_POST['batchNo']),
+    //             'category' => trim($_POST['category']),
+    //             'quantity' => trim($_POST['quantity']),
+    //             'manufacturedDate' => trim($_POST['manufacturedDate']),
+    //             'expireDate' => trim($_POST['expireDate']),
+    //             'unitPrice' => trim($_POST['unitPrice']),
+    //             'medicineId_err' => '',
+    //             'medicineName_err' => '',
+    //             'batchNo_err' => '',
+    //             'category_err' => '',
+    //             'quantity_err' => '',
+    //             'manufacturedDate_err' => '',
+    //             'expireDate_err' => '',
+    //             'unitPrice_err' => '',
+    //         ];
+
+    //         // Validate data
+    //         if (empty($data['medicineId'])) {
+    //             $data['medicineId_err'] = 'Please enter medicine id';
+    //         }
+
+    //         if (empty($data['medicineName'])) {
+    //             $data['medicineName'] = 'Please enter medicine name';
+    //         }
+
+    //         if (empty($data['batchNo'])) {
+    //             $data['batchNo_err'] = 'Please enter batch number';
+    //         }
+
+    //         if (empty($data['category'])) {
+    //             $data['category_err'] = 'Please enter category of the medicine';
+    //         }
+
+    //         if (empty($data['manufacturedDate'])) {
+    //             $data['manufacturedDate_err'] = 'Please enter manufacture date medicine';
+    //         }
+
+    //         if (empty($data['expireDate'])) {
+    //             $data['expireDate_err'] = 'Please enter expire date of the medicine';
+    //         }
+
+    //         if (empty($data['unitPrice'])) {
+    //             $data['unitPrice_err'] = 'Please enter the unit price of this medicine';
+    //         }
+
+    //         // Call the model function to update inventory item
+    //         if ($this->pharmacyModel->editInventory($data)) {
+    //             // Redirect to inventory page after successful update
+    //             redirect('pharmacies/inventory');
+    //         } else {
+    //             die('Something went wrong');
+    //         }
+    //     } else {
+    //         // Load view with inventory item data for editing
+    //         $this->view('pharmacy/inventory/editInventory', $inventory_item);
+    //     }
+    // }
+
+
+    // public function removeInventory()
+    // {
+    //     // Check for POST
+    //     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    //         // Process form
+
+    //         // Sanitize POST data
+    //         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+    //         // Get the inventory item ID from the form
+    //         $inventoryId = trim($_POST['id']);
+
+    //         // Call the model function to delete the inventory item
+    //         if ($this->pharmacyModel->removeInventory($inventoryId)) {
+    //             // Redirect to inventory page after successful deletion
+    //             redirect('pharmacies/inventory');
+    //         } else {
+    //             die('Something went wrong');
+    //         }
+    //     } else {
+    //         redirect('pharmacies/inventory');
+    //     }
+    // }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////Messages Function /////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -525,7 +720,7 @@ class Pharmacies extends Controller
 
     //     $pdf->Output('orders.pdf', 'I');
     // }
-    
+
 
     public function changeStatusAsApproved($id)
     {
@@ -599,7 +794,7 @@ class Pharmacies extends Controller
             } elseif (strtotime($data['deliveryDate']) < strtotime(date('Y-m-d'))) {
                 $data['deliveryDate_err'] = 'You entered a past date. Please enter a valid date.';
             }
-            
+
 
             if (empty($data['quantity'])) {
                 $data['quantity_err'] = 'Please enter quantity';
@@ -821,35 +1016,35 @@ class Pharmacies extends Controller
 
             // Load view
             $this->view('pharmacy/customerOrders/customerDetails', $data);
+        }
     }
-}
-//add customerOrder function to add the customer order to the database with the customer details.
-public function customerOrders($id)
-{
-    // Fetch the order by its ID
-    // $customer = $this->pharmacyModel->getCustomerById($id);
-    $order = $this->pharmacyModel->getCustomerById($id);
-   
-    $this->view('pharmacy/customerOrders/customerOrders', $order);
-}
+    //add customerOrder function to add the customer order to the database with the customer details.
+    public function customerOrders($id)
+    {
+        // Fetch the order by its ID
+        // $customer = $this->pharmacyModel->getCustomerById($id);
+        $order = $this->pharmacyModel->getCustomerById($id);
+
+        $this->view('pharmacy/customerOrders/customerOrders', $order);
+    }
 
 
-// public function fetchCustomerDetails()
-// {
-//     // Assuming you have a model method to fetch customer details by name
-//     $customerName = $_POST['customerName'];
-//     $customerDetails = $this->pharmacyModel->fetchCustomerDetailsByName($customerName);
+    // public function fetchCustomerDetails()
+    // {
+    //     // Assuming you have a model method to fetch customer details by name
+    //     $customerName = $_POST['customerName'];
+    //     $customerDetails = $this->pharmacyModel->fetchCustomerDetailsByName($customerName);
 
-//     // Send the customer details as JSON response
-//     echo json_encode($customerDetails);
-// }
+    //     // Send the customer details as JSON response
+    //     echo json_encode($customerDetails);
+    // }
 
-// //create a function to get the customer details from the customer table 
-// public function customerOrders( ){
+    // //create a function to get the customer details from the customer table 
+    // public function customerOrders( ){
 
-// }
+    // }
 
-//
+    //
 
     public function deleteOrder($id)
     {
@@ -1116,4 +1311,3 @@ public function customerOrders($id)
         redirect('users/login');
     }
 }
-
