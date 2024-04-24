@@ -16,9 +16,16 @@
 
 <!-- content -->
   <div class="content">
+  <div class="horizontaltab">
+      <button class="tablinks active" onclick="startEvent(event, 'orders')"> <i class="fa fa-shopping-cart" style="font-size:24px"> </i> ORDERS</button>
+      <button class="tablinks" onclick="startEvent(event, 'ongoingOrders')"> <i class="fa fa-gavel"> </i> ONGOING ORDERS</button>
+      <button class="tablinks" onclick="startEvent(event, 'acceptedOrders')"> <i class="fa-solid fa-check"> </i> Acccepted ORDERS</button>
+    </div>
+
+    <div id="orders" class="tabcontent">
   <h2>
   <div class="anim">
-    Ongoing Orders
+    Orders
   </div>
   </h2>
 
@@ -49,9 +56,45 @@
 </tr>
 </table>
 </div>
-<div class="space"></div>
+</div>
 
 
+<div id="ongoingOrders" class="tabcontent">
+<h2>
+  <div class="anim">
+   Ongoing Orders
+  </div>
+  </h2>
+
+<div class="anim">    
+<table class="customers">
+  <tr>
+
+    <th> </th>
+    <th> Pharmacy Name </th>
+    <th> Supplier Name </th>
+    <th> Meidicine Name </th>
+    <th> Batch No </th>
+    <th> Category No </th>
+    <th> Quantity </th>    
+    
+  </tr>
+<tr> 
+  <td> </td>
+  <td> </td>
+  <td> </td>
+  <td> </td>
+  <td> </td>
+  <td> </td>
+  
+  <td> <!-- <button class="smallOpen-button" onclick="openForm()"> Update </button> --> </td>
+</tr>
+</table>
+</div>
+</div>
+
+
+<div id="acceptedOrders" class="tabcontent">
 <h2>
   <div class="anim">
    Accepted Orders
@@ -83,38 +126,37 @@
 </tr>
 </table>
 </div>
-<div class="space"></div>
+</div>
+
+
 
 
 </div>
 </div>
 
-<div class="chat-popup" id="myForm">
-  <form action="/action_page.php" class="form-container">
-    
 
-    <label for="text"><b> Number of Item </b></label>
-    <input class="bar" type="text" placeholder="Enter Your Price for the order" name="price" required>
-    <br> <br>
-
-    <button type="submit" class="btn"> Update </button>
-    <button type="button" class="btn cancel" onclick="closeForm()"> Close </button>
-  </form>
-</div>
 
 
 <?php require APPROOT . '/views/inc/footer.php'; ?>
 
 
 <script>
-function openForm() {
-  document.getElementById("myForm").style.display = "block";
-}
-
-function closeForm() {
-  document.getElementById("myForm").style.display = "none";
-}
-</script>
+      function startEvent(evt, cityName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+          tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+          tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(cityName).style.display = "block";
+        if (evt) evt.currentTarget.className += " active";
+        else document.querySelector('button.tablinks').className += " active";
+      }
+      document.body.addEventListener('DOMContentLoaded', startEvent(event, 'orders'));
+    </script>
 
 
 </body>

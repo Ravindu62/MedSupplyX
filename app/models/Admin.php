@@ -341,9 +341,10 @@ public function addMessage($data)
 
     public function getProfile() {
         $this->db->query('SELECT * FROM admin');
-        $results = $this->db->resultSet();
-        return $results;
+        $results = $this->db->single();
+        return $results; // Return the data
     }
+   
 
 
     public function updateContactNumber($currentContactNumber, $newContactNumber)
@@ -372,39 +373,21 @@ public function addMessage($data)
         }
     }
     
-    // Find admin by email
-    public function findAdminByEmail($email) {
-        $this->db->query('SELECT * FROM admin WHERE email = :email');
-        $this->db->bind(':email', $email);
     
-        $row = $this->db->single();
-    
-        // Check row
-        if ($this->db->rowCount() > 0) {
+
+    public function updatePassword($newPassword, $confirmPassword) {
+        $this->db->query('UPDATE admin SET password = :password');
+        $this->db->bind(':password', $newPassword);
+
+        // Execute the query
+        if ($this->db->execute()) {
             return true;
         } else {
             return false;
         }
     }
     
-
-    public function updatePassword($id, $newPassword) {
-        
-        $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
-
-        $this->db->query('UPDATE admin SET password = :password WHERE id = :id');
-        $this->db->bind(':password', $hashedPassword);
-        $this->db->bind(':id', $id);
-    
-        if ($this->db->execute()) {
-            return true; 
-        } else {
-            return false; 
-        }
-    }
-
 }
-    
 
 
 
