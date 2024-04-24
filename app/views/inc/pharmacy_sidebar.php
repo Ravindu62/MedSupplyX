@@ -34,12 +34,12 @@
     <i class="fa-solid fa-envelope"></i>
         <span class="text"> Notifications</span>
       </a>
-    </li>
+    <!-- </li>
     <a href="<?php echo URLROOT ?>/pharmacies/advertisements" class="navbar_section">
     <i class="fa-solid fa-rectangle-ad"></i>
         <span class="text"> Advertistments </span>
       </a>
-    </li>
+    </li> -->
     <li>
     <a href="<?php echo URLROOT ?>/pharmacies/orders" class="navbar_section">
     <i class="fa-solid fa-cart-shopping"></i>
@@ -48,7 +48,7 @@
     </li>
 
     <li>
-    <a href="<?php echo URLROOT ?>/pharmacies/customerOrders" class="navbar_section">
+    <a href="<?php echo URLROOT ?>/pharmacies/customerDetails" class="navbar_section">
     <i class="fa-solid fa-cart-shopping"></i>
         <span class="text"> Cust. Orders </span>
       </a>
@@ -85,3 +85,5 @@
      
   </div>
  
+
+
