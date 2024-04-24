@@ -171,17 +171,21 @@ class pharmacy
 
     public function addInventory($data)
     {
-        $this->db->query('INSERT INTO inventory (pharmacy_id, medicine_id, name, batch_no, category, quantity, manu_date, expire_date, unit_amount) VALUES(:pharmacyId, :medicineId, :medicineName, :batchNo, :category, :quantity, :manufacturedDate, :expireDate, :unitPrice)');
+        $this->db->query('INSERT INTO inventory (pharmacy_id, refno, name, batch_no, category, volume, type, brand, quantity, manu_date, expire_date, unit_amount, description) VALUES(:pharmacyId, :refno, :medicineName, :batchNo, :category, :volume, :type, :brand, :quantity, :manufacturedDate, :expireDate, :unitPrice, :description)');
         // Bind values
         $this->db->bind(':pharmacyId', $_SESSION['USER_DATA']['id']);
-        $this->db->bind(':medicineId', $data['medicineId']);
+        $this->db->bind(':refno', $data['refno']);
         $this->db->bind(':medicineName', $data['medicineName']);
         $this->db->bind(':batchNo', $data['batchNo']);
         $this->db->bind(':category', $data['category']);
+        $this->db->bind(':volume', $data['volume']);
+        $this->db->bind(':type', $data['type']);
+        $this->db->bind(':brand', $data['brand']);
         $this->db->bind(':quantity', $data['quantity']);
         $this->db->bind(':manufacturedDate', $data['manufacturedDate']);
         $this->db->bind(':expireDate', $data['expireDate']);
         $this->db->bind(':unitPrice', $data['unitPrice']);
+        $this->db->bind(':description', $data['description']);
 
         // Execute
 
@@ -194,17 +198,22 @@ class pharmacy
 
     public function editInventory($data)
     {
-        $this->db->query('UPDATE inventory SET medicine_id = :medicineId, name = :medicineName, batch_no = :batchNo, category_no = :category, quantity = :quantity, manu_date = :manufacturedDate, expire_date = :expireDate, unit_amount = :unitPrice WHERE id = :id');
+        $this->db->query('UPDATE inventory SET refno = :refno, name = :medicineName, batch_no = :batchNo, category = :category, volume = :volume, type = :type, brand = :brand, quantity = :quantity, manu_date = :manufacturedDate, expire_date = :expireDate, unit_amount = :unitPrice, description = :description WHERE id = :id AND pharmacy_id = :pharmacyId');
         // Bind values
         $this->db->bind(':id', $data['id']);
-        $this->db->bind(':medicineId', $data['medicineId']);
+        $this->db->bind(':pharmacyId', $_SESSION['USER_DATA']['id']);
+        $this->db->bind(':refno', $data['refno']);
         $this->db->bind(':medicineName', $data['medicineName']);
         $this->db->bind(':batchNo', $data['batchNo']);
         $this->db->bind(':category', $data['category']);
+        $this->db->bind(':volume', $data['volume']);
+        $this->db->bind(':type', $data['type']);
+        $this->db->bind(':brand', $data['brand']);
         $this->db->bind(':quantity', $data['quantity']);
         $this->db->bind(':manufacturedDate', $data['manufacturedDate']);
         $this->db->bind(':expireDate', $data['expireDate']);
         $this->db->bind(':unitPrice', $data['unitPrice']);
+        $this->db->bind(':description', $data['description']);
 
         // Execute
         if ($this->db->execute()) {
@@ -214,10 +223,11 @@ class pharmacy
         }
     }
 
-    public function getInventoryItemById($id)
+    public function getInventoryItemById($id, $pharmacyId)
     {
-        $this->db->query('SELECT * FROM inventory WHERE id = :id');
+        $this->db->query('SELECT * FROM inventory WHERE id = :id AND pharmacy_id = :pharmacyId');
         $this->db->bind(':id', $id);
+        $this->db->bind(':pharmacyId', $pharmacyId);
         return $this->db->single();
     }
 

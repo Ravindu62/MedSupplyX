@@ -31,22 +31,21 @@
             <table class="customers">
                 <tr>
                     <th> Medicine Name </th>
-                    <th> Batch No </th>
+                    <th> Ref No </th>
                     <th> Quantity </th>
                     <th> Ordered Date </th>
                     <th> Delivery Date </th>
-                    <th> Suppliers </th>
+                    <!-- <th> Suppliers </th> -->
                     <th> Status </th>
                 </tr>
 
                 <?php foreach ($data['ongoingOrders'] as $ongoingOrders) : ?>
                     <tr>
                         <td> <?php echo $ongoingOrders->medicine_name; ?> </td>
-                        <td> <?php echo $ongoingOrders->batchno; ?> </td>
+                        <td> <?php echo $ongoingOrders->refno; ?> </td>
                         <td> <?php echo $ongoingOrders->quantity; ?> </td>
-                        <td> <?php echo $ongoingOrders->ordered_date; ?> </td>
+                        <td> <?php echo date('Y-m-d', strtotime($ongoingOrders->createdAt)); ?> </td>
                         <td> <?php echo $ongoingOrders->deliveryDate; ?> </td>
-                        <td> <?php echo $ongoingOrders->supplier_name; ?> </td>
                         <td> <?php echo $ongoingOrders->status; ?> </td>
                         </form>
                     </tr>
@@ -62,3 +61,4 @@
 </body>
 
 </html>
+

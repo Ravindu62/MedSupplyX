@@ -24,74 +24,37 @@
     <div class="smallspace"></div>
 
     <div class="anim">
-      <div class="container-fluid">
-        <div class="d-flex">
+    
           <form action="" method="POST" class="orderform">
+         <!--  display registered medicines-->
 
-            <table>
+          <table class="customers">
+            <tr>
+              <th> Medicine Name </td>
+              <th> Ref Number </td>
+              <th> Category </td>
+              <th> Volume </td>
+              <th> Type </td>
 
-              <tr>
-                <td colspan="2">
-                  <h3> <br> <br> Medicine Details </h3>
-                </td>
-              </tr>
-              <tr>
-                <td class="verticleCentered">
-                   Medicine Name 
-                </td>
-                <td> : </td>
-                <td class="verticleCentered"> <input type="text" name="Mname" class="orderdetails" required> </td>
-                
-
-                <td class="verticleCentered">
-                   Batch Number  
-                </td>
-                <td> : </td>
-                <td class="verticleCentered"><input type="text" name="Bnum" class="smallForm" required> </td>
-                <td> <button class="addBtn"> Search </button> </td>
-              </tr>
-
-              <tr> <td class="verticleCentered" colspan="4"> <p class="importantMessage">  </p> </td></tr>
-
-
-                <tr> <td colspan="5" class="verticleCentered"> <hr  class="rule"> </td></tr>
-
-                <tr> 
-                <td class="verticleCentered">
-                   Quantity 
-                </td>
-                <td> : </td>
-                <td class="verticleCentered"> <input type="number" name="quantity" class="smallForm" required min="100"> </td>
-   
-              </tr>
-
-              <tr>
-                <td class="verticleCentered">
-                   Delivery Date  
-                </td>
-                <td> : </td>
-                <td class="verticleCentered"> <input type="Date" class="orderdetails" placeholder="YYYY-MM-DD"> </td>
-              </tr>
+            </tr>
 
             <tr>
-                <td class="verticleCentered">
-                  Order End Date 
-                </td>
-                <td> : </td>
-                <td class="verticleCentered"> <input type="Date" class="orderdetails" placeholder="YYYY-MM-DD"> </td>
+              <td> </td>
+              <td> </td>
+              <td> </td>
+              <td> </td>
+              <td> </td>
+            </tr>
+
+            <?php foreach ($data['medicine'] as $medicine) : ?>
+              <tr onclick="window.location='<?php echo URLROOT; ?>/pharmacies/submitOrder/<?php echo $medicine->medicineId; ?>'">
+                <td> <?php echo $medicine->medicinename; ?> </td>
+                <td> <?php echo $medicine->refno; ?> </td>
+                <td> <?php echo $medicine->category; ?> </td>
+                <td> <?php echo $medicine->volume; ?> </td>
+                <td> <?php echo $medicine->type; ?> </td>
               </tr>
-
-
-
-              <tr>
-                <td class="verticleCentered"> <button class="addBtn"> Done </button>
-          </form>
-
-          <a href="<?php echo URLROOT ?>/pharmacy/orders" class="link">
-             <div class="publicbtn"> Cancel </div>
-          </a> </td>
-          </tr>
-
+            <?php endforeach; ?>
           </table>
 
         </div>
@@ -104,8 +67,7 @@
 
     </div>
 
-  </div>
-  </div>
+  
 
   <?php require APPROOT . '/views/inc/footer.php'; ?>
 
@@ -113,3 +75,5 @@
 </body>
 
 </html>
+
+

@@ -48,11 +48,11 @@
     </li>
 
     <li>
-    <a href="<?php echo URLROOT ?>/pharmacies/customerDetails" class="navbar_section">
+    <!-- <a href="<?php echo URLROOT ?>/pharmacies/customerDetails" class="navbar_section">
     <i class="fa-solid fa-cart-shopping"></i>
         <span class="text"> Cust. Orders </span>
       </a>
-    </li>
+    </li> -->
 
     <li>
     <a href="<?php echo URLROOT ?>/pharmacies/history" class="navbar_section">

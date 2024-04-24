@@ -3,48 +3,52 @@
 <head>
 <title> Advetistment </title>
 <meta charset="utf-8">
-<link rel="icon" href="<?php echo URLROOT ?>/public/img/logo3.png" type="image/gif" sizes="20x16">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="<?php echo URLROOT ?>/public/css/style.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7063445217024139"
+     crossorigin="anonymous"></script>
 </head>
 <body>
-
-
 <?php require APPROOT . '/views/inc/header.php'; ?>
-
-<?php require APPROOT . '/views/inc/pharmacy_sidebar.php'; ?>
-
-
+<?php require APPROOT . '/views/inc/supplier_sidebar.php'; ?>
 <!-- content -->
-<div class="content">
-    <div class="anim">
-        <h2>Advertisements</h2>
-    </div>
-    <div class="anim">
-        <p>Here are the newly advertisements</p>
-    </div>
-
-    <div class="advertisements-grid">
-        <?php foreach($data['advertisement'] as $advertisement) : ?>
-        <div class="ad-container">
-            <img src="<?php echo URLROOT ?>/public/img/<?php echo $advertisement->adImage ?>" alt="advertisement">
-            <div class="ad-layer-container">
-                <div class="ad-text-content">
-                    <div>
-                        <p class="ad-heading"><?php echo $advertisement->heading ?></p>
-                        <p class="ad-description"><?php echo $advertisement->description ?></p>
-                    </div>
-                    <a href="#" class="ad-a"><button class="ad-btn">Contact Supplier</button></a>
-                </div>
-            </div>
+  <div class="content">
+ <div class="anim"> <h2> Advertistments </h2> </div>
+  <div class="anim"> 
+  <p class="text_centered"> Add nice description about the medicine that you need to advertise </p>
+  </div>
+<div class="anim">  
+<section class="contact-form">
+        <div class="form-container2">
+            <h2>Your Details</h2>
+            <form action="#" method="POST">
+                <label for="name"> Heading : </label>
+                <input type="text" id="name" name="name" required>
+                <label for="message"> Description: </label>
+                <textarea id="message" name="message" rows="4" required></textarea>
+                <button type="submit" class="submit-button"> Post </button>
+            </form>
         </div>
-        <?php endforeach; ?>
+    </section>
     </div>
+    <div class="anim">  <h2> Previous Posts </h2> </div>
+<!-- google adds-->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7063445217024139"
+     crossorigin="anonymous"></script>
+<!-- mesupplyX -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-7063445217024139"
+     data-adtest="on"
+     data-ad-slot="4877917383"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
 </div>
-
-
+</div>
 <?php require APPROOT . '/views/inc/footer.php'; ?>
-
-
 </body>
 </html>
+
