@@ -83,7 +83,7 @@
                         <p class="editprofile-maintag"> Manager Name </p>
                     </td>
                     <td> : </td>
-                    <td><?php echo $manager->name; ?></td>
+                    <td><?php echo $manager->name ?></td>
                     <td>
                         <p class="editprofile-maintag"> Update Name </p>
                         </td>
@@ -114,18 +114,7 @@
                         <td> : </td>
                         <td><input class="editprofile-input" type="text" placeholder="Enter New Contact Info" name="newPhone"></td>
                 </tr>
-                <tr>
-                    <td>
-                        <p class="editprofile-maintag"> Email </p>
-                    </td>
-                    <td> : </td>
-                    <td><?php echo $manager->email; ?></td>
-                    <td>
-                        <p class="editprofile-maintag"> Update Email </p>
-                        </td>
-                        <td> : </td>
-                        <td><input class="editprofile-input" type="text" placeholder="Enter New Email" name="newEmail"></td>
-                </tr>
+                
             </table>
             <div class="editprofile-btnsetup">
                 <a href="<?php echo URLROOT; ?>/admins/updateManager"><button type="submit" class="editprofile-updatebutton "> Update Manager </button></a>

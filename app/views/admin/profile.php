@@ -22,9 +22,9 @@
     <div class="profilebox">
         <div class="profilecard">
             <div class="card-body">
-            <?php foreach($data['profile'] as $profile) : ?>
                 <table>
                         <tr>
+                        <?php $profile = $data['profile'][0]; ?>
                         <div class="anim"> 
                             <td> <p  class="profdetails"> Administrator Name </p> </td> 
                             <td>:</td>
@@ -59,7 +59,6 @@
                                 <td> <a href="#popup3"><button class="addBtn"> Change </button></a> </td>
                         </tr>
                 </table>
-                <?php endforeach; ?>
             </div>
         </div>
 </div>
@@ -82,6 +81,7 @@
                                 </td>
                                 <td> : </td>
                                 <td><input class="editprofile-input" type="text" placeholder="Enter New Contact Number" name="newPhone"></td>
+                                <div class="importantMessage"><?php echo $data['phone_err']?>
                             </tr>
                         </table>
                         <div class="editprofile-btnsetup">
@@ -110,6 +110,7 @@
                                 </td>
                                 <td> : </td>
                                 <td><input class="editprofile-input" type="text" placeholder="Enter New Email" name="newEmail"></td>
+                                <div class="importantMessage"><?php echo $data['email_err']?>
                             </tr>                                
                         </table>
                         <div class="editprofile-btnsetup">
@@ -122,40 +123,41 @@
 
 
             <div id="popup3" class="overlay">
-                <div class="popup-profile-change">
-                    <form action="<?php echo URLROOT; ?>/admins/changePassword" method="POST" class="form-container">
-                        <h2>Set Your Password</h2>
-                        <table>
-                            <tr>
-                                <td >
-                                    <p class="editprofile-maintag"> Current Password </p>
-                                </td>
-                                <td> : </td>
-                                <td><input class="editprofile-input" type="text" name="currentPassword" readonly value="<?php echo $profile->password; ?>"></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <p class="editprofile-maintag"> New Password </p>
-                                </td>
-                                <td> : </td>
-                                <td><input class="editprofile-input" type="password" placeholder="Enter Your New Password" name="newPassword"></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <p class="editprofile-maintag"> Confirm Password </p>
-                                </td>
-                                <td> : </td>
-                                <td><input class="editprofile-input" type="password" placeholder="Confirm Your New Password" name="confirmPassword"></td>
-                            </tr>
-                                
-                        </table>
-                        <div class="editprofile-btnsetup">
-                        <a href="<?php echo URLROOT; ?>/admins/changePassword"><button type="submit" class="editprofile-updatebutton "> Update Password </button></a>
-                        <a href="#"><button type="button" class="editprofile-button-red"> Close </button></a>
-                        </div>
-                    </form>
-                </div>
+    <div class="popup-profile-change">
+        <form action="<?php echo URLROOT; ?>/admins/changePassword" method="POST" class="form-container">
+            <h2>Set Your Password</h2>
+            <table>
+                <tr>
+                    <td>
+                        <p class="editprofile-maintag"> Current Password </p>
+                    </td>
+                    <td> : </td>
+                    <td><input class="editprofile-input" type="text" name="currentPassword" readonly value="<?php echo $profile->password; ?>"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <p class="editprofile-maintag"> New Password </p>
+                    </td>
+                    <td> : </td>
+                    <td><input class="editprofile-input" type="password" placeholder="Enter Your New Password" name="newPassword"></td>
+                    <div class="importantMessage"><?php echo $data['newPassword_err']?></div>
+                </tr>
+                <tr>
+                    <td>
+                        <p class="editprofile-maintag"> Confirm Password </p>
+                    </td>
+                    <td> : </td>
+                    <td><input class="editprofile-input" type="password" placeholder="Confirm Your New Password" name="confirmPassword"></td>
+                    <div class="importantMessage"><?php echo $data['confirmPassword_err']?></div>
+                </tr>
+            </table>
+            <div class="editprofile-btnsetup">
+                <a href="<?php echo URLROOT; ?>/admins/changePassword"><button type="submit" class="editprofile-updatebutton"> Update Password </button></a>
+                <a href="#"><button type="button" class="editprofile-button-red"> Close </button></a>
             </div>
+        </form>
+    </div>
+</div>
 
         </div>
     </div>
