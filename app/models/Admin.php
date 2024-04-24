@@ -10,100 +10,10 @@ class Admin{
         $this->db = new Database;
     }
 
-    public function regManager($data) {
-        $this->db->query('INSERT INTO managerregistration (name, email, password, phone, address) VALUES (:name, :email, :password, :phone, :address)');
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////Dashboard Function /////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        // Bind values
-        $this->db->bind(':name', $data['mname']);
-        $this->db->bind(':email', $data['memail']);
-        $this->db->bind(':password', $data['mpassword']);
-        $this->db->bind(':phone', $data['mphone']);
-        $this->db->bind(':address', $data['maddress']);
-
-         // Execute
-         if($this->db->execute()) {
-            $this->db->query('INSERT INTO users (name, email, password,role) VALUES(:name,  :email, :password , :role)');
-
-        // Bind values
-        $this->db->bind(':name', $data['mname']);
-        $this->db->bind(':email', $data['memail']);
-        $this->db->bind(':password', $data['mpassword']);
-        $this->db->bind(':role', 'manager');
-        if($this->db->execute()) {
-            return true;
-          
-        }
-        } else {
-            return false;
-        }
-    }
-    
-
-    public function findManagerByEmail($email){
-        $this->db->query('SELECT * FROM managerregistration WHERE email = :email');
-        // Bind value
-        $this->db->bind(':email', $email);
-
-        $row = $this->db->single();
-
-        // Check row
-        if($this->db->rowCount() > 0){
-            return true;
-        } else {
-            return false;
-        }
-    }
-    
-
-    public function getManager() {
-        $this->db->query('SELECT * FROM managerregistration');
-        $results = $this->db->resultSet();
-        return $results;
-   
-    }
-
-    public function getManagerById($id) {
-        $this->db->query("SELECT * FROM managerregistration WHERE id = :id");
-    
-        // Bind values
-        $this->db->bind(':id', $id);
-    
-        $row = $this->db->single();
-    
-        return $row;
-    }
-    
-
-
-    public function deleteManager($id)
-    {
-        $this->db->query('DELETE FROM managerregistration WHERE id = :id');
-        // Bind values
-        $this->db->bind(':id', $id);
-        
-        // Execute
-        if($this->db->execute()){
-            return true;
-        } else {
-            return false;
-        }
-    }
-    
-    public function updateManager($id, $name, $address, $phone) {
-        $this->db->query('UPDATE managerregistration SET name = :name, address = :address, phone = :phone WHERE id = :id');
-        $this->db->bind(':id', $id);
-        $this->db->bind(':name', $name);
-        $this->db->bind(':address', $address);
-        $this->db->bind(':phone', $phone);
-        // Execute
-        if ($this->db->execute()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    
-    
     public function getPharmacyRegistration() {
         $this->db->query("SELECT * FROM pharmacyregistration");
 
@@ -311,6 +221,110 @@ public function countMedicines() {
     }    
 }
 
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////Manager Registration /////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public function regManager($data) {
+        $this->db->query('INSERT INTO managerregistration (name, email, password, phone, address) VALUES (:name, :email, :password, :phone, :address)');
+
+        // Bind values
+        $this->db->bind(':name', $data['mname']);
+        $this->db->bind(':email', $data['memail']);
+        $this->db->bind(':password', $data['mpassword']);
+        $this->db->bind(':phone', $data['mphone']);
+        $this->db->bind(':address', $data['maddress']);
+
+         // Execute
+         if($this->db->execute()) {
+            $this->db->query('INSERT INTO users (name, email, password,role) VALUES(:name,  :email, :password , :role)');
+
+        // Bind values
+        $this->db->bind(':name', $data['mname']);
+        $this->db->bind(':email', $data['memail']);
+        $this->db->bind(':password', $data['mpassword']);
+        $this->db->bind(':role', 'manager');
+        if($this->db->execute()) {
+            return true;
+          
+        }
+        } else {
+            return false;
+        }
+    }
+    
+
+    public function findManagerByEmail($email){
+        $this->db->query('SELECT * FROM managerregistration WHERE email = :email');
+        // Bind value
+        $this->db->bind(':email', $email);
+
+        $row = $this->db->single();
+
+        // Check row
+        if($this->db->rowCount() > 0){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////Managers /////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+
+    public function getManager() {
+        $this->db->query('SELECT * FROM managerregistration');
+        $results = $this->db->resultSet();
+        return $results;
+   
+    }
+
+    public function getManagerById($id) {
+        $this->db->query("SELECT * FROM managerregistration WHERE id = :id");
+    
+        // Bind values
+        $this->db->bind(':id', $id);
+    
+        $row = $this->db->single();
+    
+        return $row;
+    }
+    
+    public function deleteManager($id)
+    {
+        $this->db->query('DELETE FROM managerregistration WHERE id = :id');
+        // Bind values
+        $this->db->bind(':id', $id);
+        
+        // Execute
+        if($this->db->execute()){
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public function updateManager($id, $name, $address, $phone) {
+        $this->db->query('UPDATE managerregistration SET name = :name, address = :address, phone = :phone WHERE id = :id');
+        $this->db->bind(':id', $id);
+        $this->db->bind(':name', $name);
+        $this->db->bind(':address', $address);
+        $this->db->bind(':phone', $phone);
+        // Execute
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////Messages/////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+
 public function getMessages()
 {
     $this->db->query("SELECT * FROM messages");
@@ -338,6 +352,9 @@ public function addMessage($data)
     }
 }
 
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////Profile /////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public function getProfile() {
         $this->db->query('SELECT * FROM admin');
@@ -372,7 +389,6 @@ public function addMessage($data)
             return false;
         }
     }
-    
     
 
     public function updatePassword($newPassword, $confirmPassword) {
