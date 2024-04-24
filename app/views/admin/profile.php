@@ -24,35 +24,34 @@
             <div class="card-body">
                 <table>
                         <tr>
-                        <?php $profile = $data['profile'][0]; ?>
                         <div class="anim"> 
                             <td> <p  class="profdetails"> Administrator Name </p> </td> 
                             <td>:</td>
-                            <td>  <?php echo $profile->name; ?> </td>           
+                            <td>  <?php echo isset($data['profile']) ? $data['profile']->name : ''; ?> </td>           
                         </tr>
                       
                         <tr>
                             <td> <p  class="profdetails">  Administrator Address</p> </td>
                             <td>:</td>
-                            <td><?php echo $profile->address; ?></td>
+                            <td><?php echo isset($data['profile']) ? $data['profile']->address : ''; ?></td>
                         </tr>
                         <tr>
                             <td> <p  class="profdetails"> Contact No </td>
                             <td>:</td>
-                            <td colspan="3"><?php echo $profile->phone; ?></td>
+                            <td colspan="3"><?php echo isset($data['profile']) ? $data['profile']->phone : ''; ?></td>
                             <td><a href="#popup1"> <button class="addBtn"> Change </button></a> </td>
                         </tr>
                         <tr>
                             <td> <p  class="profdetails">Email</td>
                             <td>:</td>
-                            <td colspan="3"><?php echo $profile->email; ?></td>
+                            <td colspan="3"><?php echo isset($data['profile']) ? $data['profile']->email : ''; ?></td>
                             <td> <a href="#popup2"><button class="addBtn"> Change </button></a> </td>
                         </tr>
                         <tr>
                             <td><p class="profdetails">Password</p></td>
                             <td>:</td>
                             <td colspan="3"> <b>
-                                        <p id="passwordDisplay"><?php echo str_repeat("*", strlen($profile->password)); ?> </p>
+                                        <p id="passwordDisplay"><?php echo isset($data['profile']) ? str_repeat("*", strlen($data['profile']->password)) : ''; ?> </p>
                                     </b>
                                     
                                 </td>
@@ -65,7 +64,7 @@
 
 <div id="popup1" class="overlay">
                 <div class="popup-profile-change">
-                    <form action="<?php echo URLROOT; ?>/admins/changeContactNumber#popup1" method="POST" class="form-container">
+                    <form action="<?php echo URLROOT; ?>/admins/changeContactNumber" method="POST" class="form-container">
                         <h2>Set Your Contact Number</h2>
                         <table>
                             <tr>
@@ -73,7 +72,7 @@
                                     <p class="editprofile-maintag"> Current Number </p>
                                 </td>
                                 <td> : </td>
-                                <td><input class="editprofile-input" type="text" name="currentContactNumber" readonly value="<?php echo $profile->phone; ?>"></td>
+                                <td><input class="editprofile-input" type="text" name="currentContactNumber" readonly value="<?php echo $data['profile']->phone; ?>"></td>
                             </tr>
                             <tr>
                                 <td>
@@ -82,20 +81,19 @@
                                 <td> : </td>
                                 <td><input class="editprofile-input" type="text" placeholder="Enter New Contact Number" name="newContactNumber"></td>
                                 <div class="importantMessage"><?php echo $data['phone_err']?></div>
-                            </tr>                                
+                            </tr>
                         </table>
                         <div class="editprofile-btnsetup">
-                        <a href="<?php echo URLROOT; ?>/admins/changeContactNumber"><button type="submit" class="editprofile-updatebutton"> Update Contact </button></a>
+                        <a href="<?php echo URLROOT; ?>/admins/changeContactNumber"><button type="submit" class="editprofile-updatebutton "> Update Contact </button></a>
                         <a href="<?php echo URLROOT; ?>/admins/profile"><button type="button" class="editprofile-button-red"> Close </button></a>
                         </div>
                     </form>
                 </div>
             </div>
 
-
-            <div id="popup2" class="overlay">
+<div id="popup2" class="overlay">
                 <div class="popup-profile-change">
-                    <form action="<?php echo URLROOT; ?>/admins/changeEmail#popup2" method="POST" class="form-container">
+                    <form action="<?php echo URLROOT; ?>/admins/changeEmail" method="POST" class="form-container">
                         <h2>Set Your Email Address</h2>
                         <table>
                             <tr>
@@ -103,7 +101,7 @@
                                     <p class="editprofile-maintag"> Current Email </p>
                                 </td>
                                 <td> : </td>
-                                <td><input class="editprofile-input" type="text" name="currentEmail" readonly value="<?php echo $profile->email; ?>"></td>
+                                <td><input class="editprofile-input" type="text" name="currentEmail" readonly value="<?php echo $data['profile']->email; ?>"></td>
                             </tr>
                             <tr>
                                 <td>
@@ -115,7 +113,7 @@
                             </tr>                                
                         </table>
                         <div class="editprofile-btnsetup">
-                        <a href="<?php echo URLROOT; ?>/admins/changeEmail"><button type="submit" class="editprofile-updatebutton"> Update Email </button></a>
+                        <a href="<?php echo URLROOT; ?>/admins/changeEmail"><button type="submit" class="editprofile-updatebutton "> Update Email </button></a>
                         <a href="<?php echo URLROOT; ?>/admins/profile"><button type="button" class="editprofile-button-red"> Close </button></a>
                         </div>
                     </form>
@@ -124,41 +122,78 @@
 
 
     <div id="popup3" class="overlay">
-    <div class="popup-profile-change">
-        <form action="<?php echo URLROOT; ?>/admins/changePassword#popup3" method="POST" class="form-container">
-            <h2>Set Your Password</h2>
-            <table>
-                <tr>
-                    <td>
-                        <p class="editprofile-maintag"> Current Password </p>
-                    </td>
-                    <td> : </td>
-                    <td><input class="editprofile-input" type="text" name="currentPassword" readonly value="<?php echo $profile->password; ?>"></td>
-                </tr>
-                <tr>
-                    <td>
-                        <p class="editprofile-maintag"> New Password </p>
-                    </td>
-                    <td> : </td>
-                    <td><input class="editprofile-input" type="password" placeholder="Enter Your New Password" name="newPassword"></td>
-                    <div class="importantMessage"><?php echo $data['newPassword_err']?></div>
-                </tr>
-                <tr>
-                    <td>
-                        <p class="editprofile-maintag"> Confirm Password </p>
-                    </td>
-                    <td> : </td>
-                    <td><input class="editprofile-input" type="password" placeholder="Confirm Your New Password" name="confirmPassword"></td>
-                    <div class="importantMessage"><?php echo $data['confirmPassword_err']?></div>
-                </tr>
-            </table>
-            <div class="editprofile-btnsetup">
-                <a href="<?php echo URLROOT; ?>/admins/changePassword"><button type="submit" class="editprofile-updatebutton"> Update Password </button></a>
-                <a href="<?php echo URLROOT; ?>/admins/profile"><button type="button" class="editprofile-button-red"> Close </button></a>
+            <div class="popup-profile-change">
+            <form action="<?php echo URLROOT; ?>/admins/changePassword" method="POST" class="form-container" id="changePasswordForm">
+                    <h2>Set Your Password</h2>
+                    <table>
+                        <tr>
+                            <td>
+                                <p class="editprofile-maintag"> Current Password </p>
+                            </td>
+                            <td> : </td>
+                            <td><input class="editprofile-input" type="text" name="currentPassword" readonly value="<?php echo $data['profile']->password; ?>"></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p class="editprofile-maintag"> New Password </p>
+                            </td>
+                            <td> : </td>
+                            <td><input class="editprofile-input" type="password" placeholder="Enter Your New Password" name="newPassword"></td>
+                            <div class="importantMessage"><?php echo $data['newPassword_err']?></div>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p class="editprofile-maintag"> Confirm Password </p>
+                            </td>
+                            <td> : </td>
+                            <td><input class="editprofile-input" type="password" placeholder="Confirm Your New Password" name="confirmPassword"></td>
+                            <div class="importantMessage"><?php echo $data['confirmPassword_err']?></div>
+                        </tr>
+                    </table>
+                    <div class="editprofile-btnsetup">
+                        <a href="<?php echo URLROOT; ?>/admins/changePassword"><button type="submit" class="editprofile-updatebutton"> Update Password </button></a>
+                        <a href="<?php echo URLROOT; ?>/admins/profile"><button type="button" class="editprofile-button-red"> Close </button></a>
+                    </div>
+                </form>
             </div>
-        </form>
-    </div>
-</div>
+        </div>
+
+<script>
+    document.getElementById("changePasswordForm").addEventListener("submit", function(event) {
+        event.preventDefault();     
+
+        fetch(this.action, {
+            method: 'POST',
+            body: new FormData(this)
+        })
+        .then(response => {
+            if (response.ok) {
+                // If response is successful, close the popup
+                closePopup();
+                // Redirect to /admins/profile
+                window.location.href = "<?php echo URLROOT; ?>/admins/profile";
+            } else {
+                // If there's an error response, open the popup
+                openPopup();
+            }
+        })
+        .catch(error => {
+            // Handle any errors
+            console.error('Error:', error);
+        });
+    });
+
+    function openPopup() {
+
+           document.getElementById("popup3").style.display = "block";
+    }
+
+    function closePopup() {
+        
+         document.getElementById("popup3").style.display = "none";
+    }
+</script>
+
 
         </div>
     </div>

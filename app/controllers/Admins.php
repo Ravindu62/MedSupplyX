@@ -412,7 +412,7 @@ public function profile() {
         'newPassword_err' => '',
         'confirmPassword_err' => '',
         'email_err' => '',
-        'phone_err' => '',
+        'phone_err' => ''
 
     ];
     
@@ -428,8 +428,8 @@ public function changeContactNumber()
             // Get current contact number and new contact number from the form
             $data =[
                 'profile' => $profile,
-                'currentContactNumber' => $_POST['currentContactNumber'],
-                'newContactNumber' => $_POST['newContactNumber'],
+                'currentContactNumber' => trim ($_POST['currentContactNumber']),
+                'newContactNumber' => trim ($_POST['newContactNumber']),
                 'phone_err' => '',
             ];
 
@@ -444,7 +444,7 @@ public function changeContactNumber()
                 $this->view('admins/profile', $data);
             }  
         }
-        $this->view('admins/profile', $data);
+        $this->view('admin/profile', $data);
     }
     
 }
@@ -492,23 +492,24 @@ public function changeContactNumber()
                 'newPassword_err' => '',
                 'confirmPassword_err' => '',
             ];
-            // print_r($data);die();
     
             if (empty($data['newPassword'])) {
                 $data['newPassword_err'] = 'Please Enter New Password';
             } elseif (strlen($data['newPassword']) < 6 || strlen($data['newPassword']) > 30) {
-                $data['newPassword_err'] = 'Password must be between 8 and 30 characters';
-            } 
+                $data['newPassword_err'] = 'Password must be between 6 and 30 characters';
+            }
     
             if (empty($data['confirmPassword'])) {
                 $data['confirmPassword_err'] = 'Please confirm password';
             } elseif ($data['newPassword'] != $data['confirmPassword']) {
-                $data['newPassword_err'] = 'Passwords do not match';
+                $data['confirmPassword_err'] = 'Passwords do not match';
             }
     
             if (empty($data['newPassword_err']) && empty($data['confirmPassword_err'])) {
                 if ($this->adminModel->updatePassword($data['newPassword'],$data['confirmPassword'])) {
-                    $this->view('admins/profile', $data);
+                    // Redirect to profile page
+                    header("Location: /admins/profile");
+                    exit; // Make sure to exit after redirection
                 }
             }
     
