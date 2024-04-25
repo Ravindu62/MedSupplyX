@@ -40,6 +40,10 @@
 
 
       <div class="anim">
+      <form class="search">
+          <input type="text" id="myInput" placeholder="Seach Medicine Names..." onkeyup="search()">
+          <i class="fas fa-search" id="searchicon"></i>
+        </form>
         <table class="customers">
           <tr>
             <th> Medicine Name </th>
@@ -90,7 +94,7 @@
           <?php endforeach; ?>
 
         </table>
-        <button onclick="generatePDF()" class="printBtn">Print Report</button>
+        <!-- <button onclick="generatePDF()" class="printBtn">Print Report</button> -->
       </div>
     </div>
 
@@ -101,6 +105,10 @@
       </div>
 
       <div class="anim">
+      <form class="search">
+          <input type="text" id="myInput" placeholder="Seach Medicine Names..." onkeyup="search()">
+          <i class="fas fa-search" id="searchicon"></i>
+        </form>
         <table class="customers">
           <tr>
             <th> Accepted Date </th>
@@ -120,7 +128,7 @@
           </tr>
 
           <?php foreach ($data['acceptedOrders'] as $acceptedOrders) : ?>
-            <tr>
+            <tr onclick=window.location.href='<?php echo URLROOT; ?>/pharmacies/showAcceptedOrderDetails/<?php echo $acceptedOrders->id; ?>'>
               <td> <?php echo date('Y-m-d', strtotime($acceptedOrders->approvedDate)); ?> </td>
               <td> <?php echo $acceptedOrders->medicineName; ?> </td>
               <td> <?php echo $acceptedOrders->category; ?> </td>
@@ -133,11 +141,12 @@
               <td> <?php echo $acceptedOrders->supplierName; ?> </td>
               <td> <?php echo $acceptedOrders->bidAmount; ?> </td>
               <td>
-                <form action="<?php echo URLROOT; ?>/pharmacies/changeStatusAsApproved/<?php echo $acceptedOrders->id; ?>" method="POST">
+                <!-- <form action="<?php echo URLROOT; ?>/pharmacies/changeStatusAsApproved/<?php echo $acceptedOrders->id; ?>" method="POST">
                   <input type="submit" id="approve" class="smallOpen-button" name="status" value="Approved">
-                  <input type="hidden" name="orderId" value="<?php echo $acceptedOrders->orderId; ?>">
-                  <form action="<?php echo URLROOT; ?>/pharmacies/deleteOrder/<?php echo $order->id; ?>" method="POST">
-                    <input type="submit" id="delete" class="smallOpen-button" name="delete" value="Reject">
+                  <input type="hidden" name="orderId" value="<?php echo $acceptedOrders->orderId; ?>"> -->
+                  <a href="<?php echo URLROOT; ?>/pharmacies/changeStatusAsApproved/<?php echo $acceptedOrders->id ?>"><button class="smallOpen-button">Approved</button></a>               
+                  <div class="smallspace"></div>
+                  <a href="<?php echo URLROOT; ?>/pharmacies/rejectBid/<?php echo $acceptedOrders->id ?>"><button class="smallOpen-button">Reject</button></a>                
               </td>
 
               </form>
@@ -154,6 +163,10 @@
       </div>
 
       <div class="anim">
+      <form class="search">
+          <input type="text" id="myInput" placeholder="Seach Medicine Names..." onkeyup="search()">
+          <i class="fas fa-search" id="searchicon"></i>
+        </form>
         <table class="customers">
           <tr>
             <th> </th>
