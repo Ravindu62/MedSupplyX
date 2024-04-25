@@ -154,12 +154,12 @@ class Pharmacies extends Controller
     public function inventory()
     {
         // Sanitize post inputs
-        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+       
 
         $pharmacyId = trim($_SESSION['USER_DATA']['id']);
 
         // Get inventory items for the pharmacy
-        $inventory_items = $this->pharmacyModel->getInventoryItems($pharmacyId);
+        $inventory_items = $this->pharmacyModel->getInventoryItemsByName($pharmacyId);
 
         $data = [
             'inventory' => $inventory_items,
@@ -320,17 +320,22 @@ class Pharmacies extends Controller
     }
 
     // public function editInventory() according to the addInventory function
-    public function editInventory()
+    public function editInventory($inventoryId)
     {
-        print_r($_POST);
+        // print_r($_POST);
         // Fetch the inventory item by its ID
+    
+        
+        $inventory_item = $this->pharmacyModel->getInventoryItemById($inventoryId);
         $pharmacyId = trim($_SESSION['USER_DATA']['id']);
 
-        $inventoryId = trim($_POST['id']);
-        $inventory_item = $this->pharmacyModel->getInventoryItemById($inventoryId, $pharmacyId);
-
+        $data = [
+            'inventory_item' => $inventory_item
+        ];
+        
         // Check if the form is submitted
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+           
             // Process form data
 
             // Sanitize POST data
@@ -731,7 +736,8 @@ class Pharmacies extends Controller
         $data = [
             'pharmacyId' => trim($_SESSION['USER_DATA']['id']),
             'bidId' => $id,
-            'status' => trim($_POST['status'])
+            'status' => trim($_POST['status']),
+            'approvedDate' => date('Y-m-d   ')
 
         ];
 
@@ -741,6 +747,20 @@ class Pharmacies extends Controller
             die('Something went wrong');
         }
     }
+
+    public function showAcceptedOrderDetails($id)
+    {
+        // Fetch the order by its ID
+        $acceptedOrderDetails = $this->pharmacyModel->getAcceptedOrderById($id);
+
+        $data = [
+            'orderDetails' => $acceptedOrderDetails
+        ];
+
+        // Load view with inventory item data
+        $this->view('pharmacy/supplierOrders/showAcceptedOrderDetails', $data);
+    }
+
 
     public function changeOrderDetails($id)
     {
@@ -940,6 +960,45 @@ class Pharmacies extends Controller
 
             // Load view
             $this->view('pharmacy/supplierOrders/submitOrder', $data);
+        }
+    }
+
+    
+    public function rejectBid($id)
+    {
+        $acceptedOrderDetails = $this->pharmacyModel->getAcceptedOrderById($id);
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Sanitize POST array
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+            $data = [
+                'id' => $id,
+                'pharmacyId' => $_SESSION['USER_DATA']['id'],
+                'orderDetails' => $acceptedOrderDetails,
+                'reason' => trim($_POST['reason']),     
+                'reason_err' => ''
+            ];
+
+            // Validate
+            if (empty($data['reason'])) {
+                $data['reason_err'] = 'Please enter reason';
+            }
+
+            if (empty($data['reason_err'])) {
+                if ($this->pharmacyModel->rejectBid($data)) {
+                    redirect('pharmacies/orders');
+                } else {
+                    die('Something went wrong');
+                }
+            } else {
+                $this->view('pharmacy/supplierOrders/rejectBid', $data);
+            }
+        } else {
+            $data = [
+                'orderDetails' => $acceptedOrderDetails
+            ];
+            $this->view('pharmacy/supplierOrders/rejectBid', $data);
         }
     }
 

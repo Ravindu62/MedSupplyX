@@ -131,15 +131,24 @@
                 </td>
                 <td> : </td>
                 <td class="verticleCentered"> Rs. <input type="number" min="1" name="bidAmount" class="orderdetails"> </td>
-                <td class="verticleCentered"> <input type="submit" class="addBtn" value="Place Bid"> </td>
                 <p> <?php echo $data['bidAmount_err']; ?> </p>
                 <td class certicleCentered>
                   <p class="grey"> (Lowest Bid is ) </p>
                 </td>
               </tr>
+              <tr>
+                <td class="verticleCentered">
+                  Remarks
+                </td>
+                <td> : </td>
+                <td class="verticleCentered">
+                  <textarea name="remarks" class="orderdetails" rows="4" cols="50"></textarea>
+                </td>
+              </tr>
 
           </form>
           <tr>
+          <td class="verticleCentered"> <input type="submit" class="addBtn" value="Place Bid"> </td>
             <td> <a href="<?php echo URLROOT ?>/suppliers/orders" class="link">
                 <div class="publicbtn"> Cancel </div>
               </a>

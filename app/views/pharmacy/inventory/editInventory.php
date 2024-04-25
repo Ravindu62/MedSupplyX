@@ -18,7 +18,7 @@
 
     <!-- content -->
     <div class="content">
-        <?php $inventory = $data['inventory_item'];?>
+        <?php $inventory = $data['inventory_item']; ?>
         <div class="anim">
             <h2> Edit Inventory </h2>
         </div>
@@ -27,7 +27,7 @@
         <div class="anim">
             <div class="container-fluid">
                 <div class="d-flex">
-                    <form action="<?php echo URLROOT; ?>/pharmacies/editInventory/<?php echo $inventory->id?>" method="POST" class="orderform">
+                <form action="<?php echo URLROOT; ?>/pharmacies/editInventory/<?php echo $inventory->id ?>" method="POST" class="orderform">
 
                         <table>
 
@@ -36,13 +36,13 @@
                                     <h3> <br> Medicine Details</h3>
                                 </td>
                             </tr>
-
                             <tr>
                                 <td class="verticleCentered">
                                     Ref No
                                 </td>
                                 <td> : </td>
-                                <td class="verticleCentered"> <input type="text" name="refno" class="smallForm" id="refno" class="form-control <?php echo (!empty($data['refno_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $inventory->refno ?>" oninput="preventEditMED()"></td>
+                                <td class="verticleCentered"> <input type="text" class="smallForm" name="refno" id="refno" class="form-control <?php echo (!empty($data['refno_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $inventory->refno ?>" oninput="preventEditMED()"></td>
+                                <!-- <input type="hidden" name="refno" value="<?php echo $inventory->refno ?>"> -->
                                 <!-- <p class="importantMessage"> <?php echo $data['refno_err']; ?> </p> -->
 
 
@@ -50,7 +50,8 @@
                                     Medicine Name
                                 </td>
                                 <td> : </td>
-                                <td class="verticleCentered"><input type="text" name="medicineName" class="smallForm" value="<?php echo $inventory->name ?>" required> </td>
+                                <td class="verticleCentered"><input type="text"  name="medicineName" class="smallForm" value="<?php echo $inventory->name ?>"> </td>
+                                <!-- <input type="hidden" name="medicineName" value="<?php echo $inventory->name ?>"> -->
                                 <!-- <p class="importantMessage"> <?php echo $data['medicineName_err']; ?> </p> -->
 
 
@@ -61,14 +62,16 @@
                                     Batch No
                                 </td>
                                 <td> : </td>
-                                <td class="verticleCentered"> <input type="text" name="batchNo" class="smallForm" id="batchNo" class="form-control <?php echo (!empty($data['batchNo_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $inventory->batch_no ?>" oninput="preventEditBCH()"> </td>
+                                <td class="verticleCentered"> <input type="text" class="smallForm" name="batchNo" id="batchNo" class="form-control <?php echo (!empty($data['batchNo_err'])) ? 'is-invalid' : ''; ?>" value="<?php echo $inventory->batch_no ?>" oninput="preventEditBCH()"> </td>
+                                <!-- <input type="hidden" name="batchNo" value="<?php echo $inventory->batch_no ?>"> -->
                                 <!-- <p class="importantMessage"> <?php echo $data['batchNo_err']; ?> </p> -->
 
                                 <td class="verticleCentered">
                                     Category
                                 </td>
                                 <td> : </td>
-                                <td class="verticleCentered"> <input type="text" name="category" class="smallForm" required value="<?php echo $inventory->category ?>"> </td>
+                                <td class="verticleCentered"> <input type="text" class="smallForm" name="category" value="<?php echo $inventory->category ?>"> </td>
+                                <!-- <input type="hidden" name="category" value="<?php echo $inventory->category ?>"> -->
                                 <!-- <p class="importantMessage"> <?php echo $data['category_err']; ?> </p> -->
 
                             </tr>
@@ -78,7 +81,8 @@
                                     Volume
                                 </td>
                                 <td> : </td>
-                                <td class="verticleCentered"> <input type="number" name="volume" class="smallForm" min="1" required value="<?php echo $inventory->volume ?>"> </td>
+                                <td class="verticleCentered"> <input type="number" class="smallForm" name="volume" min="1" value="<?php echo $inventory->volume ?>"> </td>
+                                <!-- <input type="hidden" name="volume" value="<?php echo $inventory->volume ?>"> -->
                                 <!-- <p class="importantMessage"> <?php echo $data['volume_err']; ?> </p> -->
 
 
@@ -107,6 +111,7 @@
                                         <option value="boxes" <?php if ($inventory->type === "boxes") echo "selected"; ?>> Boxes </option>
                                     </select>
                                 </td>
+                                <!-- <input type="hidden" name="type" value="<?php echo $inventory->type ?>"> -->
                                 <!-- <p class="importantMessage"> <?php echo $data['type_err']; ?> </p> -->
 
                             </tr>
@@ -139,13 +144,14 @@
                                 <!-- <p class="importantMessage"> <?php echo $data['unitPrice_err']; ?> </p> -->
 
                             </tr>
-
+<div class="middlespace"></div>
                             <tr>
                                 <td class="verticleCentered">
                                     Manufacturer Date
                                 </td>
                                 <td> : </td>
-                                <td class="verticleCentered"> <input type="Date" class="orderdetails" placeholder="YYYY-MM-DD" name="manufacturedDate" value="<?php echo $inventory->manu_date ?>" required> </td>
+                                <td class="verticleCentered"> <input type="text" class="orderdetails setblock" value="<?php echo date('d-m-Y', strtotime($inventory->manu_date)) ?>" readonly>
+                                <div class="smallspace"></div> <input type="Date" class="orderdetails setblock" placeholder="YYYY-MM-DD" name="manufacturedDate" value="<?php echo $inventory->manu_date ?>" required> </td>
                                 <!-- <p class="importantMessage"> <?php echo $data['manufacturedDate_err']; ?> </p> -->
 
 
@@ -153,7 +159,8 @@
                                     Expire Date
                                 </td>
                                 <td> : </td>
-                                <td class="verticleCentered"> <input type="Date" class="orderdetails" placeholder="YYYY-MM-DD" name="expireDate" value="<?php echo $inventory->expire_date ?>" required> </td>
+                                <td class="verticleCentered"> <input type="text" class="orderdetails setblock" value="<?php echo date('d-m-Y', strtotime($inventory->expire_date)) ?>" readonly> 
+                                <div class="smallspace"></div><input type="Date" class="orderdetails" placeholder="YYYY-MM-DD" name="expireDate" value="<?php echo $inventory->expire_date ?>" required> </td>
                                 <!-- <p class="importantMessage"> <?php echo $data['expireDate_err']; ?> </p> -->
 
                             </tr>
@@ -168,7 +175,7 @@
                             </tr>
 
                             <tr>
-                                <td class="verticleCentered"> <input type="submit" class="addBtn" value="Update" name="update"></td>
+                                <td class="verticleCentered"> <input type="submit" class="addBtn" value="Update"></td>
                                 <td><a href="<?php echo URLROOT ?>/pharmacies/inventory" class="link">
                                         <div class="publicbtn"> Cancel </div>
                                 </td>
