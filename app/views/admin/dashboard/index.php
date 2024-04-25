@@ -115,8 +115,8 @@
 
     <div class="space"></div>
       <div class="smallspace"></div>
-
       <div class="chartbackground">
+        
         <div class="anim" style="display: flex;">
           <div id="piechart1" class="chart1"></div>
           <div id="piechart2" class="chart2"></div>
