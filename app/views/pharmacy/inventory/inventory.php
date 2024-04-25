@@ -39,7 +39,6 @@
         <tr>
           <th> Medicine Name </th>
           <th> Batch No </th>
-          <th> Brand </th>
           <th> Volume </th>
           <th> Category </th>
           <th> Quantity </th>
@@ -55,17 +54,14 @@
             <td> <?php echo $inventory->name; ?> </td>
             <td> <?php echo $inventory->batch_no; ?> </td>
             <td> <?php echo $inventory->brand; ?> </td>
-            <td> <?php echo $inventory->volume; ?><?php echo $inventory->type; ?> </td>
+            <td> <?php echo $inventory->volume . ' ' . $inventory->type; ?> </td>
             <td> <?php echo $inventory->category; ?> </td>
             <td> <?php echo $inventory->quantity; ?> </td>
             <td> <?php echo $inventory->unit_amount; ?> </td>
             <td> <?php echo date('Y-m-d', strtotime($inventory->expire_date)); ?> </td>
             <td>
-              <form action="<?php echo URLROOT; ?>/pharmacies/editInventory/<?php echo $inventory->id; ?>" method="POST">
-                <input type="submit" id="edit" class="smallOpen-button" name="edit" value="Edit">
-                <input type="hidden" name="id" value="<?php echo $inventory->id; ?>">
-                </form>
-                <div class="smallspace"></div>
+              <a href="<?php echo URLROOT; ?>/pharmacies/editInventory/<?php echo $inventory->id ?>"><button class="smallOpen-button">Edit</button></a>                
+              <div class="smallspace"></div>
                 <form action="<?php echo URLROOT; ?>/pharmacies/removeInventory" method="POST">
                 <input type="submit" id="remove" class="smallOpen-button" name="remove" value="Remove">
                 <input type="hidden" name="id" value="<?php echo $inventory->id; ?>">
