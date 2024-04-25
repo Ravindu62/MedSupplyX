@@ -433,6 +433,7 @@ public function profile() {
         'profile' => $profile,
         'newPassword_err' => '',
         'confirmPassword_err' => '',
+        'emailEmpty_err' => '',
         'email_err' => '',
         'phone_err' => ''
 
@@ -462,44 +463,53 @@ public function changeContactNumber()
             if (empty($data['phone_err'])) {
 
             // Update the contact number in the database
-             if($this->adminModel->updateContactNumber($data['currentContactNumber'], $data['newContactNumber'])) {
+            if ($this->adminModel->updateContactNumber($data['currentContactNumber'], $data['newContactNumber'])) {
+                redirect('admins/profile');
+            } else {
                 $this->view('admins/profile', $data);
-            }  
-        }
-        $this->view('admin/profile', $data);
-    }
-    
-}
-
-    public function changeEmail()
-    {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            // Sanitize POST data
-            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-            $profile = $this->adminModel->getProfile();
-
-            $data = [
-                'profile' => $profile,
-                'currentEmail' => trim($_POST['currentEmail']),
-                'newEmail' => trim($_POST['newEmail']),
-                'email_err' => '',
-            ];
-
-                if (empty($data['newEmail'])) {
-                    $data['email_err'] = 'Please enter the new email address';
-                }
-
-                if (empty($data['email_err'])) {
-                // Update the email
-                    if ($this->adminModel->updateEmail($data['currentEmail'], $data['newEmail'])) {
-                        // Email updated successfully
-                        $this->view('admins/profile', $data);
-                    } 
-            } 
+            }
+        } else {
             $this->view('admin/profile', $data);
         }
-       
     }
+}
+
+public function changeEmail()
+{
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        // Sanitize POST data
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $profile = $this->adminModel->getProfile();
+
+        $data = [
+            'profile' => $profile,
+            'currentEmail' => trim($_POST['currentEmail']),
+            'newEmail' => trim($_POST['newEmail']),
+            'email_err' => '',                
+        ];
+
+        if (empty($data['newEmail'])) {
+            $data['email_err'] = 'Please enter the new email address';
+
+        } elseif (!filter_var($data['newEmail'], FILTER_VALIDATE_EMAIL)) {
+            $data['email_err'] = 'Please enter a valid email address';
+        
+        }
+
+        if (empty($data['email_err'])) {
+            // Update the email
+            if ($this->adminModel->updateEmail($data['currentEmail'], $data['newEmail'])) {
+                // Email updated successfully
+                redirect('admins/profile');
+            } else {
+                $data['email_err'] = 'Failed to update email address';
+                $this->view('admins/profile', $data);
+            }
+        } else {
+            $this->view('admin/profile', $data);
+        }
+    }
+}
 
 
     public function changePassword() {
@@ -530,12 +540,13 @@ public function changeContactNumber()
             if (empty($data['newPassword_err']) && empty($data['confirmPassword_err'])) {
                 if ($this->adminModel->updatePassword($data['newPassword'],$data['confirmPassword'])) {
                     // Redirect to profile page
-                    header("Location: /admins/profile");
-                    exit; // Make sure to exit after redirection
+                    redirect('admins/profile');
+                } else {
+                    $this->view('admins/profile', $data);
                 }
+            } else {
+                $this->view('admin/profile', $data);
             }
-    
-            $this->view('admin/profile', $data);
         }
     }
     

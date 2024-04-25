@@ -84,6 +84,7 @@
           <tr> <td colsan="3">     <span class="importantMessage"><?php echo $data['confirm_password_err']; ?>   <br> </span> </td></tr>
 
           
+          
 
       <tr> <td class="verticleCentered"> <button class="addBtn"> Register </button> 
       <input type="reset" name="reset" class="addBtn" value="Cancel"> </td>

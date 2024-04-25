@@ -74,15 +74,23 @@
                                 <td> : </td>
                                 <td><input class="editprofile-input" type="text" name="currentContactNumber" readonly value="<?php echo $data['profile']->phone; ?>"></td>
                             </tr>
+
                             <tr>
-                                <td>
+                                <td >
                                     <p class="editprofile-maintag"> New Number </p>
                                 </td>
                                 <td> : </td>
-                                <td><input class="editprofile-input" type="text" placeholder="Enter New Contact Number" name="newContactNumber"></td>
-                                <div class="importantMessage"><?php echo $data['phone_err']?></div>
-                            </tr>
+                                <td>
+                                    <div class="inputForm <?php echo (!empty($data['phone_err'])) ? 'is-invalid' : '' ; ?>">
+                                    <i class='bx bx-envelope' ></i>
+                                    <input type="text" class="editprofile-input" placeholder="Enter New Contact"  name="newContactNumber">
+                                    </div>
+                                    <span class="invalid-feedback"><?php echo $data['phone_err']; ?></span>
+                                </td>
+                            </tr>   
                         </table>
+
+
                         <div class="editprofile-btnsetup">
                         <a href="<?php echo URLROOT; ?>/admins/changeContactNumber"><button type="submit" class="editprofile-updatebutton "> Update Contact </button></a>
                         <a href="<?php echo URLROOT; ?>/admins/profile"><button type="button" class="editprofile-button-red"> Close </button></a>
@@ -91,9 +99,9 @@
                 </div>
             </div>
 
-<div id="popup2" class="overlay">
+<div id="popup2" class="overlay" >
                 <div class="popup-profile-change">
-                    <form action="<?php echo URLROOT; ?>/admins/changeEmail" method="POST" class="form-container">
+                    <form action="<?php echo URLROOT; ?>/admins/changeEmail" method="POST" class="form-container" id="changePasswordForm">
                         <h2>Set Your Email Address</h2>
                         <table>
                             <tr>
@@ -103,13 +111,20 @@
                                 <td> : </td>
                                 <td><input class="editprofile-input" type="text" name="currentEmail" readonly value="<?php echo $data['profile']->email; ?>"></td>
                             </tr>
+                            
                             <tr>
-                                <td>
-                                    <p class="editprofile-maintag"> New Email </p>
+                            <td >
+                                <p class="editprofile-maintag"> New Email </p>
                                 </td>
                                 <td> : </td>
-                                <td><input class="editprofile-input" type="text" placeholder="Enter New Email" name="newEmail"></td>
-                                <div class="importantMessage"><?php echo $data['email_err']?></div>
+                                <td>
+                                <div class="inputForm <?php echo (!empty($data['email_err'])) ? 'is-invalid' : '' ; ?>">
+                                <i class='bx bx-envelope' ></i>
+                                <input type="text" class="editprofile-input" placeholder="Enter email Address"  name="newEmail">
+                                </div>
+                                <span class="invalid-feedback"><?php echo $data['email_err']; ?></span>
+                                </td>
+                        
                             </tr>                                
                         </table>
                         <div class="editprofile-btnsetup">
@@ -123,7 +138,7 @@
 
     <div id="popup3" class="overlay">
             <div class="popup-profile-change">
-            <form action="<?php echo URLROOT; ?>/admins/changePassword" method="POST" class="form-container" id="changePasswordForm">
+            <form action="<?php echo URLROOT; ?>/admins/changePassword" method="POST" class="form-container" >
                     <h2>Set Your Password</h2>
                     <table>
                         <tr>
@@ -138,16 +153,27 @@
                                 <p class="editprofile-maintag"> New Password </p>
                             </td>
                             <td> : </td>
-                            <td><input class="editprofile-input" type="password" placeholder="Enter Your New Password" name="newPassword"></td>
-                            <div class="importantMessage"><?php echo $data['newPassword_err']?></div>
+                            <td>
+                                <div class="inputForm <?php echo (!empty($data['newPassword_err'])) ? 'is-invalid' : '' ; ?>">
+                                <i class='bx bx-envelope' ></i>
+                                <input type="text" class="editprofile-input" placeholder="Enter new  password"  name="newPassword">
+                                </div>
+                                <span class="invalid-feedback"><?php echo $data['newPassword_err']; ?></span>
+                                </td>
                         </tr>
                         <tr>
                             <td>
                                 <p class="editprofile-maintag"> Confirm Password </p>
                             </td>
                             <td> : </td>
-                            <td><input class="editprofile-input" type="password" placeholder="Confirm Your New Password" name="confirmPassword"></td>
-                            <div class="importantMessage"><?php echo $data['confirmPassword_err']?></div>
+                            <td>
+                                <div class="inputForm <?php echo (!empty($data['confirmPassword_err'])) ? 'is-invalid' : '' ; ?>">
+                                <i class='bx bx-envelope' ></i>
+                                <input type="text" class="editprofile-input" placeholder=" Re enter the  password"  name="confirmPassword">
+                                </div>
+                                <span class="invalid-feedback"><?php echo $data['confirmPassword_err']; ?></span>
+                            </td>
+                            
                         </tr>
                     </table>
                     <div class="editprofile-btnsetup">
@@ -159,39 +185,38 @@
         </div>
 
 <script>
-    document.getElementById("changePasswordForm").addEventListener("submit", function(event) {
-        event.preventDefault();     
+document.getElementById("changeEmailForm").addEventListener("submit", function(event) {
+    event.preventDefault();     
 
-        fetch(this.action, {
-            method: 'POST',
-            body: new FormData(this)
-        })
-        .then(response => {
-            if (response.ok) {
-                // If response is successful, close the popup
-                closePopup();
-                // Redirect to /admins/profile
-                window.location.href = "<?php echo URLROOT; ?>/admins/profile";
-            } else {
-                // If there's an error response, open the popup
-                openPopup();
-            }
-        })
-        .catch(error => {
-            // Handle any errors
-            console.error('Error:', error);
-        });
+    fetch(this.action, {
+        method: 'POST',
+        body: new FormData(this)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // If response indicates success, close the popup
+            closePopup();
+        } else {
+            // If there's an error, show the error message
+            alert(data.message);
+        }
+    })
+    .catch(error => {
+        // Handle any errors
+        console.error('Error:', error);
     });
+});
 
-    function openPopup() {
 
-           document.getElementById("popup3").style.display = "block";
-    }
+function openPopup() {
+    document.getElementById("popup2").style.display = "block";
+}
 
-    function closePopup() {
-        
-         document.getElementById("popup3").style.display = "none";
-    }
+function closePopup() {
+    document.getElementById("popup2").style.display = "none";
+}
+
 </script>
 
 
