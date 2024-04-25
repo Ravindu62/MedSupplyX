@@ -159,9 +159,10 @@ class pharmacy
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////Inventory data//////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public function getInventoryItems($pharmacyId)
+    public function getInventoryItemsByName($pharmacyId)
     {
         $this->db->query('SELECT * FROM inventory WHERE pharmacy_id = :pharmacyId');
+        // $this->db->query('SELECT * FROM supplierinventory WHERE supplierId = :supplierId GROUP BY medicineId ORDER BY medicineName ASC');
         $this->db->bind(':pharmacyId', $pharmacyId);
 
         $results = $this->db->resultSet();
@@ -223,12 +224,16 @@ class pharmacy
         }
     }
 
-    public function getInventoryItemById($id, $pharmacyId)
+    public function getInventoryItemById($id)
     {
         $this->db->query('SELECT * FROM inventory WHERE id = :id AND pharmacy_id = :pharmacyId');
+
         $this->db->bind(':id', $id);
-        $this->db->bind(':pharmacyId', $pharmacyId);
-        return $this->db->single();
+        $this->db->bind(':pharmacyId', $_SESSION['USER_DATA']['id']);
+
+        $row = $this->db->single();
+
+        return $row;
     }
 
     public function removeInventory($id)
@@ -326,6 +331,33 @@ class pharmacy
         return $row;
     }
 
+    public function getAcceptedOrderById($id)
+    {
+        $this->db->query("SELECT * FROM bidtable WHERE id = :id AND pharmacyId = :pharmacyId AND status = 'accepted'");
+        // Bind values
+        $this->db->bind(':id', $id);
+        $this->db->bind(':pharmacyId', $_SESSION['USER_DATA']['id']);
+        $row = $this->db->single();
+        return $row;
+    }
+
+    public function rejectBid($data)
+    {
+        $this->db->query('UPDATE bidtable SET status = "pharmacy rejected", reason = :reason WHERE id = :id AND pharmacyId = :pharmacyId');
+        // Bind values
+        $this->db->bind(':id', $data['id']);
+        $this->db->bind(':pharmacyId', $_SESSION['USER_DATA']['id']);
+        $this->db->bind(':reason', $data['reason']);
+        
+        // Execute
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
     public function getBrandById($id)
     {
         $this->db->query("SELECT * FROM medicinebrands WHERE medicineId = :id");
@@ -339,8 +371,8 @@ class pharmacy
     {
 
         //submit order details to requestorder table and bidtable
-        $this->db->query('INSERT INTO requestorder (pharmacy_id, pharmacyname, medicine_id, medicine_name, batchno, type, brand, volume, category, quantity, deliveryDate) VALUES(:pharmacy_id, :pharmacy
-        name, :medicine_id, :medicine_name, :batchno, :type, :brand, :volume, :category, :quantity, :deliveryDate)');
+        $this->db->query('INSERT INTO requestorder (pharmacy_id, pharmacyname, medicine_id, medicine_name, refno, type, brand, volume, category, quantity, deliveryDate) 
+                                           VALUES(:pharmacy_id, :pharmacyname, :medicine_id, :medicine_name, :refno, :type, :brand, :volume, :category, :quantity, :deliveryDate)');
 
 
 
@@ -349,7 +381,7 @@ class pharmacy
         $this->db->bind(':pharmacyname', $_SESSION['USER_DATA']['name']);
         $this->db->bind(':medicine_id', $data['medicineId']);
         $this->db->bind(':medicine_name', $data['medicineName']);
-        $this->db->bind(':batchno', $data['refno']);
+        $this->db->bind(':refno', $data['refno']);
         $this->db->bind(':type', $data['type']);
         $this->db->bind(':brand', $data['brands']);
         $this->db->bind(':volume', $data['volume']);
@@ -449,10 +481,11 @@ class pharmacy
 
     public function changeStatus($data)
     {
-        $this->db->query('UPDATE bidtable SET status = "approved" WHERE id = :id AND pharmacyId = :pharmacyId');
+        $this->db->query('UPDATE bidtable SET status = "approved", approvedDate = :approvedDate WHERE id = :id AND pharmacyId = :pharmacyId');
         // Bind values
         $this->db->bind(':id', $data['bidId']);
-        $this->db->bind(':pharmacyId', $data['pharmacyId']);
+        $this->db->bind(':pharmacyId', trim($_SESSION['USER_DATA']['id']));
+        $this->db->bind(':approvedDate', $data['approvedDate']); 
 
         // Execute
         if ($this->db->execute()) {
