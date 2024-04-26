@@ -807,6 +807,10 @@ label>span{
   padding:0px 10px;
 }
 
+.verticleCentered .setblock{
+  display: block;
+}
+
 .addBtn{
   border: 2px solid #00607F;
   padding: 5px 15px;
