@@ -27,7 +27,7 @@
       <br>
       <br>
       <div class="row">
-      <div class="column">
+        <div class="column">
           <div class="card1">
             <h3> <?php echo $data['countPharmacies']; ?> </h3>
             <a class="dashboard-a" href="<?php echo URLROOT; ?>/admins/all_pharmacies"> Pharmacies </a>
@@ -37,21 +37,24 @@
         <div class="column">
           <div class="card1">
             <h3> <?php echo $data['countapprovedPharmacies']; ?> </h3>
-            <a class="dashboard-a" href="<?php echo URLROOT; ?>/admins/approvedPharmacy"> Approved Pharmacies </a>
+            <a class="dashboard-a" href="<?php echo URLROOT; ?>/admins/approvedPharmacy"> Approved
+              Pharmacies </a>
           </div>
         </div>
 
         <div class="column">
           <div class="card2">
             <h3><?php echo $data['countpendingPharmacies']; ?> </h3>
-            <a class="dashboard-a" href="<?php echo URLROOT; ?>/admins/pendingPharmacy"> Pending Pharmacies </a>
+            <a class="dashboard-a" href="<?php echo URLROOT; ?>/admins/pendingPharmacy"> Pending Pharmacies
+            </a>
           </div>
         </div>
 
         <div class="column">
           <div class="card2">
             <h3><?php echo $data['countrejectedPharmacies']; ?> </h3>
-            <a class="dashboard-a" href="<?php echo URLROOT; ?>/admins/rejectedPharmacy"> Rejected Pharmacies </a>
+            <a class="dashboard-a" href="<?php echo URLROOT; ?>/admins/rejectedPharmacy"> Rejected
+              Pharmacies </a>
           </div>
         </div>
 
@@ -65,21 +68,24 @@
         <div class="column">
           <div class="card3">
             <h3> <?php echo $data['countapprovedSuppliers']; ?></h3>
-            <a class="dashboard-a" href="<?php echo URLROOT; ?>/admins/approvedSupplier">Approved Suppliers </a>
+            <a class="dashboard-a" href="<?php echo URLROOT; ?>/admins/approvedSupplier">Approved Suppliers
+            </a>
           </div>
         </div>
 
         <div class="column">
           <div class="card4">
             <h3> <?php echo $data['countpendingSuppliers']; ?> </h3>
-            <a class="dashboard-a" href="<?php echo URLROOT; ?>/admins/pendingSupplier"> Pending Suppliers </a>
+            <a class="dashboard-a" href="<?php echo URLROOT; ?>/admins/pendingSupplier"> Pending Suppliers
+            </a>
           </div>
         </div>
 
         <div class="column">
           <div class="card4">
             <h3> <?php echo $data['countrejectedSuppliers']; ?> </h3>
-            <a class="dashboard-a" href="<?php echo URLROOT; ?>/admins/rejectedSupplier"> Rejected Suppliers </a>
+            <a class="dashboard-a" href="<?php echo URLROOT; ?>/admins/rejectedSupplier"> Rejected Suppliers
+            </a>
           </div>
         </div>
 
@@ -111,40 +117,45 @@
             <a class="dashboard-a" href="<?php echo URLROOT; ?>/admins/messages"> Messages </a>
           </div>
         </div>
-</div>
+      </div>
 
-    <div class="space"></div>
+      <!-- Charts displaying data -->
+      <div class="space"></div>
       <div class="smallspace"></div>
       <div class="chartbackground">
-        
+
         <div class="anim" style="display: flex;">
           <div id="piechart1" class="chart1"></div>
           <div id="piechart2" class="chart2"></div>
         </div>
       </div>
       <br>
-      
+
       <div class="chartbackground">
         <div class="anim"></div>
-          <div id="barchart1" class="chart1" ></div>
-        </div>
+        <div id="barchart1" class="chart1"></div>
       </div>
-
     </div>
 
     </div>
+
     </div>
-</div>
+    </div>
+    </div>
     <?php require APPROOT . '/views/inc/footer.php'; ?>
 
+    <!-- Load Google Charts -->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
+      // Load the Google Charts visualization library
       google.charts.load('current', {
         'packages': ['corechart']
       });
 
+      // Callback function to draw the pie chart
       google.charts.setOnLoadCallback(drawChart1);
 
+      // Function to draw the first pie chart
       function drawChart1() {
         var data = google.visualization.arrayToDataTable([
           ['Users', 'Percentage'],
@@ -172,16 +183,18 @@
             },
           },
           chartArea: {
-              width: '80%', // Increase the width of the chart area
-              height: '80%' // Increase the height of the chart area
+            width: '80%', // Increase the width of the chart area
+            height: '80%' // Increase the height of the chart area
           }
         };
 
+        // Create a new pie chart in the specified element
         var chart = new google.visualization.PieChart(document.getElementById('piechart1'));
+        // Draw the chart with the defined data and options
         chart.draw(data, options);
       }
 
-      
+      // Callback function to draw the  pie chart
       google.charts.setOnLoadCallback(drawChart);
 
       function drawChart() {
@@ -211,16 +224,18 @@
             },
           },
           chartArea: {
-              width: '80%', // Increase the width of the chart area
-              height: '80%' // Increase the height of the chart area
+            width: '80%', // Increase the width of the chart area
+            height: '80%' // Increase the height of the chart area
           }
         };
 
+        // Create a new piechart in the specified element
         var chart = new google.visualization.PieChart(document.getElementById('piechart2'));
+        // Draw the chart with the defined data and options
         chart.draw(data, options);
       }
 
-      // Call the second chart function
+      // Callback function to draw the bar chart
       google.charts.setOnLoadCallback(drawChart2);
 
       function drawChart2() {
@@ -247,20 +262,17 @@
           isStacked: true
         };
 
+        // Create a new barchart in the specified element
         var chart = new google.visualization.BarChart(document.getElementById('barchart1'));
+        // Draw the chart with the defined data and options
         chart.draw(data, options);
       }
-
     </script>
-     
-    
-</div>
-</div>
 
 
+    </div>
+    </div>
 
+  </body>
 
-
-</body>
-</html>
-
+  </html>

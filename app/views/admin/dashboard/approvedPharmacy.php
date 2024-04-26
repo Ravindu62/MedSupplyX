@@ -11,7 +11,6 @@
 
 <body>
 
-
     <?php require APPROOT . '/views/inc/header.php'; ?>
 
     <?php require APPROOT . '/views/inc/admin_sidebar.php'; ?>
@@ -25,28 +24,27 @@
             <h2> Approved Pharmacy Registration </h2>
         </div>
 
-
-
         <div class="anim">
+
             <table class="customers">
                 <tr>
-                <th> Licence No </th>
-                <th> Pharmacy Name </th>
-                <th> Physical Address </th>
-                <th> Contact No </th>
-                <th> Email </th>
-                <th> status </th>
+                    <th> Licence No </th>
+                    <th> Pharmacy Name </th>
+                    <th> Physical Address </th>
+                    <th> Contact No </th>
+                    <th> Email </th>
+                    <th> status </th>
                 </tr>
 
                 <?php foreach ($data['approvedPharmacy'] as $approvedPharmacy) : ?>
-                    <tr>
+                <tr>
                     <td> <?php echo $approvedPharmacy->licenceno; ?> </td>
                     <td> <?php echo $approvedPharmacy->name; ?> </td>
                     <td> <?php echo $approvedPharmacy->address; ?> </td>
                     <td> <?php echo $approvedPharmacy->phone; ?> </td>
                     <td> <?php echo $approvedPharmacy->email; ?> </td>
                     <td> <?php echo $approvedPharmacy->status; ?></td>
-                    </tr>
+                </tr>
                 <?php endforeach; ?>
             </table>
         </div>
@@ -54,7 +52,6 @@
     </div>
 
     <?php require APPROOT . '/views/inc/footer.php'; ?>
-
 
 </body>
 
