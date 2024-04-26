@@ -30,22 +30,22 @@
         <div class="anim">
             <table class="customers">
                 <tr>
-                <th> Medicine Name </th>
-                <th> Reference No </th>
-                <th> Category </th>
-                <th> Volume </th>
-                <th> Type </th>
-                <th> Description </th>
+                    <th> Medicine Name </th>
+                    <th> Reference No </th>
+                    <th> Category </th>
+                    <th> Volume </th>
+                    <th> Type </th>
+                    <th> Description </th>
                 </tr>
 
                 <?php foreach ($data['medicines'] as $medicines) : ?>
                     <tr>
-                    <td> <?php echo $medicines->medicinename; ?> </td>
-                    <td> <?php echo $medicines->refno; ?> </td>
-                    <td> <?php echo $medicines->category; ?> </td>
-                    <td> <?php echo $medicines->volume; ?> </td>
-                    <td> <?php echo $medicines->type; ?> </td>
-                    <td> <?php echo $medicines->description; ?></td>
+                        <td> <?php echo $medicines->medicinename; ?> </td>
+                        <td> <?php echo $medicines->refno; ?> </td>
+                        <td> <?php echo $medicines->category; ?> </td>
+                        <td> <?php echo $medicines->volume; ?> </td>
+                        <td> <?php echo $medicines->type; ?> </td>
+                        <td> <?php echo $medicines->description; ?></td>
                     </tr>
                 <?php endforeach; ?>
             </table>

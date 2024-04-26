@@ -11,50 +11,43 @@
 
 <body>
 
-
     <?php require APPROOT . '/views/inc/header.php'; ?>
 
     <?php require APPROOT . '/views/inc/admin_sidebar.php'; ?>
 
-    <!-- content -->
+    <!-- Content Section -->
     <div class="content">
-
         <div class="smallspace"></div>
-
         <div class="anim">
             <h2> Approved Supplier Registration </h2>
         </div>
-
-
-
         <div class="anim">
+            <!-- Table displaying approved suppliers -->
             <table class="customers">
                 <tr>
-                <th> Licence No </th>
-                <th> Pharmacy Name </th>
-                <th> Physical Address </th>
-                <th> Contact No </th>
-                <th> Email </th>
-                <th> status </th>
+                    <th> Licence No </th>
+                    <th> Pharmacy Name </th>
+                    <th> Physical Address </th>
+                    <th> Contact No </th>
+                    <th> Email </th>
+                    <th> status </th>
                 </tr>
 
                 <?php foreach ($data['approvedSupplier'] as $approvedSupplier) : ?>
                     <tr>
-                    <td> <?php echo $approvedSupplier->licenceno; ?> </td>
-                    <td> <?php echo $approvedSupplier->name; ?> </td>
-                    <td> <?php echo $approvedSupplier->address; ?> </td>
-                    <td> <?php echo $approvedSupplier->phone; ?> </td>
-                    <td> <?php echo $approvedSupplier->email; ?> </td>
-                    <td> <?php echo $approvedSupplier->status; ?></td>
+                        <td> <?php echo $approvedSupplier->licenceno; ?> </td>
+                        <td> <?php echo $approvedSupplier->name; ?> </td>
+                        <td> <?php echo $approvedSupplier->address; ?> </td>
+                        <td> <?php echo $approvedSupplier->phone; ?> </td>
+                        <td> <?php echo $approvedSupplier->email; ?> </td>
+                        <td> <?php echo $approvedSupplier->status; ?></td>
                     </tr>
                 <?php endforeach; ?>
             </table>
         </div>
     </div>
-    </div>
 
     <?php require APPROOT . '/views/inc/footer.php'; ?>
-
 
 </body>
 

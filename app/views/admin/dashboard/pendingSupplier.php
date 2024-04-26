@@ -30,22 +30,22 @@
         <div class="anim">
             <table class="customers">
                 <tr>
-                <th> Licence No </th>
-                <th> Pharmacy Name </th>
-                <th> Physical Address </th>
-                <th> Contact No </th>
-                <th> Email </th>
-                <th> status </th>
+                    <th> Licence No </th>
+                    <th> Pharmacy Name </th>
+                    <th> Physical Address </th>
+                    <th> Contact No </th>
+                    <th> Email </th>
+                    <th> status </th>
                 </tr>
 
                 <?php foreach ($data['pendingSupplier'] as $pendingSupplier) : ?>
                     <tr>
-                    <td> <?php echo $pendingSupplier->licenceno; ?> </td>
-                    <td> <?php echo $pendingSupplier->name; ?> </td>
-                    <td> <?php echo $pendingSupplier->address; ?> </td>
-                    <td> <?php echo $pendingSupplier->phone; ?> </td>
-                    <td> <?php echo $pendingSupplier->email; ?> </td>
-                    <td> <?php echo $pendingSupplier->status; ?></td>
+                        <td> <?php echo $pendingSupplier->licenceno; ?> </td>
+                        <td> <?php echo $pendingSupplier->name; ?> </td>
+                        <td> <?php echo $pendingSupplier->address; ?> </td>
+                        <td> <?php echo $pendingSupplier->phone; ?> </td>
+                        <td> <?php echo $pendingSupplier->email; ?> </td>
+                        <td> <?php echo $pendingSupplier->status; ?></td>
                     </tr>
                 <?php endforeach; ?>
             </table>
