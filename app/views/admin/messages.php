@@ -18,75 +18,128 @@
 
   <!-- content -->
   <div class="content">
-    <div class="anim">
-      <br>
-      <h2> Messages </h2>
+    <div class="horizontaltab2">
+      <button class="tablinks active" onclick="openEvent(event, 'inbox')"> <i class='far fa-comments' style='font-size:18px'> </i> INBOX </button>
+      <button class="tablinks" onclick="openEvent(event, 'sentbox')"> <i class="fa-solid fa-message" style='font-size:18px'></i> SENTBOX </button>
     </div>
-    <div class="anim">
-      <button class="open-button" onclick="openForm()"> Open New Message </button>
-      <br>
-    </div>
+    <div id="inbox" class="tabcontent">
+      <div class="anim">
+        <br>
+        <h2> Messages </h2>
 
-    <br><br>
+        <br>
 
-    <div class="anim">
-      <table class="customers">
-        <tr>
-          <th> Receiver </th>
-          <th> Heading </th>
-          <th> Message </th>
-          <th> Date </th>
-        </tr>
+        <div class="anim">
+          <table class="customers">
+            <tr>
+              <th> Send By </th>
+              <th> Topic </th>
+              <th> Description </th>
+              <th> Date </th>
+            </tr>
 
-        <?php foreach ($data['messages'] as $messages) : ?>
-          <tr>
-            <td> <?php echo $messages->receiver; ?> </td>
-            <td> <?php echo $messages->heading; ?> </td>
-            <td> <?php echo $messages->message; ?> </td>
-            <td> <?php echo date('Y-m-d', strtotime($messages->createdDate)); ?> </td>
-          </tr>
-        <?php endforeach; ?>
+            <?php foreach ($data['messages'] as $messages) : ?>
+              <tr>
+                <td> <?php echo $messages->receiver; ?> </td>
+                <td> <?php echo $messages->heading; ?> </td>
+                <td> <?php echo $messages->message; ?> </td>
+                <td> <?php echo date('Y-m-d', strtotime($messages->createdDate)); ?> </td>
+              </tr>
+            <?php endforeach; ?>
 
-      </table>
-    </div>
-  </div>
-  </div>
-
-  <div class="chat-popup" id="myForm">
-    <form action="<?php echo URLROOT; ?>/admins/newMessage" method="POST"  class=" form-container">
-
-      <div>
-        <label for="receiver"> <b> To :- </b> </label>
-        <select class="dropdown" name="receiver" required>
-          <option value="0"> Select the person </option>
-          <option value="manager"> Manager </option>
-        </select>
+          </table>
+        </div>
       </div>
+    </div>
 
-      <br>
-      <label for="heading"> <b> Heading </b> </label>
-      <input class="bar" type="text" placeholder="What's about..." name="heading" required>
+      <div id="sentbox" class="tabcontent">
+        <div class="anim">
+          <br>
+          <h2> Messages </h2>
+        </div>
+        <div class="anim">
+          <button class="open-button" onclick="openForm()"> Open New Message </button>
+          <br>
+        </div>
+        <div class="middlespace"></div>
 
-      <br>
-      <br>
-      <label for="message"> <b> Message </b> </label>
-      <textarea placeholder="Type message.." name="message" required></textarea>
+        <br>
+
+        <div class="anim">
+          <table class="customers">
+            <tr>
+              <th> Receiver </th>
+              <th> Heading </th>
+              <th> Message </th>
+              <th> Date </th>
+            </tr>
+
+            <?php foreach ($data['messages'] as $messages) : ?>
+              <tr>
+                <td> <?php echo $messages->receiver; ?> </td>
+                <td> <?php echo $messages->heading; ?> </td>
+                <td> <?php echo $messages->message; ?> </td>
+                <td> <?php echo date('Y-m-d', strtotime($messages->createdDate)); ?> </td>
+              </tr>
+            <?php endforeach; ?>
+
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="chat-popup" id="myForm">
+      <form action="<?php echo URLROOT; ?>/admins/newMessage" method="POST" " class=" form-container">
+
+        <div>
+          <label for="receiver"> <b> To :- </b> </label>
+          <select class="dropdown" name="receiver" required>
+            <option value="0"> Select the person </option>
+            <option value="manager"> Manager </option>
+          </select>
+        </div>
+
+        <br>
+        <label for="heading"> <b> Heading </b> </label>
+        <input class="bar" type="text" placeholder="What's about..." name="heading" required>
+
+        <br>
+        <br>
+        <label for="message"> <b> Message </b> </label>
+        <textarea placeholder="Type message.." name="message" required></textarea>
 
 
-      <button type="submit" class="btn">Send</button>
-      <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
-    </form>
-  </div>
+        <button type="submit" class="btn">Send</button>
+        <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+      </form>
+    </div>
 
-  <script>
-    function openForm() {
-      document.getElementById("myForm").style.display = "block";
-    }
 
-    function closeForm() {
-      document.getElementById("myForm").style.display = "none";
-    }
-  </script>
+    <script>
+      function openForm() {
+        document.getElementById("myForm").style.display = "block";
+      }
+
+      function closeForm() {
+        document.getElementById("myForm").style.display = "none";
+      }
+
+      function openEvent(evt, cityName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+          tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+          tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(cityName).style.display = "block";
+        if (evt) evt.currentTarget.className += " active";
+        else document.querySelector('button.tablinks').className += " active";
+      }
+      document.body.addEventListener('DOMContentLoaded', openEvent(event, 'inbox'));
+    </script>
 
   </div>
   </div>
