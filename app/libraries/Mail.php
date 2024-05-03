@@ -57,4 +57,37 @@ class Mail
         <button style="background-color:#00607f;color:white;padding:10px 25px;border-radius:5px;"> LOGIN </button> </a>';
         return $this->send($email, $subject, $body);
     }
+
+    public function sendConfirmationEmailToManager($email, $name)
+    {
+        $subject = 'Manager Registration Confirmation';
+        $body = 'Hello ' . $name . ', <br> Your registration has been approved. 
+        <br> Thank you for registering with us.
+        <br> <h1> Here is the Login Details </h1>
+        <br> Username : ' . $email . ' 
+        <br> Password : ' . 123456 . '
+        <br> <br> click Here to login and you can change your password after login
+        <br> <a href="http://localhost/medsupplyx/users/login">
+        <button style="background-color:#00607f;color:white;padding:10px 25px;border-radius:5px;"> LOGIN </button> </a>';
+        return $this->send($email, $subject, $body);
+    }
+
+    public function sendAccountDeletedEmail($email, $name ,$reason)
+    {
+        $subject = 'Your Account Was Deactivated';
+        $body = 'Hello ' . $name . ', 
+        <br> Your account has been deactivated by the Manager. because of ' . $reason . ', 
+        <br> Please contact Manager to get more details.';
+        return $this->send($email, $subject, $body);
+    }
+
+    public function sendForgotPasswordEmail($email, $name, $password) 
+    {
+        $subject = 'Forgot Password';
+        $body = 'Hello ' . $name . ', 
+        <br> Your password has been reset by the Manager. 
+        <br> Here is your new password : ' . $password . ' 
+        <br> Please change your password after login.';
+        return $this->send($email, $subject, $body);
+    }
 }

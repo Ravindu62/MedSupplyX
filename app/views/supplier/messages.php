@@ -17,6 +17,23 @@
   <div class="anim">
     <button class="open-button" onclick="openForm()"> Open New Message </button>
   </div>
+
+  <?php foreach ($data['getMessages'] as $getMessages) : ?>
+        <div class="container-custom">
+          <div class="card-custom">
+            <div class="header-custom">
+              <p><b><?php echo $getMessages->sender; ?>:</b> <?php echo $getMessages->heading; ?></p>
+              <i class="displaydate"> <?php echo $getMessages->createdDate; ?> </i>
+            </div>
+            <div class="content-custom">
+              <p><?php echo $getMessages->message; ?></p>
+            </div>
+            <div class="header-custom"><a class="replylink" href="<?php echo URLROOT; ?>/suppliers/sendMessage/<?php echo $getMessages->id; ?>">Reply</a></div>
+          </div>
+        </div>
+      <?php endforeach; ?>
+
+
 <div class="chat-popup" id="myForm">
   <form action="" class="form-container">
   <div> 

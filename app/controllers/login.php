@@ -15,14 +15,25 @@ class Login extends Controller
                     Auth::authenticate($row);
                   if(Auth::is_admin()){
                     header('location: ' . URLROOT . '/admins/index');
+
                     }elseif(Auth::is_manager()){
+
+                        //if he log first time , he should change his password
+                        if($row->password == '123456'){
+                            header('location: ' . URLROOT . '/managers/editpassword');
+                        }else{
                         header('location: ' . URLROOT . '/managers/index');
+                        }
+
                     }elseif(Auth::is_pharmacy()){
                         header('location: ' . URLROOT . '/pharmacies/index');
+
                     }elseif(Auth::is_supplier()){
                         header('location: ' . URLROOT . '/suppliers/index');
+
                     }elseif(Auth::is_cashier()){
                         header('location: ' . URLROOT . '/cashiers/index');
+
                     }
                 }   
                 else{

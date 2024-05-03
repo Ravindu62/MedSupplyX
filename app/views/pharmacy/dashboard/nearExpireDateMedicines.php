@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title> Today Customers </title>
+    <title> Total Medicines Near to Expire </title>
     <meta charset="utf-8">
     <link rel="icon" href="<?php echo URLROOT ?>/public/img/logo3.png" type="image/gif" sizes="20x16">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,35 +20,30 @@
     <div class="content">
 
         <div class="smallspace"></div>
+        <div class="alignRight">
+            <a href="<?php echo URLROOT; ?>/pharmacies/index"> <button class="addBtn"> Back </button> </a>
+        </div>
+        <div class="smallspace"></div>
 
         <div class="anim">
-            <h2> Customer Orders </h2>
-            <p>These are the Cutomer Orders you had  today</p>
+            <h2> Total Medicines Near to Expire </h2>
         </div>
-
+<div class="middlespace"></div>
 
 
         <div class="anim">
             <table class="customers">
                 <tr>
-                    <th> Customer Name </th>
                     <th> Medicine Name </th>
-                    <th> Batch No </th>
                     <th> Category </th>
-                    <th> Contact No </th>
-                    <th> Quantity </th>
-                    <th> Price </th>
+                    <th> Exipre Date </th>
                 </tr>
 
-                <?php foreach ($data['todaysCustomerOrders'] as $todaysCustomerOrders) : ?>
+                <?php foreach ($data['nearExpireDateMedicines'] as $nearExpireDateMedicines) : ?>
                     <tr>
-                        <td> <?php echo $todaysCustomerOrders->customerName; ?> </td>
-                        <td> <?php echo $todaysCustomerOrders->medicineName; ?> </td>
-                        <td> <?php echo $todaysCustomerOrders->batchNo; ?> </td>
-                        <td> <?php echo $todaysCustomerOrders->category; ?> </td>
-                        <td> <?php echo $todaysCustomerOrders->phone; ?> </td>
-                        <td> <?php echo $todaysCustomerOrders->quantity; ?> </td>
-                        <td> <?php echo $todaysCustomerOrders->price; ?> </td>
+                        <td> <?php echo $nearExpireDateMedicines->name; ?> </td> 
+                        <td> <?php echo $nearExpireDateMedicines->category; ?> </td>
+                        <td> <?php echo date('Y-m-d', strtotime($nearExpireDateMedicines->expire_date)); ?> </td>
                         </form>
                     </tr>
                 <?php endforeach; ?>

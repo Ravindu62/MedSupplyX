@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title> Your Accepted Orders </title>
+    <title> Accepted Orders </title>
     <meta charset="utf-8">
     <link rel="icon" href="<?php echo URLROOT ?>/public/img/logo3.png" type="image/gif" sizes="20x16">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,34 +20,40 @@
     <div class="content">
 
         <div class="smallspace"></div>
+        <div class="alignRight">
+            <a href="<?php echo URLROOT; ?>/pharmacies/index"> <button class="addBtn"> Back </button> </a>
+        </div>
+        <div class="smallspace"></div>
 
         <div class="anim">
-            <h2> Your Accepted Orders </h2>
+            <h2> Accepted Orders </h2>
         </div>
-
+<div class="middlespace"></div>
 
 
         <div class="anim">
             <table class="customers">
                 <tr>
                     <th> Medicine Name </th>
-                    <th> Batch No </th>
+                    <th> Volume </th>
+                    <th> Brand</th>
                     <th> Quantity </th>
-                    <th> Ordered Date </th>
+                    <th> Accepted Date </th>
                     <th> Delivery Date </th>
                     <th> Suppliers </th>
-                    <th> Status </th>
+                    <th> Remarks </th>
                 </tr>
 
-                <?php foreach ($data['acceptedOrders'] as $acceptedOrders) : ?>
+                <?php foreach ($data['acceptedOrders'] as $acceptedOrders  ) : ?>
                     <tr>
-                        <td> <?php echo $acceptedOrders->medicine_name; ?> </td>
-                        <td> <?php echo $acceptedOrders->batchno; ?> </td>
+                        <td> <?php echo $acceptedOrders->medicineName; ?> </td>
+                        <td> <?php echo $acceptedOrders->volume . ' ' . $acceptedOrders->type; ?> </td>
+                        <td> <?php echo $acceptedOrders->brand; ?> </td>
                         <td> <?php echo $acceptedOrders->quantity; ?> </td>
-                        <td> <?php echo $acceptedOrders->ordered_date; ?> </td>
+                        <td> <?php echo date('Y-m-d', strtotime($acceptedOrders->acceptedDate)); ?> </td>
                         <td> <?php echo $acceptedOrders->deliveryDate; ?> </td>
-                        <td> <?php echo $acceptedOrders->supplier_name; ?> </td>
-                        <td> <?php echo $acceptedOrders->status; ?> </td>
+                        <td> <?php echo $acceptedOrders->supplierName; ?> </td>
+                        <td> <?php echo $acceptedOrders->remarks; ?> </td>
                         </form>
                     </tr>
                 <?php endforeach; ?>

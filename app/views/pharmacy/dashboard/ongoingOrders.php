@@ -20,18 +20,23 @@
     <div class="content">
 
         <div class="smallspace"></div>
+        <div class="alignRight">
+            <a href="<?php echo URLROOT; ?>/pharmacies/index"> <button class="addBtn"> Back </button> </a>
+        </div>
+        <div class="smallspace"></div>
 
         <div class="anim">
             <h2> Your Ongoing Orders </h2>
         </div>
-
+<div class="middlespace"></div>
 
 
         <div class="anim">
             <table class="customers">
                 <tr>
                     <th> Medicine Name </th>
-                    <th> Batch No </th>
+                    <th> Volume </th>
+                    <th> Brand</th>
                     <th> Quantity </th>
                     <th> Ordered Date </th>
                     <th> Delivery Date </th>
@@ -41,12 +46,13 @@
 
                 <?php foreach ($data['ongoingOrders'] as $ongoingOrders) : ?>
                     <tr>
-                        <td> <?php echo $ongoingOrders->medicine_name; ?> </td>
-                        <td> <?php echo $ongoingOrders->batchno; ?> </td>
+                        <td> <?php echo $ongoingOrders->medicineName; ?> </td>
+                        <td> <?php echo $ongoingOrders->volume . ' ' . $ongoingOrders->type; ?> </td>
+                        <td> <?php echo $ongoingOrders->brand; ?> </td>
                         <td> <?php echo $ongoingOrders->quantity; ?> </td>
-                        <td> <?php echo $ongoingOrders->ordered_date; ?> </td>
+                        <td> <?php echo date('Y-m-d', strtotime($ongoingOrders->orderedDate)); ?> </td>
                         <td> <?php echo $ongoingOrders->deliveryDate; ?> </td>
-                        <td> <?php echo $ongoingOrders->supplier_name; ?> </td>
+                        <td> <?php echo $ongoingOrders->supplierName; ?> </td>
                         <td> <?php echo $ongoingOrders->status; ?> </td>
                         </form>
                     </tr>

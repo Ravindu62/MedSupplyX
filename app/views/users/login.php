@@ -39,8 +39,7 @@
         </form>
         <br>
         <div>
-            <input class="input2" type="checkbox" name="remember_me" id="remember_me">
-            <label for="remember_me">Remember me</label>
+           <a href="<?php echo URLROOT ?>/users/forgotpassword" class="nodec"> <label for="remember_me"> Forgot Password ? </label> </a>
         </div>
     
         <div class="sign-up">

@@ -7,7 +7,8 @@ class User {
     }
     // Register user
     public function pharmacy($data) {
-        $this->db->query('INSERT INTO pharmacyregistration (name, address, phone, licenceno, email, password , licence) VALUES(:name, :address, :phone, :licenceno, :email, :password, :licence)');
+        $this->db->query('INSERT INTO pharmacyregistration (name, address, phone, licenceno, email, password , licence) 
+                                                    VALUES(:name, :address, :phone, :licenceno, :email, :password, :licence)');
         // Bind values
         $this->db->bind(':name', $data['name']);
         $this->db->bind(':address', $data['address']);
@@ -162,18 +163,7 @@ class User {
             return false;
         }
     }
-    public function findUserByEmailCashier($email) {
-        $this->db->query('SELECT * FROM cashierregistration WHERE email = :email');
-        // Bind value
-        $this->db->bind(':email', $email);
-        $row = $this->db->single();
-        // Check row
-        if($this->db->rowCount() > 0) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+ 
    public function findUserByEmailAdmin($email) {
         $this->db->query('SELECT * FROM adminregistration WHERE email = :email');
         // Bind value
@@ -237,4 +227,46 @@ class User {
             return false;
         }
     }
+
+    public function isEmailAvailable($data) {
+        $this->db->query('SELECT * FROM users WHERE email = :email');
+        // Bind value
+        $this->db->bind(':email', $data['email']);
+        $row = $this->db->single();
+        // Check row
+        if($this->db->rowCount() > 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public function getNameByEmail($email) {
+        $this->db->query('SELECT name FROM users WHERE email = :email');
+        // Bind value
+        $this->db->bind(':email', $email);
+        $row = $this->db->single();
+        
+        if ($row) {
+            return $row->name;
+        } else {
+            return null; // or handle the error as needed
+        }
+    }
+    
+    public function getPasswordByEmail($email) {
+        $this->db->query('SELECT password FROM users WHERE email = :email');
+        // Bind value
+        $this->db->bind(':email', $email);
+        //return password
+        $row = $this->db->single();
+        
+        if ($row) {
+            return $row->password;
+        } else {
+            return null; // or handle the error as needed
+        }
+    }
+
+    
 }

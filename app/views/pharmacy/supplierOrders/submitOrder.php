@@ -1,8 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <title> Submit Your Order </title>
+<html lang="en">   
+<head> 
+<title> Submit Your Order </title>
+<meta charset="utf-8">
+<link rel="icon" href="<?php echo URLROOT ?>/public/img/logo3.png" type="image/gif" sizes="20x16">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="<?php echo URLROOT ?>/public/css/style.css">
 </head>
 
 <body>
@@ -62,7 +65,9 @@
                 <td class="verticleCentered">
                   <span> Delivery Needed At :
                 </td>
-                <td class="verticleCentered"> <input type="date" name="deliveryDate" class="smallForm" min="100"> </td>
+                <td class="verticleCentered"> <input type="date" name="deliveryDate" class="smallForm" min="<?php echo date('Y-m-d') ?>"> <br>
+                <p class="importantMessage"> <?php echo $data['deliveryDate_err']; ?> </p>
+              </td>
               </tr>
               <tr>
                 <td class="verticleCentered">
@@ -79,14 +84,18 @@
                   ?>
                   <select class="type" name="brand" class="orderdetails">
                     <?php foreach ($brands as $brand) : ?>
-                      <option value="<?php echo $brand; ?>"> <?php echo $brand; ?> </option>
-                    <?php endforeach; ?>
-                </td>
+                      <option value="<?php echo $brand; ?>"> <?php echo $brand; ?> </option> 
+                    <?php endforeach; ?> <br>
+                 
+                  </select>
                 </td>
                 <td class="verticleCentered">
                   <span> Quantity:
                 </td>
-                <td class="verticleCentered"> <input type="number" name="quantity" min="1" class="orderdetails"> </td>
+                <td class="verticleCentered"> <input type="number" name="quantity" min="1" class="orderdetails"><br>
+                <p class="importantMessage"> <?php echo $data['quantity_err']; ?> </p>  </td>
+               
+          
               </tr>
               <tr>
                 <td class="verticleCentered" colspan="4"> <input class="addBtn-submit" type="submit" value="Submit Order">
@@ -95,6 +104,7 @@
                   </a>
                 </td>
               </tr>
+
             </table>
           </form>
           <div class="smallspace"></div>
@@ -107,3 +117,4 @@
 </body>
 
 </html>
+

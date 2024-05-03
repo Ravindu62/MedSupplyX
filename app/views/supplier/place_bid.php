@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <title> Place New Order </title>
   <meta charset="utf-8">
@@ -7,6 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="<?php echo URLROOT ?>/public/css/style.css">
 </head>
+
 <body>
   <?php $request_order_details = $data['request_order_details']; ?>
   <?php require APPROOT . '/views/inc/header.php'; ?>
@@ -37,6 +39,7 @@
                 </td>
               </tr>
               <tr>
+
                 <td class="verticleCentered">
                   Pharmacy Name
                 </td>
@@ -51,7 +54,7 @@
                 </td>
                 <td> : </td>
                 <td class="verticleCentered">
-                  <p class="detailText"> <?php echo $data['orderDetails']->medicine_name; ?> </p>
+                  <p class="detailText"> <?php echo $data['orderDetails']->medicine_name . ' ' . $data['orderDetails']->volume . ' ' . $data['orderDetails']->type; ?></p>
                 </td>
               </tr>
               <tr>
@@ -63,24 +66,7 @@
                   <p class="detailText"> <?php echo $data['orderDetails']->category; ?> </p>
                 </td>
               </tr>
-              <tr>
-                <td class="verticleCentered">
-                  Type
-                </td>
-                <td> : </td>
-                <td class="verticleCentered">
-                  <p class="detailText"> <?php echo $data['orderDetails']->type; ?> </p>
-                </td>
-              </tr>
-              <tr>
-                <td class="verticleCentered">
-                  Volume
-                </td>
-                <td> : </td>
-                <td class="verticleCentered">
-                  <p class="detailText"> <?php echo $data['orderDetails']->volume; ?> </p>
-                </td>
-              </tr>
+
               <tr>
                 <td class="verticleCentered">
                   Brand
@@ -96,7 +82,8 @@
                 </td>
                 <td> : </td>
                 <td class="verticleCentered">
-                  <p class="detailText"> <?php echo $data['orderDetails']->quantity; ?> </p>
+                  <p class="detailText"> <?php echo $data['orderDetails']->quantity; ?> </p> <br>
+
                 </td>
               </tr>
               <tr>
@@ -108,30 +95,44 @@
                   <p class="detailText"> <?php echo $data['orderDetails']->deliveryDate; ?> </p>
                 </td>
               </tr>
+              <input type="hidden" name="medicineId" value="<?php echo $data['orderDetails']->medicine_id; ?>">
+              <input type="hidden" name="pharmacyId" value="<?php echo $data['orderDetails']->pharmacy_id; ?>">
+              <input type="hidden" name="orderId" value="<?php echo $data['orderDetails']->id; ?>">
+              <input type="hidden" name="pharmacyName" value="<?php echo $data['orderDetails']->pharmacyname; ?>">
+              <input type="hidden" name="category" value="<?php echo $data['orderDetails']->category; ?>">
+              <input type="hidden" name="medicineName" value="<?php echo $data['orderDetails']->medicine_name; ?>">
+              <input type="hidden" name="quantity" value="<?php echo $data['orderDetails']->quantity; ?>">
+              <input type="hidden" name="type" value="<?php echo $data['orderDetails']->type; ?>">
+              <input type="hidden" name="volume" value="<?php echo $data['orderDetails']->volume; ?>">
+              <input type="hidden" name="brand" value="<?php echo $data['orderDetails']->brand; ?>">
+              <input type="hidden" name="deliveryDate" value="<?php echo $data['orderDetails']->deliveryDate; ?>">
+              <input type="hidden" name="supplierId" value="<?php echo $_SESSION['USER_DATA']['id']; ?>">
+              <input type="hidden" name="supplierName" value="<?php echo $_SESSION['USER_DATA']['name']; ?>">
+              <input type="hidden" name="orderedDate" value="<?php echo  $data['orderDetails']->createdAt; ?>">
               <tr>
                 <td class="verticleCentered">
                   Place a Bid
                 </td>
                 <td> : </td>
                 <td class="verticleCentered"> Rs. <input type="number" min="1" name="bidAmount" class="orderdetails"> </td>
-                <td class="verticleCentered"> <input type="submit" class="addBtn" value="Place Bid">  </td>
-                <p> <?php echo $data['bidAmount_err']; ?> </p>
-                <td class certicleCentered>
-                  <p class="grey"> (Lowest Bid is ) </p>
+              </tr>
+              <tr>
+                <td class="verticleCentered" colspan="3"><p class="importantMessage"> <?php echo $data['bidAmount_err']; ?> </p></td>
+              </tr>
+
+              <tr>
+                <td class="verticleCentered">
+                  Remarks
+                </td>
+                <td> : </td>
+                <td class="verticleCentered">
+                  <textarea name="remarks" class="orderdetails" rows="4" cols="50"></textarea>
                 </td>
               </tr>
-              <input hidden name="medicineId" value="<?php echo $data['orderDetails']->medicineId; ?>">
-              <input hidden name="pharmacyId" value="<?php echo $data['orderDetails']->pharmacyId; ?>">
-              <input hidden name="pharmacyName" value="<?php echo $data['orderDetails']->pharmacyname; ?>">
-              <input hidden name="medicineName" value="<?php echo $data['orderDetails']->medicine_name; ?>">
-              <input hidden name="category" value="<?php echo $data['orderDetails']->category; ?>">
-              <input hidden name="type" value="<?php echo $data['orderDetails']->type; ?>">
-              <input hidden name="volume" value="<?php echo $data['orderDetails']->volume; ?>">
-              <input hidden name="brand" value="<?php echo $data['orderDetails']->brand; ?>">
-              <input hidden name="quantity" value="<?php echo $data['orderDetails']->quantity; ?>">
-              <input hidden name="deliveryDate" value="<?php echo $data['orderDetails']->deliveryDate; ?>">
+
           </form>
           <tr>
+            <td class="verticleCentered"> <input type="submit" class="addBtn2" value="Place Bid"> </td>
             <td> <a href="<?php echo URLROOT ?>/suppliers/orders" class="link">
                 <div class="publicbtn"> Cancel </div>
               </a>
@@ -145,4 +146,5 @@
   </div>
   <?php require APPROOT . '/views/inc/footer.php'; ?>
 </body>
+
 </html>

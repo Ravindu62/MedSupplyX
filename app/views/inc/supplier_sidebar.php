@@ -31,12 +31,6 @@
     <i class="fa-solid fa-envelope"></i>
         <span class="text">Messages</span>
       </a>
-    </li>
-    <a href="<?php echo URLROOT ?>/suppliers/advertistments" class="navbar_section">
-    <i class="fa-solid fa-rectangle-ad"></i>
-        <span class="text"> Advertistments </span>
-      </a>
-    </li>
     <li>
     <a href="<?php echo URLROOT ?>/suppliers/orders" class="navbar_section">
     <i class="fa-solid fa-cart-shopping"></i>

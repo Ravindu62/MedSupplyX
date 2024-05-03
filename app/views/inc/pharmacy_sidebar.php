@@ -29,26 +29,17 @@
     <li>
     <a href="<?php echo URLROOT ?>/pharmacies/messages" class="navbar_section">
     <i class="fa-solid fa-envelope"></i>
-        <span class="text"> Notifications</span>
+        <span class="text"> Messages </span>
       </a>
     </li>
-    <a href="<?php echo URLROOT ?>/pharmacies/advertistments" class="navbar_section">
-    <i class="fa-solid fa-rectangle-ad"></i>
-        <span class="text"> Advertistments </span>
-      </a>
-    </li>
+
     <li>
     <a href="<?php echo URLROOT ?>/pharmacies/orders" class="navbar_section">
     <i class="fa-solid fa-cart-shopping"></i>
         <span class="text"> Supplier Orders </span>
       </a>
     </li>
-    <li>
-    <a href="<?php echo URLROOT ?>/pharmacies/customerOrders" class="navbar_section">
-    <i class="fa-solid fa-cart-shopping"></i>
-        <span class="text"> Cust. Orders </span>
-      </a>
-    </li>
+ 
     <li>
     <a href="<?php echo URLROOT ?>/pharmacies/history" class="navbar_section">
     <i class="fa-solid fa-clock-rotate-left"></i>

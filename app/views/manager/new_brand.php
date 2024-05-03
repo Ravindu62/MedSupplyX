@@ -54,6 +54,13 @@
                   <option value="boxes"> Boxes </option>
                 </select>
               </td>
+              <td class="verticleCentered">
+                <span> Manufactured Date :
+              </td>
+              <td class="verticleCentered"> <input type="text" name="volume" min="1" class="orderdetails" value="<?php echo $medicine->manufacturedDate ?>" disabled> </td>
+              <td class="verticleCentered">
+                
+              </td>
             </tr>
             <tr>
               <td class="verticleCentered">

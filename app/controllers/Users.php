@@ -271,98 +271,7 @@ class Users extends Controller {
             $this->view('users/supplier', $data);
         }
     }
-  /*  cashier part
-  public function cashier() {
-        // Check for POST
-        if($_SERVER['REQUEST_METHOD'] == 'POST') {
-            // Process form
-            // Sanitize POST data
-            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-            $data = [
-                'name' => trim($_POST['name']),
-                'licence' => trim($_POST['licence']),
-                'phone' => trim($_POST['phone']),
-                'email' => trim($_POST['email']),
-                'password' => trim($_POST['password']),
-                'confirm_password' => trim($_POST['confirm_password']),
-                'name_err' => '',
-                'email_err' => '',
-                'phone_err' => '',
-                'password_err' => '',
-                'licence_err'=>'',
-                'confirm_password_err' => ''
-            ];
-            // Validate email
-            if(empty($data['email'])) {
-                $data['email_err'] = 'Please enter email';
-            } else {
-                // Check email
-                if($this->userModel->findUserByEmail($data['email'])) {
-                    $data['email_err'] = 'Email is already taken';
-                }
-            }
-            // Validate name
-            if(empty($data['name'])) {
-                $data['name_err'] = 'Please enter name';
-            }
-            // Validate licence
-            if(empty($data['licence'])) {
-                $data['licence_err'] = 'Please enter licence number';
-            } 
-            // Validate phone
-            if(empty($data['phone'])) {
-                $data['phone_err'] = 'Please enter phone number';
-            }
-            // Validate password
-            if(empty($data['password'])) {
-                $data['password_err'] = 'Please enter password';
-            } elseif(strlen($data['password']) < 6) {
-                $data['password_err'] = 'Password must be at least 6 characters';
-            }
-            // Validate confirm password
-            if(empty($data['confirm_password'])) {
-                $data['confirm_password_err'] = 'Please confirm password';
-            } else {
-                if($data['password'] != $data['confirm_password']) {
-                    $data['confirm_password_err'] = 'Passwords do not match';
-                }
-            }
-            // Make sure errors are empty
-            if(empty($data['email_err']) && empty($data['name_err']) && empty($data['password_err']) && empty($data['confirm_password_err']) && empty($data['address_err']) && empty($data['phone_err'])) {
-            // Hash password
-                // $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
-            // Register user
-                if($this->userModel->cashier($data)) {
-                    flash('register_success', 'You are registered and can log in');
-                    redirect('users/login');
-                } else {
-                    die('Something went wrong');
-                }
-            } else {
-            // Load view with errors
-                $this->view('users/cashier', $data);
-            }
-        } else {
-                // Init data
-                $data = [
-                    'name' => '',
-                    'licence' => '',
-                    'phone' => '',
-                    'email' => '',
-                    'password' => '',
-                    'confirm_password' => '',
-                    'name_err' => '',
-                    'phone_err' =>'',
-                    'licence_err'=>'',
-                    'email_err' => '',
-                    'password_err' => '',
-                    'confirm_password_err' => ''
-                ];
-                // Load view
-                $this->view('users/cashier', $data);
-            }
-    }
-    */
+
     public function login() {
         // Check for POST
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -424,112 +333,9 @@ class Users extends Controller {
             $this->view('users/login', $data);
         }
     }
-    private function generateUniqueToken() {
-        return bin2hex(random_bytes(32)); // Generates a random hexadecimal string
-    }
-    public function forgotPassword() {
-        // Check for POST
-        if($_SERVER['REQUEST_METHOD'] == 'POST') {
-            // Sanitize POST data
-            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-            // Get email from form
-            $email = trim($_POST['email']);
-            // Check if email exists in database
-            if($this->userModel->findUserByEmail($email)) {
-                // Generate and store reset token in database
-                $token = generateUniqueToken(); // Implement this function to generate a unique token
-                $this->userModel->storeResetToken($email, $token);
-                // Send password reset email
-                $this->sendPasswordResetEmail($email, $token);
-                // Redirect to a confirmation page
-                redirect('users/resetPasswordConfirmation');
-            } else {
-                // Email not found in database
-                flash('forgot_password_error', 'Email address not found', 'alert alert-danger');
-                redirect('users/forgotPassword');
-            }
-        } else {
-            // Load forgot password form view
-            $this->view('users/forgotPassword');
-        }
-    }
-    public function resetPassword($token) {
-        // Check for POST
-        if($_SERVER['REQUEST_METHOD'] == 'POST') {
-            // Sanitize POST data
-            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-            // Get password from form
-            $password = trim($_POST['password']);
-            // Update password in database
-            if($this->userModel->resetPassword($token, $password)) {
-                // Password reset successful
-                flash('reset_password_success', 'Your password has been reset', 'alert alert-success');
-                redirect('users/login');
-            } else {
-                // Password reset failed
-                flash('reset_password_error', 'Error resetting password', 'alert alert-danger');
-                redirect('users/resetPassword/' . $token);
-            }
-        } else {
-            // Load reset password form view
-            $this->view('users/resetPassword', ['token' => $token]);
-        }
-    }
-    public function cashierlogin() {
-        // Check for POST
-        if($_SERVER['REQUEST_METHOD'] == 'POST') {
-            // Process form
-            // Sanitize POST data
-            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-            $data = [
-                'email' => trim($_POST['email']),
-                'password' => trim($_POST['password']),
-                'email_err' => '',
-                'password_err' => ''
-            ];
-            // Validate email
-            if(empty($data['email'])) {
-                $data['email_err'] = 'Please enter email';
-            }
-            // Validate password
-            if(empty($data['password'])) {
-                $data['password_err'] = 'Please enter password';
-            }
-           // Check for user/email
-              if($this->userModel->findUserByEmailCashier($data['email'])) {
-                // User found
-              } else {
-                // User not found
-                $data['email_err'] = 'No user found';
-              }
-            // Make sure errors are empty
-            if(empty($data['email_err']) && empty($data['password_err'])) {
-            // Validated
-                // Check and set logged in user
-                $loggedInUser = $this->userModel->cashierlogin($data['email'], $data['password']);
-                if($loggedInUser) {
-                    // Create Session
-                    $this->createCashierSession($loggedInUser);
-                } else {
-                    $data['password_err'] = 'Password incorrect';
-                    $this->view('cashier/login', $data);
-                }
-                } else {
-                    // Load view with errors
-                    $this->view('cashier/login', $data); 
-                }
-        } else {
-            // Init data
-            $data = [
-                'email' => '',
-                'password' => '',
-                'email_err' => '',
-                'password_err' => '',
-            ];
-            // Load view
-            $this->view('cashier/login', $data);
-        }
-    }
+    
+
+   
     public function createCashierSession($cashier){
         $_SESSION['cashier_id'] = $cashier->id;
         $_SESSION['cashier_email'] = $cashier->email;
@@ -542,6 +348,7 @@ class Users extends Controller {
         $_SESSION['user_name'] = $user->name;
         redirect('pharmacies/index');
      }
+
      public function logout() {
         unset($_SESSION['user_id']);
         unset($_SESSION['user_email']);
@@ -570,6 +377,66 @@ public function complete(){
 }
 public function index(){
     $this->view('pages/index');
+}
+
+public function forgotpassword(){
+    // Check for POST
+    if($_SERVER['REQUEST_METHOD'] == 'POST') {
+        // Process form
+        // Sanitize POST data
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $data = [
+            'email' => trim($_POST['email']),
+            'password' => '',
+            'email_err' => ''
+        ];
+        // Validate email
+        if(empty($data['email'])) {
+            $data['email_err'] = 'Please enter email';
+        } else {
+            // Check email
+            if($this->userModel->isEmailAvailable($data)) {
+                $data['email_err'] = 'No user found';
+            }
+        }
+        // Make sure errors are empty
+        if(empty($data['email_err'])) {
+            // Validated
+            //getpassword
+            $password = $this->userModel->getPasswordByEmail($data['email']);
+            $name= $this->userModel->getNameByEmail($data['email']);
+
+            $data = [
+                'email' => $data['email'],
+                'password' => $password ,
+                'name' => $name ,
+                'email_err' => ''
+            ];
+            // Check and set logged in user
+            $mail = new Mail();
+            $mail->sendForgotPasswordEmail($data['email'] , $data['name'], $data['password']);
+            // rediect to sentmail page
+            redirect('users/sentmail');
+        } else {
+            // Load view with errors
+
+            $this->view('users/forgotpassword', $data);
+        }
+    } else {
+        // Init data
+        $data = [
+            'email' => '',
+            'password' => '',
+            'email_err' => ''
+        ];
+        // Load view
+        $this->view('users/forgotpassword', $data);
+    }
+}
+
+    public function sentmail(){
+        $this->view('users/sentmail');
+        
 }
 }
 ?>

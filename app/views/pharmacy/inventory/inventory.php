@@ -1,94 +1,110 @@
-<DOCTYPE html>
-<html lang="en">   
-<head> 
-<title> Inventory </title>
-<meta charset="utf-8">
-<link rel="icon" href="<?php echo URLROOT ?>/public/img/logo3.png" type="image/gif" sizes="20x16">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="<?php echo URLROOT ?>/public/css/style.css">
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title> Inventory </title>
+  <meta charset="utf-8">
+  <link rel="icon" href="<?php echo URLROOT ?>/public/img/logo3.png" type="image/gif" sizes="20x16">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="<?php echo URLROOT ?>/public/css/style.css">
 </head>
+
 <body>
 
 
-<?php require APPROOT . '/views/inc/header.php'; ?>
+  <?php require APPROOT . '/views/inc/header.php'; ?>
 
-<?php require APPROOT . '/views/inc/pharmacy_sidebar.php'; ?>
+  <?php require APPROOT . '/views/inc/pharmacy_sidebar.php'; ?>
 
 
-<!-- content -->
+  <!-- content -->
   <div class="content">
-  <h2>
+    <h2>
+      <br>
+      <div class="alignRight">
+        <a href="<?php echo URLROOT; ?>/pharmacies/addmedicineinventory"> <button class="addBtn"> Add Inventory </button> </a>
+      </div>
+      <div class="anim">
+        Inventory
+      </div>
+    </h2>
+    <form class="search" action="<?php echo URLROOT ?>/pharmacies/inventory" method="POST">
+      <input type="text" name="search" id="myInput" placeholder="Search Medicine Names..." value="<?php echo $data['search'] ?>">
+      <button type="submit" id="searchicon"><i class="fas fa-search"></i></button>
+    </form>
+
     <br>
-  <div class="alignRight">
- <a href="<?php echo URLROOT; ?>/pharmacies/addInventory"> <button class="addBtn"> Add Inventory </button> </a>
+    <div class="anim">
+      <table class="customers" id="myTable">
+        <tr>
+          <th> Medicine Name </th>
+          <th> Category </th>
+          <th> Total Quantity </th>
+
+          <th> View </th>
+
+        </tr>
+
+        <?php foreach ($data['inventory'] as $inventory) : ?>
+          <tr onclick="window.location.href='<?php echo URLROOT; ?>/pharmacies/medicinestock/<?php echo $inventory->medicineId; ?>'">
+            <td> <?php echo $inventory->name; ?> </td>
+            <td> <?php echo $inventory->category; ?> </td>
+            <td> <?php echo $inventory->totalQuantity; ?> </td>
+
+            <td> <a href="<?php echo URLROOT; ?>/pharmacies/viewinventory/<?php echo $inventory->medicineId; ?>"> <i class="fa fa-eye" aria-hidden="true" style="font-size:24px;color:#00607f;"></i>
+              </a> </td>
+          </tr>
+        <?php endforeach; ?>
+
+      </table>
+    </div>
   </div>
-
-  <div class="anim">
-    Inventory 
   </div>
-  </h2>
+  </script>
 
-  <form class="search">
-  <input type = "text" id="myInput" placeholder="Seach Medicine Names..." onkeyup="pharmacyMedicineSearch()"> 
-  <i class="fas fa-search" id="searchicon"></i>
-  </form>
-  
-<br>
-<div class="anim">    
-<table class="customers" id="myTable">
-  <tr>
-    <th> Medicine ID </th>
-    <th> Medicine Name </th>
-    <th> Batch No </th>
-    <th> Category </th>
-    <th> Quantity </th>
-    <th> Manufacture Date </th>
-    <th> Expire Date </th>
-    <th> Unit Price</th>
-    <th> Update</th>
-    <th> Remove</th>
-    
-    
-  </tr>
+  <div class="middlespace"></div>
+  <div class="pagination">
+    <button class="addBtn2" id="prevPage"><i class="fas fa-arrow-alt-circle-left"></i></button>
+    <span id="currentPage">01</span>
+    <button class="addBtn2" id="nextPage"><i class="fas fa-arrow-alt-circle-right"></i></button>
+  </div>
+  <script>
+    $(document).ready(function() {
+      var currentPage = 1;
+      var rowsPerPage = 2; // Number of rows per page
+      var table = $('#medicineTable');
+      var rows = table.find('tr').not(':first');
+      var totalPages = Math.ceil(rows.length / rowsPerPage);
 
-<?php foreach($data['inventory'] as $inventory) : ?>
-<tr> 
-  <td> <?php echo $inventory->medicine_id; ?> </td>
-  <td> <?php echo $inventory->name; ?> </td>
-  <td> <?php echo $inventory->batch_no; ?> </td>
-  <td> <?php echo $inventory->category_no; ?> </td>
-  <td> <?php echo $inventory->quantity; ?> </td>
-  <td> <?php echo date('Y-m-d', strtotime($inventory->manu_date)); ?> </td>
-  <td> <?php echo date('Y-m-d', strtotime($inventory->expire_date)); ?> </td>
-  <td> <?php echo $inventory->unit_amount; ?> </td>
- <td> <form action="<?php echo URLROOT; ?>/pharmacies/editInventory/<?php echo $inventory->id; ?>" method="POST">
-    <input type="submit" id="edit" class="smallOpen-button" name="edit" value="Edit"> </td>
-    <td> <form action="<?php echo URLROOT; ?>/pharmacies/removeInventory" method="POST">
-    <input type="submit" id="remove" class="smallOpen-button" name="remove" value="Remove"> </td>
-</form>
-</tr>
-<?php endforeach; ?>
+      function showRowsForPage(page) {
+        var startIndex = (page - 1) * rowsPerPage;
+        var endIndex = startIndex + rowsPerPage;
+        rows.hide().slice(startIndex, endIndex).show();
+        $('#currentPage').text(page);
+      }
 
-</table>
-</div>
-</div>
-</div>
+      showRowsForPage(currentPage);
+
+      $('#prevPage').click(function() {
+        if (currentPage > 1) {
+          currentPage--;
+          showRowsForPage(currentPage);
+        }
+      });
+
+      $('#nextPage').click(function() {
+        if (currentPage < totalPages) {
+          currentPage++;
+          showRowsForPage(currentPage);
+        }
+      });
+    });
+  </script>
 
 
-<?php require APPROOT . '/views/inc/footer.php'; ?>
-
-
-<script>
-function openForm() {
-  document.getElementById("myForm").style.display = "block";
-}
-
-function closeForm() {
-  document.getElementById("myForm").style.display = "none";
-}
-</script>
+  <?php require APPROOT . '/views/inc/footer.php'; ?>
 
 
 </body>
-</html>
 
+</html>

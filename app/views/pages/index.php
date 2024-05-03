@@ -182,6 +182,7 @@
                             <label for="Message">Message : </label>
                             <textarea name="Message" rows="6" placeholder="Your Message"></textarea>
                             <button type="submit" class="btn">Submit</button>
+                            <span class="msg"></span>
                         </form>
                         <span id="msg"></span>
                     </div>
@@ -257,4 +258,28 @@
                             </ul>
                         </section>
                     </div>
+
+
+                    <script>
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbyhbig_MmbsxRxbmkTFMg-_dh6x3lu4AFLjt9MGEQTBK5IjqUUqUeZbo-DnvfZc8OvO/exec'
+            const form = document.forms['submit-to-google-sheet']
+            const msg = document.querySelector('.msg')
+
+            form.addEventListener('submit', e => {
+                e.preventDefault()
+                fetch(scriptURL, {
+                        method: 'POST',
+                        body: new FormData(form)
+                    })
+                    .then(response => {
+                        msg.innerHTML = "Message Sent Successfully"
+                        setTimeout(() => {
+                            msg.innerHTML = ""
+                        }, 1000)
+                        form.reset()
+                    })
+                    .catch(error => console.error('Error!', error.message))
+            })
+        </script>
+        
                     <?php require APPROOT . '/views/inc/landing_footer.php'; ?>

@@ -6,6 +6,9 @@
   <link rel="stylesheet" href="<?php echo URLROOT ?>/public/css/style.css">
   <script src="https://kit.fontawesome.com/b01c051a0f.js" crossorigin="anonymous"></script>
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdn.canvasjs.com/ga/canvasjs.min.js"></script>
+
   <title> </title>
 </head>
 <body>

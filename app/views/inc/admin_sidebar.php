@@ -45,12 +45,6 @@
       </a>
     </li>
     <li>
-    <a href="<?php echo URLROOT ?>/admins/history" class="navbar_section">
-    <i class="fa-solid fa-clock-rotate-left"></i>
-        <span class="text"> History </span>
-      </a>
-    </li>
-    <li>
       <a href="<?php echo URLROOT ?>/admins/profile" class="navbar_section">
       <i class="fa-solid fa-user"></i>
         <span class="text"> Profile  </span>

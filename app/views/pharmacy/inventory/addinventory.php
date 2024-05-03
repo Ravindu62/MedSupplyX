@@ -17,6 +17,11 @@
     <?php require APPROOT . '/views/inc/pharmacy_sidebar.php'; ?>
 
     <!-- content -->
+    <?php $medicine = $data['medicine']; ?>
+    <?php $brand = $data['brands']; ?>
+
+
+
     <div class="content">
         <div class="anim">
             <h2> Add Inventory </h2>
@@ -26,8 +31,7 @@
         <div class="anim">
             <div class="container-fluid">
                 <div class="d-flex">
-                    <form action="<?php echo URLROOT; ?>/pharmacies/addInventory" method="POST" class="orderform">
-
+                    <form action="<?php echo URLROOT; ?>/pharmacies/addinventory/<?php echo $medicine->medicineId ?>" method="POST" class="orderform">
                         <table>
 
                             <tr>
@@ -35,20 +39,21 @@
                                     <h3> <br> Medicine Details</h3>
                                 </td>
                             </tr>
-                            
+
                             <tr>
                                 <td class="verticleCentered">
-                                    Medicine ID
+                                    Ref No
                                 </td>
                                 <td> : </td>
-                                <td class="verticleCentered"> <input type="text" name="medicineId" class="orderdetails" required> </td>
+                                <td class="verticleCentered"> <input type="text" class="smallForm" value="<?php echo $medicine->refno ?>" disabled></td>
 
 
                                 <td class="verticleCentered">
                                     Medicine Name
                                 </td>
                                 <td> : </td>
-                                <td class="verticleCentered"><input type="text" name="medicineName" class="smallForm" required> </td>
+                                <td class="verticleCentered"><input type="text" class="smallForm" value="<?php echo $medicine->medicinename ?>" disabled></td>
+
 
                             </tr>
 
@@ -57,16 +62,58 @@
                                     Batch No
                                 </td>
                                 <td> : </td>
-                                <td class="verticleCentered"> <input type="text" name="batchNo" class="orderdetails" required> </td>
+                                <td class="verticleCentered"> <input type="text" name="batchNo" class="smallForm" id="batchNo" class="form-control <?php echo (!empty($data['batchNo_err'])) ? 'is-invalid' : ''; ?>" value="BCH" oninput="preventEditBCH()" required> </td>
+                                <p class="importantMessage"> <?php echo $data['batchNo_err']; ?> </p>
 
                                 <td class="verticleCentered">
                                     Category
                                 </td>
                                 <td> : </td>
-                                <td class="verticleCentered"> <select name="category" type="text" class="smallForm" required>
-                                    <option value="general">General</option>
-                                    <option value="special">Special</option>
-                                </select>  </td>
+                                <td class="verticleCentered"><input type="text" class="smallForm" value="<?php echo $medicine->category ?>" disabled></td>
+
+                            </tr>
+
+                            <tr>
+                                <td class="verticleCentered">
+                                    Volume
+                                </td>
+                                <td> : </td>
+                                <td class="verticleCentered"> <input type="text" class="smallForm" value="<?php echo $medicine->volume ?>" disabled> </td>
+
+
+
+
+                                <td class="verticleCentered">
+                                    Type
+                                </td>
+                                <td> : </td>
+                                <td class="verticleCentered">
+                                    <input type="text" class="smallForm" value="<?php echo $medicine->type ?>" disabled>
+                                </td>
+
+                            </tr>
+
+                            <tr>
+                                <td class="verticleCentered">
+                                    <span> Available Brand:
+                                </td>
+                                <td> : </td>
+                                <td class="verticleCentered">
+                                    <?php
+                                    $brands = array();
+                                    foreach ($brand as $b) {
+                                        if ($b->medicineId == $medicine->medicineId) {
+                                            $brands[] = $b->brandname;
+                                        }
+                                    }
+                                    ?>
+                                    <select class="type" name="brand" class="orderdetails">
+                                        <?php foreach ($brands as $b) : ?>
+                                            <option value="<?php echo $b; ?>"> <?php echo $b; ?> </option>
+                                        <?php endforeach; ?> <br>
+                                    </select>
+                                </td>
+                                <p class="importantMessage"> <?php echo $data['brand_err']; ?> </p>
                             </tr>
 
                             <tr>
@@ -75,6 +122,8 @@
                                 </td>
                                 <td> : </td>
                                 <td class="verticleCentered"> <input type="number" name="quantity" class="smallForm" min="1" required> </td>
+                                <p class="importantMessage"> <?php echo $data['quantity_err']; ?> </p>
+
 
 
                                 <td class="verticleCentered">
@@ -82,6 +131,8 @@
                                 </td>
                                 <td> : </td>
                                 <td class="verticleCentered"> <input type="number" name="unitPrice" class="smallForm" min="1" required> </td>
+                                <p class="importantMessage"> <?php echo $data['unitPrice_err']; ?> </p>
+
                             </tr>
 
                             <tr>
@@ -89,20 +140,43 @@
                                     Manufacturer Date
                                 </td>
                                 <td> : </td>
-                                <td class="verticleCentered"> <input type="Date" class="orderdetails" placeholder="YYYY-MM-DD" name="manufacturedDate" required> </td>
+                                <td class="verticleCentered"> <input type="Date" class="orderdetails" placeholder="YYYY-MM-DD" name="manufacturedDate" max="<?php echo date('Y-m-d') ?>" required> </td>
+                                <p class="importantMessage"> <?php echo $data['manufacturedDate_err']; ?> </p>
+
 
                                 <td class="verticleCentered">
                                     Expire Date
                                 </td>
                                 <td> : </td>
-                                <td class="verticleCentered"> <input type="Date" class="orderdetails" placeholder="YYYY-MM-DD" name="expireDate" required> </td>
+                                <td class="verticleCentered"> <input type="Date" class="orderdetails" placeholder="YYYY-MM-DD" name="expireDate" min="<?php echo date('Y-m-d') ?>" required> </td>
+                                <p class="importantMessage"> <?php echo $data['expireDate_err']; ?> </p>
+
+                            </tr>
+                            <tr>
+                                <td class="verticleCentered">
+                                    Description
+                                </td>
+                                <td> : </td>
+                                <td class="verticleCentered"> <input type="text" name="description" row="5" class="orderdetails" placeholder="Add medicine description here" required> </td>
+                                <p class="importantMessage"> <?php echo $data['description_err']; ?> </p>
+
                             </tr>
 
                             <tr>
-                                <td class="verticleCentered"> <input type="submit" class="addBtn" value="Add" name="add"></td>
+                                <input type="hidden" name="medicineId" value="<?php echo $medicine->medicineId ?>">
+                                <input type="hidden" name=pharmacyId" value="<?php echo $_SESSION['USER_DATA']['id'] ?>">
+                                <input type="hidden" name="medicineName" value="<?php echo $medicine->medicinename ?>">
+                                <input type="hidden" name="refno" value="<?php echo $medicine->refno ?>">
+                                <input type="hidden" name="category" value="<?php echo $medicine->category ?>">
+                                <input type="hidden" name="volume" value="<?php echo $medicine->volume ?>">
+                                <input type="hidden" name="type" value="<?php echo $medicine->type ?>">
+                                <input type="hidden" name="category" value="<?php echo $medicine->category ?>">
+                            </tr>
+                            <tr>
+                                <td class="verticleCentered"><input type="submit" class="addBtn" value="Add"></td>
                                 <td><a href="<?php echo URLROOT ?>/pharmacies/inventory" class="link">
-                                    <div class="publicbtn"> Go Back </div>
-                                    </td>
+                                        <div class="publicbtn"> Go Back </div>
+                                </td>
                                 </a>
                             </tr>
                     </form>

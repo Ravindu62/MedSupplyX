@@ -19,17 +19,23 @@
     <div class="anim">
       <h2> Registered Medicines </h2>
     </div>
+
+    <form class="search" action="<?php echo URLROOT ?>/managers/medicines" method="POST">
+      <input type="text" name="search" id="myInput" placeholder="Search Medicine Names..." value="<?php echo $data['search'] ?>">
+      <button type="submit"><i class="fas fa-search" id="searchicon2"></i></button>
+    </form>
+    <!-- search bar -->
+    
     <div class="smallspace"></div>
     <div class="smallspace"></div>
     <div class="smallspace"></div>
     <div class="anim">
-      <table class="customers">
+      <table class="customers" id="medicineTable">
         <tr>
           <th>Medicine Name</th>
           <th>Reference No</th>
           <th>Category</th>
           <th>Volume</th>
-          <th>Type</th>
           <th>Available brands</th>
           <th>Description</th>
         </tr>
@@ -38,8 +44,8 @@
             <td> <?php echo $medicine->medicinename; ?> </td>
             <td> <?php echo $medicine->refno; ?> </td>
             <td> <?php echo $medicine->category; ?> </td>
-            <td> <?php echo $medicine->volume; ?> </td>
-            <td> <?php echo $medicine->type; ?> </td>
+            <td> <?php echo $medicine->volume; ?>
+             <?php echo $medicine->type; ?> </td>
             <?php
             $brands = array();
             foreach ($medicine_brands as $brand) {
@@ -55,13 +61,47 @@
         <?php endforeach; ?>
       </table>
     </div>
+    <div class="middlespace"></div>
+    <div class="pagination">
+      <button class="addBtn2" id="prevPage"><i class="fas fa-arrow-alt-circle-left"></i></button>
+      <span id="currentPage">1</span>
+      <button class="addBtn2" id="nextPage"><i class="fas fa-arrow-alt-circle-right"></i></button>
+    </div>
     <script>
-      function openForm() {
-        document.getElementById("myForm").style.display = "block";
+      function submitForm() {
+        document.querySelector('.search').submit();
       }
-      function closeForm() {
-        document.getElementById("myForm").style.display = "none";
-      }
+      
+      $(document).ready(function() {
+        var currentPage = 1;
+        var rowsPerPage = 10; // Number of rows per page
+        var table = $('#medicineTable');
+        var rows = table.find('tr').not(':first');
+        var totalPages = Math.ceil(rows.length / rowsPerPage);
+
+        function showRowsForPage(page) {
+          var startIndex = (page - 1) * rowsPerPage;
+          var endIndex = startIndex + rowsPerPage;
+          rows.hide().slice(startIndex, endIndex).show();
+          $('#currentPage').text(page);
+        }
+
+        showRowsForPage(currentPage);
+
+        $('#prevPage').click(function() {
+          if (currentPage > 1) {
+            currentPage--;
+            showRowsForPage(currentPage);
+          }
+        });
+
+        $('#nextPage').click(function() {
+          if (currentPage < totalPages) {
+            currentPage++;
+            showRowsForPage(currentPage);
+          }
+        });
+      });
     </script>
   </div>
   </div>

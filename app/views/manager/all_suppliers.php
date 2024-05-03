@@ -5,6 +5,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="<?php echo URLROOT ?>/public/css/style.css">
+    <style>
+    .hidden {
+      display: none;
+    }
+  </style>
   </head>
   <body>
     <?php require APPROOT . '/views/inc/header.php'; ?>
@@ -23,8 +28,10 @@
             <th> Contact No </th>
             <th> Email </th>
             <th colspan="2"> Licence </th>
+            <th> Action </th>
           </tr>
           <tr>
+            <td> </td>
             <td> </td>
             <td> </td>
             <td> </td>
@@ -35,7 +42,7 @@
             <td> <!-- <button> Accept </button> --> </td>
           </tr>
           <?php foreach ($data['allSuppliers'] as $allSuppliers) : ?>
-            <tr>
+            <tr class="supplier-row" >
               <td> </td>
               <td> <?php echo $allSuppliers->licenceno; ?> </td>
               <td> <?php echo $allSuppliers->name; ?> </td>
@@ -48,29 +55,71 @@
               <td> <a href="<?php echo URLROOT; ?>/public/uploads/SupplierLicence/<?php echo $allSuppliers->licence; ?>" target="_blank" download>
               <i class="fa fa-download" aria-hidden="true"></i> </a>
               </td>
+
+              <td>
+                <a href="<?php echo URLROOT; ?>/managers/deletesupplier/<?php echo $allSuppliers->id; ?>">
+                  <button class="addbtn"> Delete </button>
+                </a>
+           
+            </td>
             <?php endforeach; ?>
             </tr>
         </table>
       </div>
+
+      <div class="middlespace"> </div>
+
+    <div id="pagination"> <!-- Added pagination div -->
+      <button id="prevBtn" style='font-size:24px'> <i class='fas fa-arrow-circle-left' style="color:#00607F;"> </i></button>
+      <span id="currentPage"> </span>
+      <button id="nextBtn" style='font-size:24px'> <i class='fas fa-arrow-circle-right' style="color:#00607F;"> </i></button>
+    </div>
+  </div>
+  </div>
+
     </div>
     </div>
-    <div class="chat-popup" id="myForm">
-      <form action="/action_page.php" class="form-container">
-        <label for="text"><b> Number of Item </b></label>
-        <input class="bar" type="text" placeholder="Enter Your Price for the order" name="price" required>
-        <br> <br>
-        <button type="submit" class="btn"> Update </button>
-        <button type="button" class="btn cancel" onclick="closeForm()"> Close </button>
-      </form>
-    </div>
-    <?php require APPROOT . '/views/inc/footer.php'; ?>
+
+    
     <script>
-      function openForm() {
-        document.getElementById("myForm").style.display = "block";
+    $(document).ready(function() {
+      var rowsPerPage = 10; // Change this value to the desired number of rows per page
+      var $rows = $('.supplier-row');
+      var totalRows = $rows.length;
+      var totalPages = Math.ceil(totalRows / rowsPerPage);
+      var currentPage = 1;
+
+      showPage(1);
+
+      $('#prevBtn').click(function() {
+        if (currentPage > 1) {
+          currentPage--;
+          showPage(currentPage);
+        }
+      });
+
+      $('#nextBtn').click(function() {
+        if (currentPage < totalPages) {
+          currentPage++;
+          showPage(currentPage);
+        }
+      });
+
+      function showPage(page) {
+        var startIndex = (page - 1) * rowsPerPage;
+        var endIndex = startIndex + rowsPerPage;
+
+        $rows.addClass('hidden');
+        $rows.slice(startIndex, endIndex).removeClass('hidden');
+
+        $('#currentPage').text('Page ' + page + ' of ' + totalPages);
       }
-      function closeForm() {
-        document.getElementById("myForm").style.display = "none";
-      }
-    </script>
+    });
+  </script>
+ 
+    <?php require APPROOT . '/views/inc/footer.php'; ?>
+
+
+
   </body>
   </html>

@@ -15,7 +15,9 @@ header {
   color:white;
   position: fixed;
   box-shadow: 0px 0px 10px rgb(185, 185, 185) inset;
+  z-index:1;
 }
+
 .profile{
   width: 40px;
   height: 40px;
@@ -79,6 +81,8 @@ header {
   box-shadow: 0px 10px 10px rgb(185, 185, 185) inset; 
   background-image: url(../img/background.png);
 }
+
+
 
 .dashboard-a {
   text-decoration: none;
@@ -227,6 +231,7 @@ footer {
   background-color:#ecebeb;
   box-shadow: 0px 0px 5px 0px #7b7b7b;
   animation: 1s anim-lineUp ease-out;
+  margin-top:15px;
 }
 .card2 {
   background: rgb(255,255,255);
@@ -236,6 +241,7 @@ footer {
   background-color:#ecebeb;
   box-shadow: 0px 0px 5px 0px #7b7b7b;
   animation: 2s anim-lineUp ease-out;
+  margin-top:15px;
 }
 .card3 {
   background: rgb(255,255,255);
@@ -245,6 +251,7 @@ footer {
   background-color:#ecebeb;
   box-shadow: 0px 0px 5px 0px #7b7b7b;
   animation: 3s anim-lineUp ease-out;
+  margin-top:15px;
 }
 .card4 {
   background: rgb(255,255,255);
@@ -254,6 +261,7 @@ footer {
   background-color:#ecebeb;
   box-shadow: 0px 0px 5px 0px #7b7b7b;
   animation: 4s anim-lineUp ease-out;
+  margin-top:15px;
 }
 .card1:hover  {
   background-color:#c9e9ed;
@@ -610,6 +618,9 @@ reporttext{
 .middlespace{
   height:30px;
 }
+.bigspace{
+  height:1000px;
+}
 .alignRight{
   float: right;
   height:40px;
@@ -947,6 +958,8 @@ span[class ^= "icon"]{
     width:fit-content;
     height:fit-content;
   }
+
+  
 }
 @media only screen and (max-width: 480px){
   .nav-container, a{ width:50px; }
@@ -980,6 +993,7 @@ nav ul li::before {
 nav ul li:hover::before {
 	transform: scale(7);
 }
+
 .overlay {
   position: fixed;
   top: 0;
@@ -991,6 +1005,9 @@ nav ul li:hover::before {
   visibility: hidden;
   opacity: 0;
 }
+
+
+
 .overlay:target {
   visibility: visible;
   opacity: 1;
@@ -1011,6 +1028,16 @@ nav ul li:hover::before {
   background: #fff;
   border-radius: 5px;
   width: 600px;
+  position: relative;
+  transition: all 5s ease-in-out;
+}
+
+.popup-profile-change2 {
+  margin: 200px auto;
+  padding: 30px 50px;
+  background: #fff;
+  border-radius: 5px;
+  width: 850px;
   position: relative;
   transition: all 5s ease-in-out;
 }
@@ -1147,12 +1174,39 @@ nav ul li:hover::before {
   width:300px;
   box-shadow:0px 0px 2px 0px;
 }
+
+#myInput2 {
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  font-size: 16px;
+  padding: 10px ;
+  border: 1px solid #ddd;
+  margin:10px;
+  width:300px;
+  box-shadow:0px 0px 2px 0px;
+}
+
+#myInput3 {
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  font-size: 16px;
+  padding: 10px ;
+  border: 1px solid #ddd;
+  margin:10px;
+  width:300px;
+  box-shadow:0px 0px 2px 0px;
+}
 #searchicon{
   box-shadow: 0px 0px 2px 0px;
   border: 1px solid #9bdef5;
   background-color: #c9e9ed;
   padding:10px;
 }
+
+#searchicon2{
+  padding:10px;
+}
+
 .search{
   margin:0 auto;
   width:450px;
@@ -1257,12 +1311,13 @@ nav ul li:hover::before {
   }
 }
 /* Style the horizontal tabs in order page */
-.horizontaltab , .horizontaltab2{
+.horizontaltab , .horizontaltab2 , .horizontaltab3 {
   overflow: hidden;
   background-color: white;
   border-bottom: 1px solid #00607F;
   border-left: 1px solid #00607F; 
 }
+
 /* Style the buttons inside the tab */
 .horizontaltab button {
   background-color: inherit;
@@ -1292,12 +1347,32 @@ nav ul li:hover::before {
   font-weight: bold;
   border-right: 1px solid #00607F;
 }
+.horizontaltab3 button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+  width:25%;
+  color:#00607F;
+  font-weight: bold;
+  border-right: 1px solid #00607F;
+}
 /* Change background color of buttons on hover */
-.horizonaltab button:hover , .horizontaltab2 button:hover {
+.horizonaltab button:hover , .horizontaltab2 button:hover , .horizontaltab3 button:hover{
   background-color: #daf6ff;
 }
+
+.tablinks.active {
+  background-color: #00607F;
+  color: white;
+}
+
 /* Create an active/current tablink class */
-.horizontaltab button:hover , .horizontaltab2 button.active {
+.horizontaltab button:hover , .horizontaltab2 button.active , .horizontaltab3 button.active{
   background-color: #00607F;
   color:#ffffff;
 }
@@ -1431,4 +1506,98 @@ nav ul li:hover::before {
 .ad-btn:hover {
   background: #fff;
   color: #00607f;
+}
+
+
+.replylink{
+  cursor: pointer;
+  text-decoration:underline;
+  color:purple;
+}
+
+
+.red-rectangle{
+  background-color: red;
+  width: 17px;
+  height: 17px;
+  border-radius: 5px;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  padding-top: 5px;
+  display: inline-block;
+  margin:auto;
+}
+
+.nodec{
+  text-decoration: none;
+  color:#00607F;
+}
+
+.nodec:hover{
+  color:white;
+}
+
+
+.contentOne {
+  background: rgb(255,255,255);
+  background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgb(235, 252, 255) 100%);
+  padding: 130px;
+  flex:1;
+  background-repeat: no-repeat;
+  background-size: cover; 
+  box-shadow: 0px 10px 10px rgb(185, 185, 185) inset; 
+  background-image: url(../img/background2.png);
+  height:680px;
+  width:100%;
+
+}
+
+.displaydate{
+  color:gray;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+
+.message-container {
+  width: 60%;
+    margin: 0 auto;
+}
+
+.messagetable {
+  display: flex;
+  flex-direction: row;
+  background: rgb(242,252,255);
+  background: linear-gradient(135deg, rgba(242,252,255,1) 0%, rgba(228,233,255,1) 100%);
+  box-shadow: black 0px 0px 3px 0px;
+  padding: 15px;
+  border:1px solid #00607F;
+  width:60%;
+  justify-content: center;
+  align-items: center;
+  border-radius:5px;
+}
+
+.smallform2{
+  width: 100%;
+  height: 30px;
+  border: 1px solid #dadada;
+  font-size: 15px;
+  padding: 5px 10px;
+  box-shadow: 0px 0px 5px 0px #7b7b7b;
+}
+
+
+.orderdetails3{
+  width:600px;
+  height:200px;
+  border:1px solid #dadada;
+  padding: 5px 10px;
+  margin-bottom: 20px;
+  box-shadow: 0px 0px 5px 0px #7b7b7b;
+}
+
+.highlight-row {
+  background-color: #4ee7cb; /* Light yellow */
 }
