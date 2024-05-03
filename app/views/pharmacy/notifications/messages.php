@@ -18,32 +18,33 @@
 
   <!-- content -->
   <div class="content">
-    <div class="horizontaltab2">
-      <button class="tablinks active" onclick="openEvent(event, 'inbox')"> <i class='far fa-comments' style='font-size:18px'> </i> INBOX </button>
+    <div class="horizontaltab">
+      <button class="tablinks active" onclick="openEvent(event, 'message')"> <i class="fa-solid fa-envelope" style='font-size:18px'></i> MESSAGE </button>
+      <button class="tablinks" onclick="openEvent(event, 'inbox')"> <i class='far fa-comments' style='font-size:18px'> </i> INBOX </button>
       <button class="tablinks" onclick="openEvent(event, 'sentbox')"> <i class="fa-solid fa-message" style='font-size:18px'></i> SENTBOX </button>
     </div>
-    <div id="inbox" class="tabcontent">
+    <div id="message" class="tabcontent">
       <div class="anim">
         <br>
-        <h2> Messages </h2>
+        <h2> Select Supplier </h2>
 
         <br>
 
         <div class="anim">
           <table class="customers">
             <tr>
-              <th> Send By </th>
-              <th> Topic </th>
-              <th> Description </th>
-              <th> Date </th>
+              <th> Supplier </th>
+              <th> Email </th>
+              <th> Address </th>
+              <th> Phone </th>
             </tr>
 
-            <?php foreach ($data['messages'] as $messages) : ?>
-              <tr>
-                <td> <?php echo $messages->receiver; ?> </td>
-                <td> <?php echo $messages->heading; ?> </td>
-                <td> <?php echo $messages->message; ?> </td>
-                <td> <?php echo date('Y-m-d', strtotime($messages->createdDate)); ?> </td>
+            <?php foreach ($data['suppliers'] as $suppliers) : ?>
+              <tr onclick=window.location.href='<?php echo URLROOT; ?>/pharmacies/messageSupplier/<?php echo $suppliers->id; ?>'>
+                <td> <?php echo $suppliers->name; ?> </td>
+                <td> <?php echo $suppliers->email; ?> </td>
+                <td> <?php echo $suppliers->address; ?> </td>
+                <td> <?php echo $suppliers->phone; ?> </td>
               </tr>
             <?php endforeach; ?>
 
@@ -51,6 +52,44 @@
         </div>
       </div>
     </div>
+
+    <div id="inbox" class="tabcontent">
+
+      <div class="anim">
+        <br>
+        <h2> Messages </h2>
+      </div>
+      <div class="anim">
+        <button class="open-button" onclick="openForm()"> Open New Message </button>
+        <br>
+      </div>
+      <div class="middlespace"></div>
+
+      <br>
+
+      <div class="anim">
+        <table class="customers">
+          <tr>
+            <th> Sender </th>
+            <th> Heading </th>
+            <th> Message </th>
+            <th> Date </th>
+          </tr>
+
+          <?php foreach ($data['inboxmessages'] as $inboxmessages) : ?>
+            <tr>
+              <td> <?php echo $inboxmessages->sender; ?> </td>
+              <td> <?php echo $inboxmessages->heading; ?> </td>
+              <td> <?php echo $inboxmessages->message; ?> </td>
+              <td> <?php echo date('Y-m-d', strtotime($inboxmessages->createdDate)); ?> </td>
+            </tr>
+          <?php endforeach; ?>
+
+        </table>
+
+    </div>
+    </div>
+    
 
       <div id="sentbox" class="tabcontent">
         <div class="anim">

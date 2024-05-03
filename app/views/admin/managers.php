@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>Inventory</title>
+  <title> Registered Managers </title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="<?php echo URLROOT ?>/public/css/style.css">
@@ -16,6 +16,8 @@
   <div class="content">
     <h2 class="anim">Managers</h2>
     <p class="anim">Here are all the Managers who registered to the MedSupplyX</p>
+
+    
 
     <div class="anim">
       <table class="customers">
@@ -59,8 +61,8 @@
       <!-- Popup for updating manager -->
       <?php foreach ($data['managers'] as $manager) : ?>
         <div id="popup" class="overlay">
-          <div class="popup-update">
-            <div id="popup-message" class="importantMessage"></div>
+          <div class="popup-profile-change2">
+           
             <!-- Form to update manager details -->
             <form action="<?php echo URLROOT; ?>/admins/updateManager/<?php echo $manager->id; ?>" method="POST" class="form-container" id="updateManagerForm">
               <h2>Update Manager</h2>

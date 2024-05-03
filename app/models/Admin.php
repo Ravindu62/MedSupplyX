@@ -202,7 +202,7 @@ class Admin
 
     public function countOrders()
     {
-        $this->query = $this->db->query2("SELECT COUNT(*) as count FROM approvedorders");
+        $this->query = $this->db->query2("SELECT COUNT(*) as count FROM bidTable WHERE status='approved'");
 
         if ($this->query) {
             return $this->query[0]->count;
@@ -347,36 +347,133 @@ class Admin
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-    public function getMessages()
+
+    public function getInboxMessages()
     {
-        $this->db->query("SELECT * FROM messages");
+        //get the mess
+        $this->db->query("SELECT * FROM messages WHERE receiver = :receiver");
+        $this->db->bind(':receiver', 'admin'); // Assuming 'admin' is the value you want to filter by
 
         $results = $this->db->resultSet();
 
         return $results;
     }
 
+    public function getSentMessages()
+    {
+        //get the messages
+        $this->db->query("SELECT * FROM messages WHERE sender = :sender");
+        $this->db->bind(':sender', 'admin');
+
+        $results = $this->db->resultSet();
+
+        return $results;
+    }
+
+    public function getPharmacyList()
+    {
+        $this->db->query("SELECT * FROM pharmacyregistration");
+        $results = $this->db->resultSet();
+        return $results;
+    }
+
+
+    public function getPharmacyMessageById($id)
+    {
+        $this->db->query('SELECT id FROM users WHERE id = :id');
+        $this->db->bind(':id', $id);
+        $row = $this->db->single();
+        return $row;
+    }
+
+    public function getPharmacyByUserId($id)
+    {
+        $this->db->query('SELECT id FROM users WHERE id = :id');
+        $this->db->bind(':id', $id);
+        $row = $this->db->single();
+        return $row;
+    }
+
+    public function getPharmacyDetails($id)
+    {
+        $this->db->query('SELECT * FROM pharmacyregistration WHERE id = :id');
+        $this->db->bind(':id', $id);
+        $row = $this->db->single();
+        return $row;
+    }
+
+    public function getSupplierList()
+    {
+        $this->db->query("SELECT * FROM supplierregistration");
+        $results = $this->db->resultSet();
+        return $results;
+    }
+
+
+    public function getSupplierMessageById($id)
+    {
+        $this->db->query('SELECT id FROM users WHERE id = :id');
+        $this->db->bind(':id', $id);
+        $row = $this->db->single();
+        return $row;
+    }
+
+    public function getSupplierByUserId($id)
+    {
+        $this->db->query('SELECT id FROM users WHERE id = :id');
+        $this->db->bind(':id', $id);
+        $row = $this->db->single();
+        return $row;
+    }
+
+    public function getSupplierDetails($id)
+    {
+        $this->db->query('SELECT * FROM supplierregistration WHERE id = :id');
+        $this->db->bind(':id', $id);
+        $row = $this->db->single();
+        return $row;
+    }
+
+    public function sendMessage($data)
+    {
+        $this->db->query('INSERT INTO messages (sender, receiver, heading, message) VALUES( :sender, :receiver, :heading, :message)');
+        // Bind values
+        // $this->db->bind(':adminId', $_SESSION['USER_DATA']['id']);
+        $this->db->bind(':sender', $_SESSION['USER_DATA']['email']);
+        $this->db->bind(':receiver', $data['receiver']);
+        $this->db->bind(':heading', $data['topic']);
+        $this->db->bind(':message', $data['description']);
+
+        // Execute
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;// Return false if deletion fails
+        }
+    }
+
     public function addMessage($data)
     {
-        // Add a new message to the 'messages' table
-        $this->db->query('INSERT INTO messages (receiver, heading, message) VALUES(:receiver, :heading, :message)');
+        $this->db->query('INSERT INTO messages (sender, receiver, heading, message) VALUES( :sender , :receiver, :heading, :message)');
         // Bind values
+        // $this->db->bind(':adminId', $_SESSION['USER_DATA']['id']);
+        $this->db->bind(':sender', $_SESSION['USER_DATA']['name']);
         $this->db->bind(':receiver', $data['receiver']);
         $this->db->bind(':heading', $data['heading']);
         $this->db->bind(':message', $data['message']);
 
         // Execute
         if ($this->db->execute()) {
-            return true;// Return true if the message is successfully added
+            return true;
         } else {
-            return false;// Return false if there is an error
+            return false;// Return false if update fails
         }
     }
+
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////Profile /////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     public function getProfile()
     {
         // Retrieve the profile data for the admin
@@ -431,4 +528,258 @@ class Admin
             return false;// Return false if there is an error
         }
     }
+
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    public function getPharmacyReceivedOrders()
+    {
+        // Get delivered orders from the bidtable where the status is delivered and the pharmacyId is the current pharmacyId
+        // Group the results by the medicine name and select the total quantity and bid amount for each medicine
+        $this->db->query("SELECT pharmacyName, COUNT(*) AS orderId
+                      FROM bidtable
+                      WHERE status = 'received'
+                      GROUP BY pharmacyName");
+
+        $results = $this->db->resultSet();
+        return $results;
+    }
+
+    public function getSearchPharmacyReceivedOrders($searchTerm)
+    {
+        $this->db->query("SELECT * FROM bidtable WHERE pharmacyName LIKE '$searchTerm%' ORDER BY pharmacyName ASC");
+        $results = $this->db->resultSet();
+
+        // Return the results
+        return $results;
+    }
+
+    public function getPharmacyReceivedOrderDetails($pharmacyName)
+    {
+        $this->db->query("SELECT * FROM bidtable WHERE pharmacyName = :pharmacyName AND status = 'received'");
+        $this->db->bind(':pharmacyName', $pharmacyName);
+
+        $results = $this->db->resultSet();
+        return $results;
+    }
+
+    public function getPharmacyReceivedOrderById($pharmacyName)
+    {
+        $this->db->query("SELECT * FROM bidtable WHERE pharmacyName = :pharmacyName AND status = 'received'");
+        $this->db->bind(':pharmacyName', $pharmacyName);
+
+        $results = $this->db->resultSet();
+        return $results;
+    }
+
+    public function getPharmacyRejectedOrders()
+    {
+        // Get delivered orders from the bidtable where the status is delivered and the pharmacyId is the current pharmacyId
+        // Group the results by the medicine name and select the total quantity and bid amount for each medicine
+        $this->db->query("SELECT pharmacyName, COUNT(*) AS orderId
+                          FROM bidtable
+                          WHERE status = 'pharmacy rejected'
+                          GROUP BY pharmacyName");
+
+        $results = $this->db->resultSet();
+        return $results;
+    }
+
+    public function getSearchPharmacyRejectedOrders($searchTerm)
+    {
+        $this->db->query("SELECT * FROM bidtable WHERE pharmacyName LIKE '$searchTerm%' ORDER BY pharmacyName ASC");
+        $results = $this->db->resultSet();
+
+        // Return the results
+        return $results;
+    }
+
+    public function getPharmacyRejectedOrderById($pharmacyName)
+    {
+        $this->db->query("SELECT * FROM bidtable WHERE pharmacyName = :pharmacyName AND status = 'pharmacy rejected'");
+        $this->db->bind(':pharmacyName', $pharmacyName);
+
+        $results = $this->db->resultSet();
+        return $results;
+    }
+
+    public function getPharmacyRejectedOrderDetails($pharmacyName)
+    {
+        $this->db->query("SELECT * FROM bidtable WHERE pharmacyName = :pharmacyName AND status = 'pharmacy rejected'");
+        $this->db->bind(':pharmacyName', $pharmacyName);
+
+        $results = $this->db->resultSet();
+        return $results;
+    }
+
+
+    public function getPharmacyCancelledOrders()
+    {
+        // Get delivered orders from the bidtable where the status is delivered and the pharmacyId is the current pharmacyId
+        // Group the results by the medicine name and select the total quantity and bid amount for each medicine
+        $this->db->query("SELECT pharmacyName, COUNT(*) AS orderId
+        FROM bidtable
+        WHERE status = 'pharmacy cancelled'
+        GROUP BY pharmacyName");
+
+
+        $results = $this->db->resultSet();
+        return $results;
+    }
+
+    public function getSearchPharmacyCancelledOrders($searchTerm)
+    {
+        $this->db->query("SELECT * FROM bidtable WHERE pharmacyName LIKE '$searchTerm%' ORDER BY pharmacyName ASC");
+        $results = $this->db->resultSet();
+
+        // Return the results
+        return $results;
+    }
+
+
+    public function getPharmacyCancelledOrderById($pharmacyName)
+    {
+        $this->db->query("SELECT * FROM bidtable WHERE pharmacyName = :pharmacyName AND status = 'pharmacy cancelled'");
+        $this->db->bind(':pharmacyName', $pharmacyName);
+
+        $results = $this->db->resultSet();
+        return $results;
+    }
+
+    public function getPharmacyCancelledOrderDetails($pharmacyName)
+    {
+        $this->db->query("SELECT * FROM bidtable WHERE pharmacyName = :pharmacyName AND status = 'pharmacy cancelled'");
+        $this->db->bind(':pharmacyName', $pharmacyName);
+
+        $results = $this->db->resultSet();
+        return $results;
+    }
+
+
+    public function getSupplierDeliveredOrders()
+    {
+        // Get delivered orders from the bidtable where the status is delivered and the pharmacyId is the current pharmacyId
+        // Group the results by the medicine name and select the total quantity and bid amount for each medicine
+        $this->db->query("SELECT supplierName, COUNT(*) AS orderId
+                      FROM bidtable
+                      WHERE status = 'delivered'
+                      GROUP BY supplierName");
+
+        $results = $this->db->resultSet();
+        return $results;
+    }
+
+    public function getSearchSupplierDeliveredOrders($searchTerm)
+    {
+        $this->db->query("SELECT * FROM bidtable WHERE supplierName LIKE '$searchTerm%' ORDER BY supplierName ASC");
+        $results = $this->db->resultSet();
+
+        // Return the results
+        return $results;
+    }
+
+    public function getSupplierDeliveredOrderById($supplierName)
+    {
+        $this->db->query("SELECT * FROM bidtable WHERE supplierName = :supplierName AND status = 'delivered'");
+        $this->db->bind(':supplierName', $supplierName);
+
+        $results = $this->db->resultSet();
+        return $results;
+    }
+
+    public function getSupplierDeliveredOrderDetails($supplierName)
+    {
+        $this->db->query("SELECT * FROM bidtable WHERE supplierName = :supplierName AND status = 'delivered'");
+        $this->db->bind(':supplierName', $supplierName);
+
+        $results = $this->db->resultSet();
+        return $results;
+    }
+
+
+    public function getSupplierRejectedOrders()
+    {
+        // Get delivered orders from the bidtable where the status is delivered and the pharmacyId is the current pharmacyId
+        // Group the results by the medicine name and select the total quantity and bid amount for each medicine
+        $this->db->query("SELECT supplierName, COUNT(*) AS orderId
+                          FROM bidtable
+                          WHERE status = 'supplier rejected'
+                          GROUP BY supplierName");
+
+        $results = $this->db->resultSet();
+        return $results;
+    }
+
+    public function getSearchSupplierRejectedOrders($searchTerm)
+    {
+        $this->db->query("SELECT * FROM bidtable WHERE supplierName LIKE '$searchTerm%' ORDER BY supplierName ASC");
+        $results = $this->db->resultSet();
+
+        // Return the results
+        return $results;
+    }
+
+    public function getSupplierRejectedOrderById($supplierName)
+    {
+        $this->db->query("SELECT * FROM bidtable WHERE supplierName = :supplierName AND status = 'supplier rejected'");
+        $this->db->bind(':supplierName', $supplierName);
+
+        $results = $this->db->resultSet();
+        return $results;
+    }
+
+    public function getSupplierRejectedOrderDetails($supplierName)
+    {
+        $this->db->query("SELECT * FROM bidtable WHERE supplierName = :supplierName AND status = 'supplier rejected'");
+        $this->db->bind(':supplierName', $supplierName);
+
+        $results = $this->db->resultSet();
+        return $results;
+    }
+
+
+    public function getSupplierCancelledOrders()
+    {
+        // Get delivered orders from the bidtable where the status is delivered and the pharmacyId is the current pharmacyId
+        // Group the results by the medicine name and select the total quantity and bid amount for each medicine
+        $this->db->query("SELECT supplierName, COUNT(*) AS orderId
+        FROM bidtable
+        WHERE status = 'supplier cancelled'
+        GROUP BY supplierName");
+
+
+        $results = $this->db->resultSet();
+        return $results;
+    }
+
+    public function getSearchSupplierCancelledOrders($searchTerm)
+    {
+        $this->db->query("SELECT * FROM bidtable WHERE supplierName LIKE '$searchTerm%' ORDER BY supplierName ASC");
+        $results = $this->db->resultSet();
+
+        // Return the results
+        return $results;
+    }
+
+    public function getSupplierCancelledOrderById($supplierName)
+    {
+        $this->db->query("SELECT * FROM bidtable WHERE supplierName = :supplierName AND status = 'supplier cancelled'");
+        $this->db->bind(':supplierName', $supplierName);
+
+        $results = $this->db->resultSet();
+        return $results;
+    }
+
+    public function getSupplierCancelledOrderDetails($supplierName)
+    {
+        $this->db->query("SELECT * FROM bidtable WHERE supplierName = :supplierName AND status = 'supplier cancelled'");
+        $this->db->bind(':supplierName', $supplierName);
+
+        $results = $this->db->resultSet();
+        return $results;
+    }
+
 }

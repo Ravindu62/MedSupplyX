@@ -98,6 +98,7 @@
                             </td>
                             <td> : </td>
                             <td class="verticleCentered" colspan="3"> <input type="password" name="mpassword" class="orderdetails" <?php echo (!empty($data['mpassword_err'])) ? 'is-invalid' : ''; ?> value="<?php echo $data['mpassword']; ?>"> </td>
+                            <td> <button class="addBtn2" type="button"> Generate Password </button> </td>
                             </tr>
                             <tr>
                                 <td colsan="3"> <span class="importantMessage"><?php echo $data['mpassword_err']; ?>
@@ -135,6 +136,15 @@
 
     </div>
     </div>
+
+    <script>
+        // Generate password button
+        document.querySelector('.addBtn2').addEventListener('click', function() {
+            var password = 123456;
+            document.querySelector('input[name="mpassword"]').value = password;
+            document.querySelector('input[name="confirm_password"]').value = password;
+        });
+    </script>
 
     <?php require APPROOT . '/views/inc/footer.php'; ?>
 

@@ -2,10 +2,8 @@
         <div class="background2"></div>
         <section class="home">
             <div class="content">
-                
                 <h2>Welcome!</h2>
                 <h3> Pharmacy Cashier</h3>
-
                 <div class="icon">
                     <i class="fa-brands fa-facebook"></i>
                     <i class="fa-brands fa-twitter"></i>
@@ -16,10 +14,8 @@
                 <a href="<?php echo URLROOT . '/users/adminlogin';?>" class="link"><button class="userbtn"> Admin </button> </a>
                 <a href="<?php echo URLROOT . '/users/cashierlogin';?>" class="link"> <button class="userbtn"> Cashier </button> </a>
                 <a href="<?php echo URLROOT . '/users/managerlogin';?>" class="link"> <button class="userbtn"> Manager </button> </a>
-
             </div>
             </div>
-            
             <div class="login">
                 <h2>Log In</h2>
                 <form action="<?php echo URLROOT; ?>/users/suppplierlogin" method="post">
@@ -35,20 +31,15 @@
             <span> <?php echo $data['password_err']; ?> </span>
                     <i class="fa-solid fa-lock"></i>
                 </div>   
-
                 <div class="check">
-                
                     <a href="#" class="forgot"> Forgot Password?</a>
                 </div>
                 <div class="button">
                   <a href="#"> <input type="submit" value="Sign In" name="submit"> </a>  
                 </div>
                 </form>
-                
-
             </div>
         </section>
 <?php require APPROOT . '/views/inc/landing_footer.php'; ?>
     </form>
 </div>
-

@@ -10,6 +10,10 @@ class Admins extends Controller
     public function __construct()
     {
         $this->adminModel = $this->model('Admin');
+        if (!Auth::is_admin()) {
+            redirect('users/login');
+        }          
+       
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -175,6 +179,7 @@ class Admins extends Controller
                 'confirm_password_err' => '',
                 'mphone_err' => '',
                 'maddress_err' => ''
+                
             ];
 
             // Validated data
@@ -191,6 +196,7 @@ class Admins extends Controller
                 }
             }
 
+
             if (empty($data['mpassword'])) {
                 $data['mpassword_err'] = 'Please enter password';
             } elseif (strlen($data['mpassword']) < 6) {
@@ -203,6 +209,11 @@ class Admins extends Controller
                 if ($data['mpassword'] != $data['confirm_password']) {
                     $data['confirm_password_err'] = 'Passwords do not match';
                 }
+            }
+
+            // check password should be 123456
+            if ($data['mpassword'] != '123456') {
+                $data['mpassword_err'] = 'You are not used default password';
             }
 
 
@@ -222,7 +233,12 @@ class Admins extends Controller
                 // Register Manager
                 if ($this->adminModel->regManager($data)) {
                     $this->view('popup/registered');
-                    redirect('admins/managerRegistration');
+                    // send email to manager
+                    $name = $data['mname'];
+                    $email = $data['memail'];
+                    $mail = new Mail();
+                    $mail->sendConfirmationEmailToManager($email, $name);
+                    redirect('admins/managers');
                 } else {
                     die('Something went wrong');
                 }
@@ -361,19 +377,267 @@ class Admins extends Controller
     public function messages()
     {
         //Sanitize inputs
-        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
-        $adminId = trim($_SESSION['USER_DATA']['id']);
-
-        $messages = $this->adminModel->getMessages($adminId);
+        $inboxMessages = $this->adminModel->getInboxMessages();
+        $sentMessages = $this->adminModel->getSentMessages();
+        $pharmacyList = $this->adminModel->getPharmacyList();
+        $supplierList = $this->adminModel->getSupplierList();
 
         $data = [
-            'messages' => $messages
+            'inboxMessages' => $inboxMessages,
+            'sentMessages' => $sentMessages,
+            'pharmacy' => $pharmacyList,
+            'supplier' => $supplierList,
         ];
 
-        $this->view('admin/messages', $data);
+        $this->view('admin/messages/messages', $data);
     }
 
+    public function messagePharmacy($id)
+    {
+        // Sanitize post inputs
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+        $pharmacy = $this->adminModel->getPharmacyMessageById($id);
+        $pharmacyDetails = $this->adminModel->getPharmacyDetails($id);
+        $contactPharmacy = $this->adminModel->getPharmacyByUserId($id);
+
+
+        $data = [
+            'pharmacy' => $pharmacy,
+            'pharmacyDetails' => $pharmacyDetails,
+            'contactPharmacy' => $contactPharmacy,
+            'receiver' => '',
+            'topic_err' => '',
+            'description_err' => ''
+        ];
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Sanitize POST array
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+            // Validate data
+            $data = [
+                'pharmacy' => $pharmacy,
+                'pharmacyDetails' => $pharmacyDetails,
+                'receiver' => trim($_POST['receiver']),
+                'topic' => trim($_POST['topic']),
+                'description' => trim($_POST['description']),
+                'receiver_err' => '',
+                'topic_err' => '',
+                'description_err' => ''
+            ];
+
+            // Validate data
+            if (empty($data['topic'])) {
+                $data['_err'] = 'Please enter the topic';
+            }
+
+            if (empty($data['description'])) {
+                $data['message_err'] = 'Please enter the message';
+            }
+
+            // Make sure no errors
+            if (empty($data['topic_err']) && empty($data['description_err'])) {
+                // Validated
+
+                // Inventory model function
+                if ($this->adminModel->sendMessage($data)) {
+                    // Redirect to order
+                    redirect('admins/messages');
+                } else {
+                    die('Something went wrong');
+                }
+            } else {
+                // Load view with errors
+                $this->view('admin/messages/messagePharmacy', $data);
+            }
+        }
+
+        $this->view('admin/messages/messagePharmacy', $data);
+    }
+
+    public function contactPharmacy($id)
+    {
+        // Sanitize post inputs
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+        $pharmacyDetails = $this->adminModel->getPharmacyByUserId($id);
+
+
+        $data = [
+            'pharmacy' => $pharmacyDetails,
+            'receiver' => '',
+            'topic_err' => '',
+            'description_err' => ''
+        ];
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Sanitize POST array
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+            // Validate data
+            $data = [
+                'pharmacy' => $pharmacyDetails,
+                'receiver' => trim($_POST['pharmacyEmail']),
+                'topic' => trim($_POST['topic']),
+                'description' => trim($_POST['description']),
+                'receiver_err' => '',
+                'topic_err' => '',
+                'description_err' => ''
+            ];
+
+            // Validate data
+            if (empty($data['topic'])) {
+                $data['_err'] = 'Please enter the topic';
+            }
+
+            if (empty($data['description'])) {
+                $data['message_err'] = 'Please enter the message';
+            }
+
+            // Make sure no errors
+            if (empty($data['topic_err']) && empty($data['description_err'])) {
+                // Validated
+
+                // Inventory model function
+                if ($this->adminModel->sendMessage($data)) {
+                    // Redirect to order
+                    redirect('admins/messages');
+                } else {
+                    die('Something went wrong');
+                }
+            } else {
+                // Load view with errors
+                $this->view('admin/messages/messagePharmacy', $data);
+            }
+        }
+
+        $this->view('admin/messages/messagePharmacy', $data);
+    }
+
+    public function messageSupplier($id)
+    {
+        // Sanitize post inputs
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+        $supplier = $this->adminModel->getSupplierMessageById($id);
+        $supplierDetails = $this->adminModel->getSupplierDetails($id);
+        $contactSupplier = $this->adminModel->getSupplierByUserId($id);
+
+
+        $data = [
+            'supplier' => $supplier,
+            'supplierDetails' => $supplierDetails,
+            'contactSupplier' => $contactSupplier,
+            'receiver' => '',
+            'topic_err' => '',
+            'description_err' => ''
+        ];
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Sanitize POST array
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+            // Validate data
+            $data = [
+                'supplier' => $supplier,
+                'supplierDetails' => $supplierDetails,
+                'receiver' => trim($_POST['receiver']),
+                'topic' => trim($_POST['topic']),
+                'description' => trim($_POST['description']),
+                'receiver_err' => '',
+                'topic_err' => '',
+                'description_err' => ''
+            ];
+
+            // Validate data
+            if (empty($data['topic'])) {
+                $data['_err'] = 'Please enter the topic';
+            }
+
+            if (empty($data['description'])) {
+                $data['message_err'] = 'Please enter the message';
+            }
+
+            // Make sure no errors
+            if (empty($data['topic_err']) && empty($data['description_err'])) {
+                // Validated
+
+                // Inventory model function
+                if ($this->adminModel->sendMessage($data)) {
+                    // Redirect to order
+                    redirect('admins/messages');
+                } else {
+                    die('Something went wrong');
+                }
+            } else {
+                // Load view with errors
+                $this->view('admin/messages/messageSupplier', $data);
+            }
+        }
+
+        $this->view('admin/messages/messageSupplier', $data);
+    }
+
+    public function contactSupplier($id)
+    {
+        // Sanitize post inputs
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+        $supplierDetails = $this->adminModel->getSupplierByUserId($id);
+
+
+        $data = [
+            'supplier' => $supplierDetails,
+            'receiver' => '',
+            'topic_err' => '',
+            'description_err' => ''
+        ];
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Sanitize POST array
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+            // Validate data
+            $data = [
+                'supplier' => $supplierDetails,
+                'receiver' => trim($_POST['supplierEmail']),
+                'topic' => trim($_POST['topic']),
+                'description' => trim($_POST['description']),
+                'receiver_err' => '',
+                'topic_err' => '',
+                'description_err' => ''
+            ];
+
+            // Validate data
+            if (empty($data['topic'])) {
+                $data['_err'] = 'Please enter the topic';
+            }
+
+            if (empty($data['description'])) {
+                $data['message_err'] = 'Please enter the message';
+            }
+
+            // Make sure no errors
+            if (empty($data['topic_err']) && empty($data['description_err'])) {
+                // Validated
+
+                // Inventory model function
+                if ($this->adminModel->sendMessage($data)) {
+                    // Redirect to order
+                    redirect('admins/messages');
+                } else {
+                    die('Something went wrong');
+                }
+            } else {
+                // Load view with errors
+                $this->view('admin/messages/messageSupplier', $data);
+            }
+        }
+
+        $this->view('admin/messages/messageSupplier', $data);
+    }
+    
     public function newMessage()
     {
         // Check for POST
@@ -437,17 +701,161 @@ class Admins extends Controller
         }
     }
 
-
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////All Orders/////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public function all_orders()
     {
-        $data = [];
+        // $adminId = trim($_SESSION['USER_DATA']['id']);
+        $pharmacyName = '';
+        $supplierName = '';
+        $pharmacyReceivedOrders = $this->adminModel->getPharmacyReceivedOrders();
+        $pharmacyReceivedOrderById = $this -> adminModel -> getPharmacyReceivedOrderById($pharmacyName);
+        $supplierDeliveredOrders = $this->adminModel->getSupplierDeliveredOrders();
+        $supplierDeliveredOrderById = $this -> adminModel -> getSupplierDeliveredOrderById($supplierName);
+        $supplierRejectedOrders = $this->adminModel->getSupplierRejectedOrders();
+        $supplierRejectedOrderById = $this -> adminModel -> getSupplierRejectedOrderById($supplierName);
+        $pharmacyRejectedOrders = $this->adminModel->getPharmacyRejectedOrders();
+        $pharmacyRejectedOrderById = $this -> adminModel -> getPharmacyRejectedOrderById($pharmacyName);
+        $pharmacyCancelledOrders = $this->adminModel->getPharmacyCancelledOrders();
+        $pharmacyCancelledOrderById = $this -> adminModel -> getPharmacyCancelledOrderById($pharmacyName);
+        $supplierCancelledOrders = $this->adminModel->getSupplierCancelledOrders();
+        $supplierCancelledOrderById = $this -> adminModel -> getSupplierCancelledOrderById($supplierName);
 
-        $this->view('admin/all_orders', $data);
+        $data = [
+            'pharmacyReceivedOrders' => $pharmacyReceivedOrders,
+            'pharmacyReceivedOrderById' => $pharmacyReceivedOrderById,
+            'supplierDeliveredOrders' => $supplierDeliveredOrders,
+            'supplierDeliveredOrderById' => $supplierDeliveredOrderById,
+            'supplierRejectedOrders' => $supplierRejectedOrders,
+            'supplierRejectedOrderById' => $supplierRejectedOrderById,
+            'pharmacyRejectedOrders' => $pharmacyRejectedOrders,
+            'pharmacyRejectedOrderById' => $pharmacyRejectedOrderById,
+            'supplierCancelledOrders' => $supplierCancelledOrders,
+            'supplierCancelledOrderById' => $supplierCancelledOrderById,
+            'pharmacyCancelledOrders' => $pharmacyCancelledOrders,
+            'pharmacyCancelledOrderById' => $pharmacyCancelledOrderById,
+            'search' => '',
+
+        ];
+        // Check for POST
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Sanitize POST data
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+            // Get search term
+            $searchTerm = trim($_POST['search']);
+
+            // Get medicines based on search term
+            $pharmacyReceivedOrders = $this->adminModel->getSearchPharmacyReceivedOrders($searchTerm);
+            $supplierDeliveredOrders = $this->adminModel->getSearchSupplierDeliveredOrders($searchTerm);
+            $supplierRejectedOrders = $this->adminModel->getSearchSupplierRejectedOrders($searchTerm);
+            $pharmacyRejectedOrders = $this->adminModel->getSearchPharmacyRejectedOrders($searchTerm);
+            $pharmacyCancelledOrders = $this->adminModel->getSearchPharmacyCancelledOrders($searchTerm);
+            $supplierCancelledOrders = $this->adminModel->getSearchSupplierCancelledOrders($searchTerm);
+
+            // Update data array with search results
+            $data = [
+                'pharmacyReceivedOrders' => $pharmacyReceivedOrders,
+                'supplierDeliveredOrders' => $supplierDeliveredOrders,
+                'supplierRejectedOrders' => $supplierRejectedOrders,
+                'pharmacyRejectedOrders' => $pharmacyRejectedOrders,
+                'supplierCancelledOrders' => $supplierCancelledOrders,
+                'pharmacyCancelledOrders' => $pharmacyCancelledOrders,
+                'pharmacyReceivedOrderById' => $pharmacyReceivedOrderById,
+                'pharmacyRejectedOrderById' => $pharmacyRejectedOrderById,
+                'pharmacyCancelledOrderById' => $pharmacyCancelledOrderById,
+                'supplierDeliveredOrderById' => $supplierDeliveredOrderById,
+                'supplierRejectedOrderById' => $supplierRejectedOrderById,
+                'supplierCancelledOrderById' => $supplierCancelledOrderById,
+                'search' => $searchTerm,
+                'searchResults' => ''
+            ];
+        }
+        $this->view('admin/all_orders/all_orders', $data);
     }
+
+    public function showPharmacyReceivedOrderDetails($pharmacyName)
+    {
+        // Fetch the order details for the specified pharmacy
+        $pharmacyReceivedOrderDetails = $this->adminModel->getpharmacyReceivedOrderDetails($pharmacyName);
+
+        $data = [
+            'orderDetails' => $pharmacyReceivedOrderDetails
+        ];
+
+        // Load view with order details
+        $this->view('admin/all_orders/pharmacyReceivedOrderDetails', $data);
+    }
+
+
+    public function showPharmacyRejectedOrderDetails($pharmacyName)
+    {
+        // Fetch the order by its ID
+        $pharmacyRejectedOrderDetails = $this->adminModel->getPharmacyRejectedOrderDetails($pharmacyName);
+
+        $data = [
+            'orderDetails' => $pharmacyRejectedOrderDetails
+        ];
+
+        // Load view with inventory item data
+        $this->view('admin/all_orders/pharmacyRejectedOrderDetails', $data);
+    }
+
+    public function showPharmacyCancelledOrderDetails($pharmacyName)
+    {
+        // Fetch the order by its ID
+        $pharmacyCancelledOrderDetails = $this->adminModel->getPharmacyCancelledOrderDetails($pharmacyName);
+
+        $data = [
+            'orderDetails' => $pharmacyCancelledOrderDetails
+        ];
+
+        // Load view with inventory item data
+        $this->view('admin/all_orders/pharmacyCancelledOrderDetails', $data);
+    }
+
+    public function showSupplierDeliveredOrderDetails($supplierName)
+    {
+        // Fetch the order details for the specified supplier
+        $supplierDeliveredOrderDetails = $this->adminModel->getSupplierDeliveredOrderDetails($supplierName);
+
+        $data = [
+            'orderDetails' => $supplierDeliveredOrderDetails
+        ];
+
+        // Load view with order details
+        $this->view('admin/all_orders/supplierDeliveredOrderDetails', $data);
+    }
+
+    public function showSupplierRejectedOrderDetails($supplierName)
+    {
+        // Fetch the order details for the specified supplier
+        $supplierRejectedOrderDetails = $this->adminModel->getSupplierRejectedOrderDetails($supplierName);
+
+        $data = [
+            'orderDetails' => $supplierRejectedOrderDetails
+        ];
+
+        // Load view with order details
+        $this->view('admin/all_orders/supplierRejectedOrderDetails', $data);
+    }
+
+    public function showSupplierCancelledOrderDetails($supplierName)
+    {
+       // Fetch the order details for the specified supplier
+       $supplierCancelledOrderDetails = $this->adminModel->getSupplierCancelledOrderDetails($supplierName);
+
+       $data = [
+           'orderDetails' => $supplierCancelledOrderDetails
+       ];
+
+       // Load view with order details
+       $this->view('admin/all_orders/supplierCancelledOrderDetails', $data);
+    }
+    
+
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////Profile/////////////////////////////////////////////////////////
@@ -594,12 +1002,10 @@ class Admins extends Controller
             } else {
                 // Return the error message to the popup
                 http_response_code(400); // Bad Request
-                echo $data['newPassword_err'];
-                echo $data['confirmPassword_err'];
+                echo json_encode(['newPassword_err' => $data['newPassword_err'], 'confirmPassword_err' => $data['confirmPassword_err']]);
             }
         }
     }
-
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////Logout/////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

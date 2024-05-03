@@ -1,4 +1,3 @@
-
 <?php require APPROOT . '/views/inc/landing_header.php'; ?>
         <div class="background"> 
             <div class="content">
@@ -21,10 +20,7 @@
                 </div>
             </div>
             <div class="space"> </div>
-        
         </div>
-
-
         <!--------------------About------------------>
         <div id="about">
             <div class="container">
@@ -32,7 +28,6 @@
                     <div class="about-col-one">
                      <img src="<?php echo URLROOT ?>/public/img/about-im.png" alt="logo" class="pic">
                     </div>
-
                     <div class="about-col-two">
                         <h1 class="sub-title">About Us</h1>
                         <br>
@@ -85,7 +80,6 @@
                         <h2>Procument Hadling</h2>
                         <p>
                         Expertly manage the intricacies of procurement. Our system empowers efficient handling of pharmaceutical procurement, minimizing errors and delays.
-
 </p>
                         <a href="#">Learn More</a>
                     </div>
@@ -188,6 +182,7 @@
                             <label for="Message">Message : </label>
                             <textarea name="Message" rows="6" placeholder="Your Message"></textarea>
                             <button type="submit" class="btn">Submit</button>
+                            <span class="msg"></span>
                         </form>
                         <span id="msg"></span>
                     </div>
@@ -265,4 +260,26 @@
                     </div>
 
 
+                    <script>
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbyhbig_MmbsxRxbmkTFMg-_dh6x3lu4AFLjt9MGEQTBK5IjqUUqUeZbo-DnvfZc8OvO/exec'
+            const form = document.forms['submit-to-google-sheet']
+            const msg = document.querySelector('.msg')
+
+            form.addEventListener('submit', e => {
+                e.preventDefault()
+                fetch(scriptURL, {
+                        method: 'POST',
+                        body: new FormData(form)
+                    })
+                    .then(response => {
+                        msg.innerHTML = "Message Sent Successfully"
+                        setTimeout(() => {
+                            msg.innerHTML = ""
+                        }, 1000)
+                        form.reset()
+                    })
+                    .catch(error => console.error('Error!', error.message))
+            })
+        </script>
+        
                     <?php require APPROOT . '/views/inc/landing_footer.php'; ?>

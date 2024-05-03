@@ -1,6 +1,5 @@
 <?php
     session_start();
-
     // Flash message helper
     // EXAMPLE - flash('register_success', 'You are now registered', 'alert alert-danger');
     // DISPLAY IN VIEW - echo flash('register_success');
@@ -10,11 +9,9 @@
                 if(!empty($_SESSION[$name])){
                     unset($_SESSION[$name]);
                 }
-
                 if(!empty($_SESSION[$name. '_class'])){
                     unset($_SESSION[$name. '_class']);
                 }
-
                 $_SESSION[$name] = $message;
                 $_SESSION[$name. '_class'] = $class;
             } elseif(empty($message) && !empty($_SESSION[$name])){
@@ -29,17 +26,13 @@ function generate_unique_token($length = 32)
 {
     // Define characters allowed in the token
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-
     $token = '';
-
     // Generate random token
     for ($i = 0; $i < $length; $i++) {
         $token .= $characters[rand(0, strlen($characters) - 1)];
     }
-
     return $token;
 }
-
 function isLoggedIn(){
     if(isset($_SESSION['user_id'])){
         return true;

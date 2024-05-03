@@ -65,7 +65,7 @@
                 <td class="verticleCentered">
                   <span> Delivery Needed At :
                 </td>
-                <td class="verticleCentered"> <input type="date" name="deliveryDate" class="smallForm" min="100"> <br>
+                <td class="verticleCentered"> <input type="date" name="deliveryDate" class="smallForm" min="<?php echo date('Y-m-d') ?>"> <br>
                 <p class="importantMessage"> <?php echo $data['deliveryDate_err']; ?> </p>
               </td>
               </tr>
@@ -87,7 +87,7 @@
                       <option value="<?php echo $brand; ?>"> <?php echo $brand; ?> </option> 
                     <?php endforeach; ?> <br>
                  
-                </td>
+                  </select>
                 </td>
                 <td class="verticleCentered">
                   <span> Quantity:

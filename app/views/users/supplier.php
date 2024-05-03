@@ -8,7 +8,7 @@
             </div>
             <div class="reg-form">
                 <h1> Registration </h1>
-                <form action="<?php echo URLROOT; ?>/users/supplier" method="post">
+                <form action="<?php echo URLROOT; ?>/users/supplier" method="post" enctype="multipart/form-data">
                     <div class="input">
                         <label for="#companyname">Company Name :</label>
                         <br>
@@ -39,24 +39,26 @@
                         <input type="email" name="email" id="email" <?php echo (!empty($data['email_err'])) ? 'is-invalid' : ''; ?> value="<?php echo $data['email']; ?>">
                         <div> <span class="importantMessage"> <?php echo $data['email_err']; ?> </span> </div>
                     </div>
-
                     <div class="input">
                         <label for="#passord">Password :</label>
                         <br>
                         <input type="password" name="password" id="password" <?php echo (!empty($data['password_err'])) ? 'is-invalid' : ''; ?> value="<?php echo $data['password']; ?>">
                         <div> <span class="importantMessage"> <?php echo $data['password_err']; ?> </span> </div>
-                        <input type="checkbox" id="showPassword" class="check-box-password"> Show Password
                     </div>
                     <div class="input">
                         <label for="#con-password">Confirm Password :</label>
                         <br>
                         <input type="password" name="confirm_password" id="con-password" <?php echo (!empty($data['confirm_password_err'])) ? 'is-invalid' : ''; ?> value="<?php echo $data['confirm_password']; ?>">
                         <div> <span class="importantMessage"> <?php echo $data['confirm_password_err']; ?> </span> </div>
-                        <input type="checkbox" id="showPassword" class="check-box-password"> Show Password
                     </div>
-
-
-                    <div class="captcha">
+                    <div class="upload-container">
+                            <p>Upload your licence (only pdf) : </p>
+                            <label for="licence" class="file-input">
+                                <input type="file" id="file-upload" accept=".pdf" name="licence" id="licence" value="">
+                            </label> 
+                        </div>
+                        <div><span class="importantMessage"> <?php echo $data['licence_err']; ?> </span> </div> 
+                        <div class="captcha">
                         <div class="g-recaptcha" data-sitekey="6LdhetUoAAAAAI3IGcx_nVJZVzLUMu-3clUfSxf8" data-callback="callback">
                         </div>
                     </div>
@@ -64,16 +66,13 @@
                         <input type="submit" name="submit" value="Register" id="registerbtn" disabled />
                     </div>
                 </form>
-
                 <script type="text/javascript">
                     function callback() {
                         const submitButton = document.getElementById("registerbtn");
                         submitButton.removeAttribute("disabled");
                     }
-
                     const passwordInput = document.getElementById("password");
                     const showPasswordCheckbox = document.getElementById("showPassword");
-
                     showPasswordCheckbox.addEventListener("change", function() {
                         if (showPasswordCheckbox.checked) {
                             passwordInput.type = "text";
@@ -82,10 +81,7 @@
                         }
                     });
                 </script>
-
             </div>
         </div>
     </div>
-
-
     <?php require APPROOT . '/views/inc/landing_footer.php'; ?>

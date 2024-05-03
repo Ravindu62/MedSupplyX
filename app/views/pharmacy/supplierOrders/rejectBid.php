@@ -185,7 +185,7 @@
                                 <td class="verticleCentered">
                                 <textarea name="reason" class="orderdetails" rows="4" cols="50"></textarea>
                                     <?php if (isset($data['reason_err'])) : ?>
-                                        <p><?php echo $data['reason_err']; ?></p>
+                                        <p class="importantMessage"> <?php echo $data['reason_err']; ?></p>
                                     <?php endif; ?>
                                 </td>
 
@@ -193,7 +193,7 @@
                             <tr>
                                 <td class="verticleCentered"> <input type="submit" class="addBtn" value="Reject"> </td>
 
-                                <td class="verticleCentered"> <a href="<?php echo URLROOT ?>/pharmacies/supplierOrders/orders" class="link">
+                                <td class="verticleCentered"> <a href="<?php echo URLROOT ?>/pharmacies/orders" class="link">
                                         <div class="publicbtn"> Back </div>
                                     </a>
                                 </td>

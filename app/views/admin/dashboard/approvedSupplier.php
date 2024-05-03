@@ -46,7 +46,7 @@
             </table>
         </div>
     </div>
-
+                </div>
     <?php require APPROOT . '/views/inc/footer.php'; ?>
 
 </body>

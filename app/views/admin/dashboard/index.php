@@ -7,6 +7,91 @@
     <link rel="icon" href="<?php echo URLROOT ?>/public/img/logo3.png" type="image/gif" sizes="20x16">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="<?php echo URLROOT ?>/public/css/style.css">
+
+    <script>
+window.onload = function() {
+
+var chart = new CanvasJS.Chart("chartContainer", {
+	animationEnabled: true,
+	title: {
+		text: "Pharmacies Status"
+	},
+	data: [{
+		type: "pie",
+		startAngle: 240,
+		toolTipContent: "{y} (#percent%)",
+		indexLabel: "{label} #percent%",
+		dataPoints: [
+			{y: <?php echo $data['countrejectedPharmacies']; ?>, label: "Rejected Pharmacy", color:"#ff0000"},
+			{y: <?php echo $data['countapprovedPharmacies']; ?>, label: "Approved Pharmacies", color:"#94F5FF"},
+      {y: <?php echo $data['countpendingPharmacies']; ?>, label: "Pending Pharmacies", color:"#C1FFFE"}
+			
+		
+		]
+	}]
+});
+chart.render();
+
+
+var chart = new CanvasJS.Chart("chartContainer1", {
+	animationEnabled: true,
+	title: {
+		text: "suppliers Status"
+      },
+        data: [{
+              type: "pie",
+              startAngle: 240,
+              toolTipContent: "{y} (#percent%)",
+              indexLabel: "{label} #percent%",
+              dataPoints: [
+              {y: <?php echo $data['countrejectedSuppliers']; ?>, label: "Rejected Suppliers" , color:"#C1FFFE"},
+              {y: <?php echo $data['countapprovedSuppliers']; ?>, label: "Approved Suppliers", color:"#94F5FF"},
+              {y: <?php echo $data['countpendingSuppliers']; ?>, label: "Pending Suppliers", color:"#00607f"}
+
+
+              ]
+        }]
+});
+chart.render();
+
+
+var chart = new CanvasJS.Chart("chartContainer2", {
+	animationEnabled: true,	
+	title: {
+		text:"Count of Pharmacies and Suppliers"
+	},
+	axisX: {
+		interval: 1
+	},
+	axisY2: {
+		interlacedColor: "rgba(1,77,101,.2)",
+		gridColor: "rgba(1,77,101,.1)",
+		title: "Number of Users"
+	},
+	data: [{
+		type: "bar",
+		name: "companies",
+		color: "#014D65",
+		axisYType: "secondary",
+		dataPoints: [
+			{ y: <?php echo $data['countPharmacies']; ?>, label: "Pharmacy" },
+      { y: <?php echo $data['countSuppliers']; ?>, label: "Supplier" },
+			
+		]
+	}]
+});
+chart.render();
+
+}
+
+
+
+
+   
+	
+
+</script>
+
   </head>
 
   <body>
@@ -119,160 +204,23 @@
         </div>
       </div>
 
-      <!-- Charts displaying data -->
-      <div class="space"></div>
-      <div class="smallspace"></div>
-      <div class="chartbackground">
-
-        <div class="anim" style="display: flex;">
-          <div id="piechart1" class="chart1"></div>
-          <div id="piechart2" class="chart2"></div>
-        </div>
-      </div>
-      <br>
-
-      <div class="chartbackground">
-        <div class="anim"></div>
-        <div id="barchart1" class="chart1"></div>
-      </div>
-    </div>
-
-    </div>
-
-    </div>
-    </div>
-    </div>
-    <?php require APPROOT . '/views/inc/footer.php'; ?>
+     
+    <div class="middlespace"></div>
 
     <!-- Load Google Charts -->
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-      // Load the Google Charts visualization library
-      google.charts.load('current', {
-        'packages': ['corechart']
-      });
+ 
 
-      // Callback function to draw the pie chart
-      google.charts.setOnLoadCallback(drawChart1);
+ 
+     <div id="chartContainer" style="height: 300px; width: 50%;float:left;"></div>
+     <div id="chartContainer1" style="height: 300px; width: 50%;"></div>
+     <div id="chartContainer2" style="height: 300px; width: 100%;"> </div>
 
-      // Function to draw the first pie chart
-      function drawChart1() {
-        var data = google.visualization.arrayToDataTable([
-          ['Users', 'Percentage'],
-          ['Pharmacies', <?php echo $data['countPharmacies']; ?>],
-          ['Pending Pharmacies', <?php echo $data['countpendingPharmacies']; ?>],
-          ['Approved Pharmacies', <?php echo $data['countapprovedPharmacies']; ?>],
-          ['Rejected Pharmacies', <?php echo $data['countrejectedPharmacies']; ?>],
-        ]);
-
-        var options = {
-          title: 'Pharmacy Current Status',
-          fontSize: '13',
-          slices: {
-            0: {
-              color: '#00607f'
-            },
-            1: {
-              color: '#006faf'
-            },
-            2: {
-              color: '#007faf'
-            },
-            3: {
-              color: '#008faf'
-            },
-          },
-          chartArea: {
-            width: '80%', // Increase the width of the chart area
-            height: '80%' // Increase the height of the chart area
-          }
-        };
-
-        // Create a new pie chart in the specified element
-        var chart = new google.visualization.PieChart(document.getElementById('piechart1'));
-        // Draw the chart with the defined data and options
-        chart.draw(data, options);
-      }
-
-      // Callback function to draw the  pie chart
-      google.charts.setOnLoadCallback(drawChart);
-
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Users', 'Percentage'],
-          ['Suppliers', <?php echo $data['countSuppliers']; ?>],
-          ['Pending Suppliers', <?php echo $data['countpendingSuppliers']; ?>],
-          ['Approved Suppliers', <?php echo $data['countapprovedSuppliers']; ?>],
-          ['Rejected Suppliers', <?php echo $data['countrejectedSuppliers']; ?>],
-        ]);
-
-        var options = {
-          title: 'Supplier Current Status',
-          fontSize: '13',
-          slices: {
-            0: {
-              color: '#00607f'
-            },
-            1: {
-              color: '#006faf'
-            },
-            2: {
-              color: '#007faf'
-            },
-            3: {
-              color: '#008faf'
-            },
-          },
-          chartArea: {
-            width: '80%', // Increase the width of the chart area
-            height: '80%' // Increase the height of the chart area
-          }
-        };
-
-        // Create a new piechart in the specified element
-        var chart = new google.visualization.PieChart(document.getElementById('piechart2'));
-        // Draw the chart with the defined data and options
-        chart.draw(data, options);
-      }
-
-      // Callback function to draw the bar chart
-      google.charts.setOnLoadCallback(drawChart2);
-
-      function drawChart2() {
-        var data = google.visualization.arrayToDataTable([
-          ['Users', 'Percentage'],
-          ['Pharmacies', <?php echo $data['countapprovedPharmacies']; ?>],
-          ['Suppliers', <?php echo $data['countapprovedSuppliers']; ?>],
-          ['Managers', <?php echo $data['countManagers']; ?>],
-        ]);
-
-        var options = {
-          title: 'Counts of Users',
-          fontSize: '12',
-          hAxis: {
-            title: 'Count',
-            viewWindow: {
-              min: [7, 30, 0],
-              max: [17, 30, 0]
-            }
-          },
-          vAxis: {
-            title: 'Users'
-          },
-          isStacked: true
-        };
-
-        // Create a new barchart in the specified element
-        var chart = new google.visualization.BarChart(document.getElementById('barchart1'));
-        // Draw the chart with the defined data and options
-        chart.draw(data, options);
-      }
-    </script>
 
 
     </div>
     </div>
 
+    <?php require APPROOT . '/views/inc/footer.php'; ?>
   </body>
 
   </html>

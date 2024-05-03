@@ -6,6 +6,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="<?php echo URLROOT ?>/public/css/style.css">
+  <style>
+    .hidden {
+      display: none;
+    }
+  </style>
 </head>
 
 <body>
@@ -23,36 +28,48 @@
         <div class="smallspace"></div>
         <h2> Order Requests </h2>
         <div class="anim">
-          <form class="search">
-            <input type="text" id="myInput" placeholder="Seach Medicine Names..." onkeyup="search()">
-            <i class="fas fa-search" id="searchicon"></i>
-          </form>
+
+        <form class="search" action="<?php echo URLROOT ?>/suppliers/orders" method="POST">
+      <input type="text" name="search" id="myInput" placeholder="Search Medicine Names..." value="<?php echo $data['search'] ?>">
+      <button type="submit"><i class="fas fa-search" id="searchicon2"></i></button>
+    </form>
+
           <table class="customers" id="myTable">
             <tr>
               <th> Ordered Date</th>
               <th> Pharmacy Name</th>
               <th> Medicine Name </th>
               <th> Category </th>
-              <th> Type </th>
-              <th> Volume </th>
+  
               <th> Brand </th>
               <th> Quantity </th>
               <th> Delivery Date </th>
             </tr>
             <?php foreach ($data['order'] as $order) : ?>
-              <tr onclick=window.location.href='<?php echo URLROOT; ?>/suppliers/place_bid/<?php echo $order->id; ?>'>
+              <tr onclick=window.location.href='<?php echo URLROOT; ?>/suppliers/place_bid/<?php echo $order->id; ?>' class="orders-row">
                 <td> <?php echo date('Y-m-d', strtotime($order->createdAt)); ?> </td>
                 <td> <?php echo $order->pharmacyname; ?> </td>
-                <td> <?php echo $order->medicine_name; ?> </td>
+                <td> <?php echo $order->medicine_name; ?> 
+                <?php echo $order->volume; ?> 
+                <?php echo $order->type; ?> 
+                </td>
                 <td> <?php echo $order->category; ?> </td>
-                <td> <?php echo $order->type; ?> </td>
-                <td> <?php echo $order->volume; ?> </td>
+            
                 <td> <?php echo $order->brand; ?> </td>
                 <td> <?php echo $order->quantity; ?> </td>
                 <td> <?php echo $order->deliveryDate; ?> </td>
               </tr>
             <?php endforeach; ?>
           </table>
+
+          <div class="middlespace"> </div>
+        <div id="pagination">
+          <button id="prevBtn" style='font-size:24px' type="button"> <i class='fas fa-arrow-circle-left' style="color:#00607F;"> </i></button>
+          <span id="currentPage"> 01 </span>
+          <button id="nextBtn" style='font-size:24px' type="button"> <i class='fas fa-arrow-circle-right' style="color:#00607F;"> </i></button>
+        </div>
+
+
         </div>
       </div>
     </div>
@@ -101,7 +118,7 @@
               <td> <?php echo $getAcceptBid->brand; ?> </td>
               <td> <?php echo $getAcceptBid->quantity; ?> </td>
               <td> <?php echo $getAcceptBid->deliveryDate; ?> </td>
-              <td> <?php echo $getAcceptBid->bidAmount; ?> </td>
+              <td> Rs. <?php echo $getAcceptBid->bidAmount; ?> </td>
               <td> <?php echo $getAcceptBid->remarks; ?> </td>
               <td> <a href="<?php echo URLROOT; ?>/suppliers/cancelBid/<?php echo $getAcceptBid->id; ?>"> <button class="smallOpen-button"> Cancel </button> </a> </td>
             </tr>
@@ -121,17 +138,13 @@
         </form>
         <table class="customers">
           <tr>
-            <th> Accepted Date </th>
             <th> Approved Date </th>
             <th> Pharmacy Name </th>
             <th> Medicine Name </th>
-            <th> Volume </th>
             <th> Brand </th>
             <th> Quantity </th>
-            <th> Delivery Date </th>
             <th> Bid Amount </th>
-            <th> Reply to Remarks </th>
-            <th> Status </th>
+            <th colspan="2"> Status </th>
           </tr>
           <tr>
             <td> </td>
@@ -142,26 +155,20 @@
             <td> </td>
             <td> </td>
             <td> </td>
-            <td> </td>
-            <td> </td>
-            <td> </td>
+
           </tr>
 
           <?php foreach ($data['getApprovedBid'] as $getApprovedBid) : ?>
             <tr onclick=window.location.href='<?php echo URLROOT; ?>/suppliers/showApprovedOrderDetails/<?php echo $getApprovedBid->id; ?>'>
-              <td> <?php echo date('Y-m-d', strtotime($getApprovedBid->acceptedDate)); ?> </td>
               <td> <?php echo date('Y-m-d', strtotime($getApprovedBid->approvedDate)); ?> </td>
               <td> <?php echo $getApprovedBid->pharmacyName; ?> </td>
-              <td> <?php echo $getApprovedBid->medicineName; ?> </td>
-              <td> <?php echo $getApprovedBid->volume . ' ' . $getApprovedBid->type; ?> </td>
+              <td> <?php echo $getApprovedBid->medicineName; ?> 
+               <?php echo $getApprovedBid->volume . ' ' . $getApprovedBid->type; ?> </td>
               <td> <?php echo $getApprovedBid->brand; ?> </td>
               <td> <?php echo $getApprovedBid->quantity; ?> </td>
-              <td> <?php echo $getApprovedBid->deliveryDate; ?> </td>
-              <td> <?php echo $getApprovedBid->bidAmount; ?> </td>
-              <td> <?php echo $getApprovedBid->reply; ?> </td>
-              <td> <a href="<?php echo URLROOT; ?>/suppliers/deliverOrder/<?php echo $getApprovedBid->id; ?>"> <button class="smallOpen-button"> Deliver </button> </a> <div class="smallspace"></div>
-                <a href="<?php echo URLROOT; ?>/suppliers/rejectBid/<?php echo $getApprovedBid->id; ?>"> <button class="smallOpen-button"> Reject </button> </a>
-              </td>
+              <td> Rs. <?php echo $getApprovedBid->bidAmount; ?> </td>
+              <td> <a href="<?php echo URLROOT; ?>/suppliers/deliverOrder/<?php echo $getApprovedBid->id; ?>"> <button class="smallOpen-button"> Deliver </button> </a>  </td>
+              <td> <a href="<?php echo URLROOT; ?>/suppliers/rejectBid/<?php echo $getApprovedBid->id; ?>"> <button class="smallOpen-button"> Reject </button> </a> </td>
             </tr>
           <?php endforeach; ?>
         </table>
@@ -182,23 +189,7 @@
     </div>
   </div>
   </div>
-  <!-- <script>
-    function openEvent(evt, cityName) {
-      var i, tabcontent, tablinks;
-      tabcontent = document.getElementsByClassName("tabcontent");
-      for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
-      }
-      tablinks = document.getElementsByClassName("tablinks");
-      for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
-      }
-      document.getElementById(cityName).style.display = "block";
-      if (evt) evt.currentTarget.className += " active";
-      else document.querySelector('button.tablinks').className += " active";
-    }
-    document.body.addEventListener('DOMContentLoaded', openEvent(event, 'orders'));
-  </script> -->
+ 
 
   <script>
     // Function to open the selected tab
@@ -228,6 +219,44 @@
     window.onload = function() {
       openEvent(null, 'orders');
     };
+
+    
+    
+    $(document).ready(function() {
+        var rowsPerPage = 10; // Change this value to the desired number of rows per page
+        var $rows = $('.orders-row');
+        var totalRows = $rows.length;
+        var totalPages = Math.ceil(totalRows / rowsPerPage);
+        var currentPage = 1;
+
+        showPage(1);
+
+        $('#prevBtn').click(function() {
+          if (currentPage > 1) {
+            currentPage--;
+            showPage(currentPage);
+          }
+        });
+
+        $('#nextBtn').click(function() {
+          if (currentPage < totalPages) {
+            currentPage++;
+            showPage(currentPage);
+          }
+        });
+
+        function showPage(page) {
+          var startIndex = (page - 1) * rowsPerPage;
+          var endIndex = startIndex + rowsPerPage;
+
+          $rows.addClass('hidden');
+          $rows.slice(startIndex, endIndex).removeClass('hidden');
+
+          $('#currentPage').text('Page ' + page + ' of ' + totalPages);
+        }
+      });
+
+      
   </script>
 
 

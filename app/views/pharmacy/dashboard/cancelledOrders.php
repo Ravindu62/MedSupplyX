@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title> Cancelled Orders</title>
+    <title> Cancelled Orders </title>
     <meta charset="utf-8">
     <link rel="icon" href="<?php echo URLROOT ?>/public/img/logo3.png" type="image/gif" sizes="20x16">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,34 +20,34 @@
     <div class="content">
 
         <div class="smallspace"></div>
-
-        <div class="anim">
-            <h2> Cancelled Orders by You </h2>
+        <div class="alignRight">
+            <a href="<?php echo URLROOT; ?>/pharmacies/index"> <button class="addBtn"> Back </button> </a>
         </div>
-
-
+        <div class="smallspace"></div>
 
         <div class="anim">
+            <h2> Cancelled Orders </h2>
+        </div>
+<div class="middlespace"></div>
+
+
+<div class="anim">
             <table class="customers">
                 <tr>
                     <th> Medicine Name </th>
-                    <th> Batch No </th>
+                    <th> Ref No </th>
+                    <th> Volume </th>
+                    <th> Brand</th>
                     <th> Quantity </th>
-                    <th> Ordered Date </th>
-                    <th> Delivery Date </th>
-                    <th> Suppliers </th>
-                    <th> Status </th>
                 </tr>
 
-                <?php foreach ($data['cancelledOrders'] as $cancelledOrders) : ?>
+                <?php foreach ($data['cancelledOrders'] as $cancelledOrders  ) : ?>
                     <tr>
                         <td> <?php echo $cancelledOrders->medicine_name; ?> </td>
-                        <td> <?php echo $cancelledOrders->batchno; ?> </td>
+                        <td> <?php echo $cancelledOrders->refno; ?> </td>
+                        <td> <?php echo $cancelledOrders->volume . ' ' . $cancelledOrders->type; ?> </td>
+                        <td> <?php echo $cancelledOrders->brand; ?> </td>
                         <td> <?php echo $cancelledOrders->quantity; ?> </td>
-                        <td> <?php echo $cancelledOrders->ordered_date; ?> </td>
-                        <td> <?php echo $cancelledOrders->deliveryDate; ?> </td>
-                        <td> <?php echo $cancelledOrders->supplier_name; ?> </td>
-                        <td> <?php echo $cancelledOrders->status; ?> </td>
                         </form>
                     </tr>
                 <?php endforeach; ?>

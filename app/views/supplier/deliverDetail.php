@@ -11,7 +11,9 @@
 
 <body>
     <?php $approvedOrderDetails = $data['orderDetails']; ?>
-    <?php $inventoryItem = $data['inventoryItem']; ?>
+    <?php $inventoryitem = $data['inventoryitem']; ?>
+    <?php $totalQuantity = $data['totalQuantity']; ?>
+
 
     <?php require APPROOT . '/views/inc/header.php'; ?>
     <?php require APPROOT . '/views/inc/supplier_sidebar.php'; ?>
@@ -32,11 +34,12 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="verticleCentered">
-                                    Remarks
+                                <td class="verticleCentered ">
+                                    Remarks 
                                 </td>
-                                <td> : </td>
-                                <td class="verticleCentered"> <?php echo $approvedOrderDetails->remarks; ?> </td>
+                                
+                                 <td class="verticleCentered detailText"> 
+                                    : <?php echo $approvedOrderDetails->remarks; ?> </td>
                                 </td>
                             </tr>
                             <tr>
@@ -44,55 +47,41 @@
                                 <td class="verticleCentered">
                                     Reply
                                 </td>
-                                <td> : </td>
-                                <td class="verticleCentered">
-                                    <p class="detailText"> <?php echo $approvedOrderDetails->reply; ?> </p>
+                                
+                                <td class="verticleCentered detailText">
+                                    : <?php echo $approvedOrderDetails->reply; ?> 
                                 </td>
                             </tr>
                             <tr>
                                 <td class="verticleCentered">
                                     Quantity
                                 </td>
-                                <td> : </td>
+                               
                                 <td class="verticleCentered">
-                                    <input type="number" name="quantity" id="quantity" class="inputText" value="<?php echo $approvedOrderDetails->quantity ?>">
+                                    : <input type="number" name="quantity" id="quantity" class="orderdetails" value="<?php echo $approvedOrderDetails->quantity ?>">
                                 </td>
 
                                 <td class="verticleCentered">
                                     Brand
                                 </td>
-                                <td> : </td>
+                              
                                 <td class="verticleCentered">
-                                    <input type="text" name="brand" id="brand" class="inputText" value="<?php echo $approvedOrderDetails->brand ?>">
+                                    : <input type="text" name="brand" id="brand" class="orderdetails" value="<?php echo $approvedOrderDetails->brand ?>">
                                 </td>
                             </tr>
-                            <!-- <tr>
-                                <td class="verticleCentered">
-                                    Manufacture Date
-                                </td>
-                                <td> : </td>
-                                <td class="verticleCentered">
-                                    <input type="date" name="manufactureDate" id="manufactureDate" class="inputText" value="<?php echo date('Y-m-d', strtotime($approvedOrderDetails->manufactureDate)); ?>">
-                                </td>
 
-
-                                <td class="verticleCentered">
-                                    Expire Date
-                                </td>
-                                <td> : </td>
-                                <td class="verticleCentered">
-                                    <input type="date" name="expireDate" id="expireDate" class="inputText" value="<?php echo date('Y-m-d', strtotime($approvedOrderDetails->expireDate)); ?>">
-                                </td>
-
-                            </tr> -->
-
+                            <input type="hidden" name="medicineId" value="<?php echo $approvedOrderDetails->medicineId; ?>">
                             <input type="hidden" name="medicineName" value="<?php echo $approvedOrderDetails->medicineName; ?>">
+                            <input type="hidden" name="orderId" value="<?php echo $approvedOrderDetails->orderId ?>">
+                            <input type="hidden" name="pharmacyId" value="<?php echo $approvedOrderDetails->pharmacyId; ?>">
+                            <input type="hidden" name="pharmacyName" value="<?php echo $approvedOrderDetails->pharmacyName; ?>">
+                            
                             <input type="hidden" name="type" value="<?php echo $approvedOrderDetails->type; ?>">
                             <!--<input type="hidden" name="brand" value="<?php echo $approvedOrderDetails->brand; ?>">-->
                             <input type="hidden" name="category" value="<?php echo $approvedOrderDetails->category; ?>">
                             <input type="hidden" name="volume" value="<?php echo $approvedOrderDetails->volume; ?>">
 
-                            
+
 
                             <tr>
                                 <td class="verticleCentered"> <input type="submit" class="addBtn" value="Deliver"> </td>
@@ -103,10 +92,34 @@
                                 </td>
                             </tr>
                         </table>
+                      <p class="importantMessage">  <?php echo $data['quantity_err']; ?> </p> 
                     </form>
                 </div>
             </div>
         </div>
+<div class="middlespace"></div>
+        <h2> Available Stock : <?php echo $totalQuantity->total_quantity ?> </h2>
+        <table class="customers">
+            <tr>
+                <th> Medicine Name </th>
+                <th> brand </th>
+                <th> Expire Date </th>
+                <th> Quantity </th>
+               
+           
+            </tr>
+            <?php foreach ($inventoryitem as $inventoryitems) : ?>
+                <tr>
+                 <td> <?php echo $inventoryitems->medicineName; ?> 
+                      <?php echo $inventoryitems->volume; ?> 
+                      <?php echo $inventoryitems->type; ?>       </td>
+                 <td> <?php echo $inventoryitems->brand; ?>      </td>
+                 <td> <?php echo $inventoryitems->expireDate; ?> </td>
+                 <td> <?php echo $inventoryitems->quantity; ?>   </td>
+                </tr>
+            <?php endforeach; ?>
+
+        </table>
     </div>
     </div>
     <?php require APPROOT . '/views/inc/footer.php'; ?>

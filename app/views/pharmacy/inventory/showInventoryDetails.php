@@ -18,7 +18,7 @@
 
     <!-- content -->
     <div class="content">
-        <?php $inventory = $data['inventory_item']; ?>
+        <?php $inventory = $data['inventoryItem']; ?>
         <div class="anim">
             <h2> Details of <?php echo $inventory->name?> </h2>
         </div>

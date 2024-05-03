@@ -7,69 +7,62 @@
 <link rel="stylesheet" href="<?php echo URLROOT ?>/public/css/style.css">
 </head>
 <body>
-
-
 <?php require APPROOT . '/views/inc/header.php'; ?>
-
 <?php require APPROOT . '/views/inc/supplier_sidebar.php'; ?>
-
 <div class="content">
 <div class="anim">
 <h2> Profile </h2>
 </div>
 <div class="anim"> 
     <div class="profilebox">
-        
         <div class="profilecard">
             <div class="card-body">
                 <table>
+                    <?php $getProfileData = $data['getProfileData']; ?>
                         <tr>
                         <div class="anim"> 
                             <td> <p class="profdetails"> Company Name </p> </td> </div>
                             <td>:</td>
-                            <td> ABC (pvt) Ltd </td>           
+                            <td> <?php echo $getProfileData->name; ?> </td>         
                         </tr>
-                      
                         <tr>
                             <td> <p class="profdetails"> Company Address </p> </td>
                             <td>:</td>
-                            <td> 123/2 , Benthara </td>
+                            <td> <?php echo $getProfileData->address; ?> </td>
                         </tr>
                         <tr>
                             <td> <p class="profdetails">Licence Number </p> </td>
                             <td>:</td>
-                            <td>  1312312S </td>
+                            <td> <?php echo $getProfileData->licenceno; ?> </td>
                         </tr>
                         <tr>
                             <td> <p class="profdetails"> Contact Number </p>  </td>
                             <td> : </td>
-                            <td> 0705918924</td>
-                            <td> <button class="addBtn"> Change </button> </td>
+                            <td> <?php echo $getProfileData->phone; ?></td>
+                           
                         </tr>
                         <tr>
                             <td> <p class="profdetails"> Email </p> </td>
                             <td>:</td>
-                            <td> abc2gmail.com </td>
-                            <td> <button class="addBtn"> Change </button> </td>
+                            <td> <?php echo $getProfileData->email; ?> </td>
+                           
                         </tr>
                         <tr>
                             <td> <p class="profdetails"> Password </p> </td>
                             <td> : </td>
-                            <td> *****************</td>
-                            <td> <button class="addBtn"> Change </button> </td>
+                            <td> <p id="password" style="display:none;"><?php echo $getProfileData->password; ?></p>  <input type="checkbox" onclick="showPassword()"> show password </td>
+                            <td>
+                            <a href="<?php echo URLROOT; ?>/suppliers/editprofile">
+                            <button class="addBtn"> Change </button> </td>
+                             </a>            
                         </tr>
-                      
                 </table>
             </div>
         </div>
 </div>
-
 </div>
 </div>
 </div>
-
 <?php require APPROOT . '/views/inc/footer.php'; ?>
-
 </body>
 </html>
-

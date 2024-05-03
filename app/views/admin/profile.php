@@ -259,10 +259,17 @@
                                 window.location.href = "<?php echo URLROOT; ?>/admins/profile";
                             } else {
                                 // If there's an error response, open the popup and display the error message
-                                response.text().then(errorMessage => {
-                                    document.getElementById('popup3-message').innerText = errorMessage;
-                                    openPopup('popup3', errorMessage);
-                                });
+                                response.json().then(errors => {
+                                const newPasswordError = errors.newPassword_err;
+                                const confirmPasswordError = errors.confirmPassword_err;
+
+                                // Display the error messages in the respective popups
+                                document.getElementById('popup3-message').innerText = newPasswordError;
+                                openPopup('popup3', newPasswordError);
+
+                                document.getElementById('popup4-message').innerText = confirmPasswordError;
+                                openPopup('popup4', confirmPasswordError);
+                            });
                             }
                         })
                         .catch(error => {
@@ -272,34 +279,7 @@
                 });
 
                 // Add event listeners for form submissions
-                document.getElementById("changePasswordForm").addEventListener("submit", function(event) {
-                    // Prevent the default form submission
-                    event.preventDefault();
-
-                    // Fetch the form data and process it
-                    fetch(this.action, {
-                            method: 'POST',
-                            body: new FormData(this)
-                        })
-                        .then(response => {
-                            if (response.ok) {
-                                // If response is successful, close the popup
-                                closePopup('popup3');
-                                // Redirect to /admins/profile
-                                window.location.href = "<?php echo URLROOT; ?>/admins/profile";
-                            } else {
-                                // If there's an error response, open the popup and display the error message
-                                response.text().then(errorMessage => {
-                                    document.getElementById('popup4-message').innerText = errorMessage;
-                                    openPopup('popup3', errorMessage);
-                                });
-                            }
-                        })
-                        .catch(error => {
-                            // Handle any errors
-                            console.error('Error:', error);
-                        });
-                });
+               
 
                 // Define openPopup and closePopup functions
                 function openPopup(popupId, message) {

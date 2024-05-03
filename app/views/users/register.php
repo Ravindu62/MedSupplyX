@@ -1,7 +1,5 @@
-
     <body>
         <?php require APPROOT . '/views/inc/landing_header.php'; ?>
-
         <div class="background2">
             <div class="main-container">
                 <div class="cards">
@@ -22,8 +20,6 @@
                 </div>
             </div>
         </div>
-
         <?php require APPROOT . '/views/inc/landing_footer.php'; ?>
-        
     </body>
 </html>

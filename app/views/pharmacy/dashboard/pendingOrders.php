@@ -20,33 +20,39 @@
     <div class="content">
 
         <div class="smallspace"></div>
+        <div class="alignRight">
+            <a href="<?php echo URLROOT; ?>/pharmacies/index"> <button class="addBtn"> Back </button> </a>
+        </div>
+        <div class="smallspace"></div>
 
         <div class="anim">
             <h2> Your Pending Orders </h2>
         </div>
-
+<div class="middlespace"></div>
 
 
         <div class="anim">
             <table class="customers">
                 <tr>
                     <th> Medicine Name </th>
-                    <th> Batch No </th>
+                    <th> Ref No </th>
+                    <th> Volume </th>
+                    <th> Brand</th>
                     <th> Quantity </th>
                     <th> Ordered Date </th>
                     <th> Delivery Date </th>
-                    <th> Suppliers </th>
                     <th> Status </th>
                 </tr>
 
                 <?php foreach ($data['pendingOrders'] as $pendingOrders) : ?>
                     <tr>
                         <td> <?php echo $pendingOrders->medicine_name; ?> </td>
-                        <td> <?php echo $pendingOrders->batchno; ?> </td>
+                        <td> <?php echo $pendingOrders->refno; ?> </td>
+                        <td> <?php echo $pendingOrders->volume . ' ' . $pendingOrders->type; ?> </td>
+                        <td> <?php echo $pendingOrders->brand; ?> </td>
                         <td> <?php echo $pendingOrders->quantity; ?> </td>
-                        <td> <?php echo $pendingOrders->ordered_date; ?> </td>
+                        <td> <?php echo date('Y-m-d', strtotime($pendingOrders->createdAt)); ?> </td>
                         <td> <?php echo $pendingOrders->deliveryDate; ?> </td>
-                        <td> <?php echo $pendingOrders->supplier_name; ?> </td>
                         <td> <?php echo $pendingOrders->status; ?> </td>
                         </form>
                     </tr>

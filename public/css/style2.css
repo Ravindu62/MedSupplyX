@@ -4,7 +4,6 @@
   box-sizing: border-box;
   font-family:"poppins", sans-serif;
 }
-
 .header {
   position: fixed;
   width: 100%;
@@ -17,43 +16,34 @@
   background-color:#b0caf1;
   opacity:0.9;
 }
-
 span{
   padding:0px 10px;
 }
-
 body {
   background: rgb(255,255,255);
   background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgb(200, 239, 246) 100%);
   color: #262626;
 }
-
 .container {
   padding: 10px 10%;
 }
-
 .header-text {
   margin-top: 20%;
   margin-left:-15%; 
 }
-
 .header-text h1 {
   font-size: 80px;
   margin-top: 20px;
 }
-
 .header-text h1 span {
   color: #01193e;
   padding:10px 10%;
 }
-
 .header-text h2{
   font-size: 15px;
   margin-left:-30%;
   color:#000000;
 }
-
-
 .header-text p {
   color: #2c2c2c;
   margin-top: 10px;
@@ -80,31 +70,24 @@ body {
   border: 1px solid #fff;
   transition: 0.3s;
 }
-
 .header.changeHeader{
   background-color: #01193e;
 }
-
 .nodec{
   text-decoration: none;
 }
-
 .logo{
   width: 80px;
   height: 50px;
   border-radius: 10px;
   margin-top: 2px;
-  
 }
-
 .txt_white{
   color:#00607F;
   padding:0px 10px;
   font-size: 20px ;
 }
-
 .d-flex2{
-
   background: rgb(242,252,255);
   background: linear-gradient(135deg, rgba(242,252,255,1) 0%, rgba(228,233,255,1) 100%);
   box-shadow: black 0px 0px 3px 0px;
@@ -118,11 +101,9 @@ body {
   align-items: center;
   border-radius:5px;
 }
-
 .space{
   height:1000px;
 }
-
 .userbtn{
   width:200px;
   margin:auto;
@@ -130,16 +111,13 @@ body {
   color:#020551;
   border:1px solid #020551;
 }
-
 .userbtn2{
   width:400px;
   margin:auto;
   background-color: #020551;
   color:white;
   margin-bottom:80px;
- 
 }
-
 .logintext{
   margin:auto;
   margin-top:50px;
@@ -147,20 +125,16 @@ body {
   margin-left:230px;
   color:#062757;
 }
-
 .errmsg{
   color:red;
 }
-
 .userbtn:hover{
   background-color: #020551;
   color:white;
   border:1px solid #020551;
   transform: translateY(-5px);
   transition: 0.3s ease-in-out;
-
 }
-
 .userbtn2:hover{
   background-color: white;
   color:#020551;
@@ -170,14 +144,11 @@ body {
 .forgot{
   margin-top: 30px;
 }
-
 .buttons{
   margin:auto;
   margin-top:50px;
   margin-right:50px;
 }
-
-
 nav {
   display: flex;
   align-items: center;
@@ -210,26 +181,20 @@ nav ul li a::after {
 nav ul li a:hover::after {
   width: 100%;
 }
-
 .center{
   text-align: center;
   color:#01193e;
  padding: 10px;
 }
-
 .space{
   height:100px;
 }
-
 .smallspace{
   height:10px;
 }
-
 .middlespace{
   height:40px;
 }
-
-
 .background2 {
   width: 100%;
   height:100vh;
@@ -241,8 +206,6 @@ nav ul li a:hover::after {
   background-attachment: fixed;
   padding:10px 10%;
 }
-
-
 .background {
   width: 100%;
   height:160%;
@@ -252,7 +215,6 @@ nav ul li a:hover::after {
   background-attachment: fixed;
   padding:10px 10%;
 }
-
 .menu-bar {
   background: #062757;
   text-align: center;
@@ -260,13 +222,11 @@ nav ul li a:hover::after {
   justify-content: center;
   align-items: center;
 }
-
 .footertxt{
   color: #fff;
   font-size: 15px;
   padding: 25px 0px;
 }
-
 .home {
   position: absolute;
   top: 50%;
@@ -283,7 +243,6 @@ nav ul li a:hover::after {
   border-radius: 5px;
   border: none;
 }
-
 .captcha{
  margin:auto;
  margin-top:30px;
@@ -293,18 +252,15 @@ nav ul li a:hover::after {
   border: none;
   box-shadow: 0px 0px 5px 0px black;
 }
-
 .anim{
   animation: anim-lineUp 4s ease-in-out;
 }
 .anim2{
   animation: anim-lineUp2 4s ease-in-out;
 }
-
 .anim3{
   animation: anim-lineUp3 4s ease-in-out;
 }
-
 @keyframes anim-lineUp {
   0% {
     opacity: 0;
@@ -322,7 +278,6 @@ nav ul li a:hover::after {
     transform: translateY(0%);
   }
 }
-
 @keyframes anim-lineUp2 {
   0% {
     opacity: 0;
@@ -340,8 +295,6 @@ nav ul li a:hover::after {
     transform: translateX(0%);
   }
 }
-
-
 @keyframes anim-lineUp3 {
   0% {
     opacity: 0;
@@ -359,7 +312,6 @@ nav ul li a:hover::after {
     transform: translateX(0%);
   }
 }
-
 .about{
   text-align: justify;
 }
@@ -369,7 +321,6 @@ nav ul li a:hover::after {
   display: flex;
   flex-direction: column;
 }
-
 .content a {
   position: relative;
   text-decoration: none;
@@ -447,12 +398,10 @@ nav ul li a:hover::after {
   bottom: 27px;
   color: #fff;
 }
-
 .getstarted{
   margin:200px  -80px;
   padding:100px 0px;
 }
-
 .check {
   margin-bottom: 40px;
   display: flex;
@@ -500,43 +449,32 @@ button:active {
 .sign-up a:hover {
   text-decoration: underline;
 }
-
 .services{
   padding:40px 0px;
 }
-
 .column {
   float: left;
   width: 50%;
   height:auto;
-
 }
-
 @media screen and (max-width: 600px) {
   .column {
     width: 100%;
     height:auto;
   }
-  
 }
-
 .row:after {
   content: "";
   display: table;
   clear: both;
-
 }
-
 .flip-card {
   margin:auto;
   padding : 10px;
   background-color: transparent;
   width: 500px;
   height: 300px;
-
-  
 }
-
 .flip-card-inner {
   position: relative;
   width: 100%;
@@ -547,11 +485,9 @@ button:active {
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   border-radius:25px;
 }
-
 .flip-card:hover .flip-card-inner {
   transform: rotateY(180deg);
 }
-
 .flip-card-front, .flip-card-back {
   position: absolute;
   width:500px;
@@ -560,19 +496,16 @@ button:active {
   backface-visibility: hidden;
   border-radius:25px;
 }
-
 .image{
   width:500px;
   height:300px;
   border-radius: 25px;
   box-shadow: black 0px 0px 5px 0px;
 }
-
 .flip-card-front {
   background-color: #bbb;
   color: black;
 }
-
 .flip-card-back {
   background-color:#00607F;
   color: white;
@@ -580,9 +513,6 @@ button:active {
   padding:70px 0px;
   margin:auto;
 }
-
-
-
 /*-------------About---------------*/
 #about {
   padding: 80px 0;
@@ -647,7 +577,6 @@ button:active {
   margin-right: 10px;
   font-size: 20px;
 }
-
 /*-------------Services---------------*/
 #services {
   padding: 30px 0;
@@ -783,38 +712,30 @@ button:active {
   -ms-transition: 0.4s;
   -o-transition: 0.4s;
 }
-
 .layer h3 {
   font-weight: 700;
   margin-bottom: 30px;
   margin-top: 20px;
   color: #fff;
 }
-
 .ad:hover img {
   transform: scale(1.1);
   opacity: 0.5;
 }
-
 .ad:hover .layer {
   height: 100%;
 }
-
 .nostyle{
   text-decoration: none;
   ;
 }
-
 .container-fluid{
-
   justify-content: center;
   align-items: center;
   text-align: center;
   margin:auto;
   padding:210px 0px;
-
 }
-
 .btn {
   font-weight: 700;
   display: block;
@@ -839,7 +760,6 @@ button:active {
 }
 .contact-right {
   flex-basis: 60%;
-
 }
 .contact-left p {
   margin-top: 30px;
@@ -882,7 +802,6 @@ button:active {
   text-decoration: none;
   transition: transform 0.5s;
   font-family: Arial, Helvetica, sans-serif;
-  
 }
 .btn:hover {
   background: #01193e;
@@ -914,7 +833,6 @@ footer {
   flex-direction: column;
   box-sizing: border-box;
 }
-
 .footer-wrapper {
   display: flex;
   background-color: #01193e;
@@ -922,7 +840,6 @@ footer {
   max-width: 1320px;
   padding: 16px;
 }
-
 .footer-top {
   display: flex;
   flex-direction: wrap;
@@ -1028,7 +945,6 @@ footer {
 .social a:hover{
   color: #6badde;
 }
-
 .footer-bottom {
   text-align: center;
   width: 100%;
@@ -1041,7 +957,6 @@ footer {
   color: #fff;
   background-color: #01193e;
 }
-
 .footer-bottom small {
   font-size: 14px;
   margin: 0 4px;
@@ -1049,21 +964,6 @@ footer {
 .footer-bottom small i{
   color: #6badde;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .register {
   display: flex;
   flex-wrap: wrap;
@@ -1091,12 +991,10 @@ footer {
     justify-content: center;
     align-items: right;
 }
-
 .importantMessage{
   color:#fd1100;
   font-size:12px;
 }
-
 .reg-img img{
   margin: auto;
   margin-top:15px;
@@ -1127,7 +1025,6 @@ footer {
   transform: scale(1.05);
   transition: 0.5s;
 }
-
 .input label {
   font-size: 18px;
   color: #01193e;
@@ -1148,7 +1045,7 @@ footer {
 .upload-container {
   color: #fff;
   width: 400px;
-  margin-top: 30px;
+  margin-top: 10px;
   position: relative;
   padding: 10px 10px;
   border: 1px solid #01193e;
@@ -1171,7 +1068,6 @@ footer {
   margin-right: 10px;
   padding: auto;
 }
-
 .licence{
   color: #01193e;
   padding: 5px 10px;
@@ -1180,8 +1076,6 @@ footer {
   font-weight: 600;
   cursor: pointer;
 }
-
-
 .reg-btn input{
     text-decoration: none;
     color: #01193e;
@@ -1200,7 +1094,6 @@ footer {
     border: 1px solid #fff;
     transition: 0.3s;
   }
-
 .main-container {
   display: flex;
   flex-wrap: wrap;
@@ -1353,14 +1246,12 @@ footer {
   margin-bottom: 20px;
   color: #01193e;
 }
-
 .login .input {
   position: relative;
   width: 100%;
   height: 30px;
   margin-top: 40px;
 }
-
 .login .input .input1 {
   font-size: 18px;
   display: flex;
@@ -1433,4 +1324,3 @@ button:active {
 .sign-up a:hover {
   text-decoration: underline;
 }
-

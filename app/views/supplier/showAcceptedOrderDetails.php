@@ -135,7 +135,7 @@
                 </td>
               </tr>
           <tr>
-            <td> <a href="<?php echo URLROOT ?>/supplier/orders" class="link">
+            <td> <a href="<?php echo URLROOT ?>/suppliers/orders" class="link">
                 <div class="publicbtn"> Cancel </div>
               </a>
             </td>
