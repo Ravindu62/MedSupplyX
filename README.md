@@ -47,4 +47,25 @@ MedSupplyX is aimed at improving the efficiency and accuracy of medical supply m
 
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/yourusername/MedSupplyX.git
+   git clone https://github.com/Ravindu62/MedSupplyX.git
+
+2. **Start the Server:**
+   - Place the project folder inside the htdocs directory of XAMPP.
+   - Start Apache and MySQL from the XAMPP control panel.
+   - Access the application by navigating to http://localhost/MedSupplyX in your browser.
+
+### Contributors
+
+- Ravindu Nanayakkara - Backend Development (Pharmacy Actor, Bid Management, Order Management, Pharmacy Inverntory Management)
+- Nisal Wishwajith - Frontend Development & Backend Development (Manager, Supplier Actors, Order Management for Supplier, Registration of Pharmacies and Suppliers)
+- Shimra Hanan - Backend Development (Admin Actor, Manager Registration, Profile, Update Functionalities)
+
+### License
+
+- This project is licensed under the MIT License - see the LICENSE file for details.
+
+### Contact Information
+
+  - For any questions or inquiries, please contact:
+
+        Ravindu Nanayakkara - pasan62nanayakkara@gmail.com
